@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <Frame>
-      <Brand>세줄의! 민족</Brand>
+      <Brand>세줄의 민족</Brand>
       <VertexAlignContainer>
         <Form onSubmit={onSubmit}>
           <TextArea value={inputText} onChange={onChangeTextArea} />
