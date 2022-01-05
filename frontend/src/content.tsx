@@ -16,8 +16,11 @@ const init = async () => {
     $content.insertAdjacentElement("beforeend", $div);
 
     const text = removeFootnoteNumber($content.textContent || "");
+
     ReactDOM.render(<ExtensionButton inputText={text} />, $div);
   });
 };
 
 init();
+
+export default init;

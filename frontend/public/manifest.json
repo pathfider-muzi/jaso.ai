@@ -34,5 +34,9 @@
         "content.js"
       ]
     }
+  ],
+  "permissions": [
+    "webNavigation",
+    "tabs"
   ]
 }
