@@ -16,8 +16,17 @@ const init = async () => {
     $content.insertAdjacentElement("beforeend", $div);
 
     const text = removeFootnoteNumber($content.textContent || "");
+
     ReactDOM.render(<ExtensionButton inputText={text} />, $div);
   });
 };
 
 init();
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message === "tab_url_changed") {
+    init();
+  }
+});
+
+export default init;
