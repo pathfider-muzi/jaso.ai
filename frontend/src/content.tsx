@@ -23,4 +23,10 @@ const init = async () => {
 
 init();
 
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message === "tab_url_changed") {
+    init();
+  }
+});
+
 export default init;
