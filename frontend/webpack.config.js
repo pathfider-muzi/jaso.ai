@@ -1,58 +1,54 @@
-const webpack = require("webpack");
 const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const config = {
-  entry: {
-    popup: path.join(__dirname, "src/popup.tsx"),
-    content: path.join(__dirname, "src/content.tsx"),
-    background: path.join(__dirname, "src/background.tsx"),
+module.exports = {
+  entry: ["./src/index.tsx"],
+  output: {
+    path: path.resolve(__dirname, "dist/js"),
+    filename: "bundle.js",
+    clean: true
   },
-  output: { clean: true, path: path.join(__dirname, "dist"), filename: "[name].js" },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: "babel-loader",
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.ts(x)?$/,
-        loader: "ts-loader",
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.svg$/,
-        use: "file-loader",
-      },
-      {
-        test: /\.png$/,
+        test: /.(tsx|ts|js|jsx)$/,
         use: [
           {
-            loader: "url-loader",
+            loader: "babel-loader",
             options: {
-              mimetype: "image/png",
-            },
-          },
+              presets: [
+                "@babel/preset-env",
+                [
+                  "@babel/preset-react",
+                  {
+                    runtime: "automatic"
+                  }
+                ],
+                "@babel/preset-typescript",
+              ],
+              plugins: ["@babel/plugin-transform-runtime"]
+            }
+          }
         ],
-      },
-    ],
-  },
-  resolve: {
-    extensions: [".js", ".jsx", ".tsx", ".ts"],
-    alias: {
-      "react-dom": "@hot-loader/react-dom",
-    },
-  },
-  devServer: {
-    contentBase: "./dist",
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [{ from: "public", to: "." }],
+    new HtmlWebpackPlugin({
+      template: "./public/index.html"
     }),
   ],
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx", "css", "scss"]
+  },
   devtool: "source-map",
+  mode: "development",
+  devServer: {
+    host: "localhost",
+    port: 3000,
+    historyApiFallback: true,
+    open: true,
+    hot: true
+  }
 };
-
-module.exports = config;

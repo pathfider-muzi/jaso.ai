@@ -4,11 +4,11 @@ import GlobalStyle from "./GlobalStyle";
 
 import App from "./App";
 
-const $popup = document.getElementById("popup");
+const $root = document.getElementById("root");
 ReactDOM.render(
   <>
     <GlobalStyle />
     <App />
   </>,
-  $popup,
+  $root
 );
