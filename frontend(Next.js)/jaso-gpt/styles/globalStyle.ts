@@ -9,13 +9,17 @@ const globalStyles = css`
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
   }
 
-  * {
-    box-sizing: border-box;
+  button {
+    cursor: pointer;
   }
 `;
 

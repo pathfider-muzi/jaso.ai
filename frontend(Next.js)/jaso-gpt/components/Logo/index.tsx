@@ -22,7 +22,7 @@ const SIZE_INFO: {
   },
 } as const;
 
-export interface Props extends ImageProps {
+export interface Props {
   _size: Size;
 }
 
