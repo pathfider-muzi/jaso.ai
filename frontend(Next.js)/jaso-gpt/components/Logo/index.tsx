@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 
 export type Size = "sm" | "md" | "lg";
 
@@ -22,12 +22,12 @@ const SIZE_INFO: {
   },
 } as const;
 
-export interface Props {
-  size: Size;
+export interface Props extends ImageProps {
+  _size: Size;
 }
 
-const Logo = ({ size = "sm" }: Props) => {
-  const { width, height } = SIZE_INFO[size];
+const Logo = ({ _size = "sm" }: Props) => {
+  const { width, height } = SIZE_INFO[_size];
 
   return <Image src="/logo.png" alt="Logo" width={width} height={height} />;
 };

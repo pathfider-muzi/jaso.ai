@@ -13,7 +13,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>자기소개서 AI Assistant</h1>
+        <h1 className={styles.title}>AI 자소서 Assistant</h1>
 
         <p className={styles.description}>
           카카오브레인의 <span className={styles.blue}>koGPT</span>가 당신의
