@@ -1,9 +1,20 @@
+import { Global } from "@emotion/react";
 import * as nextImage from "next/image";
+import globalStyles from "../styles/globalStyle";
 
 Object.defineProperty(nextImage, "default", {
   configurable: true,
   value: (props) => <img {...props} />,
 });
+
+export const decorators = [
+  (Story) => (
+    <>
+      <Global styles={globalStyles} />
+      <Story />
+    </>
+  ),
+];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
