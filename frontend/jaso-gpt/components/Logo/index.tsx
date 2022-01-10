@@ -1,4 +1,4 @@
-import Image, { ImageProps } from "next/image";
+import Image from "next/image";
 
 export type Size = "sm" | "md" | "lg";
 
