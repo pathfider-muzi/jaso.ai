@@ -7,6 +7,7 @@ const MyDocument = () => {
       <body>
         <Main />
         <NextScript />
+        <div id="modal-root" />
       </body>
     </Html>
   );

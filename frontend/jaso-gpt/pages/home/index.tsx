@@ -1,21 +1,12 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import MainIntroduction from "../../components/MainIntroduction";
+import Screen from "@/components/layouts/Screen";
+import * as S from "./styles";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <Head>
-        <title>JASO-GPT</title>
-        <meta name="description" content="AI 자소서 assistant" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-      <MainIntroduction />
-      <Footer />
-    </div>
+    <Screen title="Home" description="AI 자소서 assistant, JASO-GPT 홈페이지">
+      <S.ServiceIntroduction />
+    </Screen>
   );
 };
 

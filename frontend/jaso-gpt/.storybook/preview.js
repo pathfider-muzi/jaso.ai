@@ -12,6 +12,7 @@ export const decorators = [
     <>
       <Global styles={globalStyles} />
       <Story />
+      <div id="modal-root" />
     </>
   ),
 ];

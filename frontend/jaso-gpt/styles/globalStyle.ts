@@ -2,7 +2,12 @@ import { css } from "@emotion/react";
 
 const globalStyles = css`
   html,
-  body {
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     padding: 0;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
