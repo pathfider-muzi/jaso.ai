@@ -25,8 +25,6 @@ export const Description = styled.p`
 `;
 
 export const Button = styled(ButtonComponent)`
-  max-width: 800px;
-  margin: 1rem;
   padding: 1.5rem;
   text-align: left;
   color: inherit;
@@ -35,9 +33,15 @@ export const Button = styled(ButtonComponent)`
   font-weight: bold;
   font-size: 1.5rem;
   ${BUTTON_THEME.SIMPLE}
+  border: none;
+  background-image: linear-gradient(
+    286deg,
+    rgb(76, 160, 252) 23%,
+    rgb(224, 47, 238) 76%
+  );
+  transition: transform 0.2s ease;
 
   &:hover {
-    color: ${PALETTE.BLUE};
-    border-color: ${PALETTE.BLUE};
+    transform: scale(1.1);
   }
 `;

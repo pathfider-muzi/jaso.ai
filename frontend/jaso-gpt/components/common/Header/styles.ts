@@ -25,9 +25,3 @@ export const BrandName = styled.h1`
   display: inline-block;
   vertical-align: top;
 `;
-
-export const ButtonsWrapper = styled.div`
-  & > button:last-child {
-    margin-left: 1rem;
-  }
-`;

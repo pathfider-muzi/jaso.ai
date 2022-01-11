@@ -1,4 +1,5 @@
 import Footer from "@/components/common/Footer";
+import Header from "@/components/common/Header";
 import { BRAND_NAME } from "@/constants/brandName";
 import Head from "next/head";
 import { ReactNode } from "react";
@@ -18,7 +19,7 @@ const Screen = ({ title, description, children }: Props) => {
         <meta name="description" content={description || ""} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <S.Header />
+      <Header />
       <S.MainWrapper>{children}</S.MainWrapper>
       <Footer />
     </>

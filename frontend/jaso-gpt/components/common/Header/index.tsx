@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Avatar from "../Avatar";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";
@@ -18,12 +19,9 @@ const Header = ({ user, ...props }: Props) => {
       </Link>
       <div>
         {user ? (
-          <Button size="md">로그아웃</Button>
+          <Avatar src="/profile_default.png" alt="profile image" size="sm" />
         ) : (
-          <S.ButtonsWrapper>
-            <Button size="md">로그인</Button>
-            <Button size="md">회원가입</Button>
-          </S.ButtonsWrapper>
+          <Button size="md">로그인</Button>
         )}
       </div>
     </S.Frame>

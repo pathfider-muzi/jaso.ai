@@ -3,6 +3,7 @@ import PersonalInformationComponent from "@/components/User/PersonalInformation"
 
 export const Frame = styled.div`
   display: flex;
+  margin-top: 3rem;
 
   @media (max-width: 780px) {
     flex-direction: column;
