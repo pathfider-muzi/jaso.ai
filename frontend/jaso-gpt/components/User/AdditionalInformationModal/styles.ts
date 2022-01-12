@@ -1,5 +1,5 @@
-import ButtonComponent from "@/components/common/Button";
-import Modal from "@/components/common/Modal";
+import ButtonComponent from "@/components/_common/Button";
+import Modal from "@/components/_common/Modal";
 import PALETTE from "@/constants/palette";
 import styled from "@emotion/styled";
 

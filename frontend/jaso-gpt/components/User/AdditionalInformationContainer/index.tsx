@@ -4,14 +4,14 @@ import AdditionalInformation from "../AdditionalInformation";
 import AdditionalInformationModal from "../AdditionalInformationModal";
 import * as S from "./styles";
 
-const AdditionalInformationContainer = () => {
+const AdditionalInformationContainer = ({ ...props }) => {
   const { isModalOpen, closeModal, openModal } = useModal({});
 
   return (
-    <S.Frame>
+    <S.Frame {...props}>
       <S.Header>
         <S.Title>추가정보</S.Title>
-        <S.EditButton type="button" onClick={openModal}>
+        <S.EditButton onClick={openModal}>
           <Image src="/edit.png" alt="edit icon" width={20} height={20} />
         </S.EditButton>
       </S.Header>

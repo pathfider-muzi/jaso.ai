@@ -4,13 +4,13 @@ import { BOX_SHADOW } from "./boxShadow";
 
 const BUTTON_THEME = {
   SIMPLE: css`
-    ${BORDER.GRAY};
+    ${BORDER.GRAY_200};
     ${BOX_SHADOW.DEFAULT}
     background-color: transparent;
     border-radius: 10px;
     transition: box-shadow 0.15s ease;
 
-    &:hover {
+    &:hover:enabled {
       ${BOX_SHADOW.BOLD.styles}
     }
   `,

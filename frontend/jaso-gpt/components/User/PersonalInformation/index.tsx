@@ -1,4 +1,4 @@
-import Avatar from "@/components/common/Avatar";
+import Avatar from "@/components/_common/Avatar";
 import * as S from "./styles";
 
 const PersonalInformation = ({ ...props }) => {

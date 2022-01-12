@@ -12,6 +12,8 @@ const globalStyles = css`
   textarea {
     padding: 0;
     margin: 0;
+    word-break: keep-all;
+    word-wrap: break-word;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
@@ -26,6 +28,19 @@ const globalStyles = css`
   }
 
   button {
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+      filter: brightness(90%);
+      opacity: 0.6;
+    }
+  }
+
+  input[type="radio"],
+  input[type="checkbox"],
+  .input-label {
     cursor: pointer;
   }
 `;

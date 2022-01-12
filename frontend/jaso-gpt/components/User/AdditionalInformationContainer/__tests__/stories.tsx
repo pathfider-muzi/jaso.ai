@@ -8,9 +8,9 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof AdditionalInformationContainer>;
 
-const Template: ComponentStory<typeof AdditionalInformationContainer> = () => (
-  <AdditionalInformationContainer />
-);
+const Template: ComponentStory<typeof AdditionalInformationContainer> = (
+  args
+) => <AdditionalInformationContainer {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

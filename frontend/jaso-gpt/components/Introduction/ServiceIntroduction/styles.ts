@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import PALETTE from "@/constants/palette";
 import BUTTON_THEME from "@/styles/buttonTheme";
-import ButtonComponent from "@/components/common/Button";
+import ButtonComponent from "@/components/_common/Button";
 
 export const Frame = styled.main`
   display: flex;
@@ -42,6 +42,6 @@ export const Button = styled(ButtonComponent)`
   transition: transform 0.2s ease;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 `;
