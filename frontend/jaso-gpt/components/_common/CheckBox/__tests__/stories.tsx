@@ -13,7 +13,4 @@ const Template: ComponentStory<typeof CheckBox> = (args) => (
 );
 
 export const Primary = Template.bind({});
-Primary.args = {
-  size: "md",
-  children: "버튼",
-};
+Primary.args = {};
