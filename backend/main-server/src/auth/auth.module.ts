@@ -11,18 +11,21 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
     imports: [
-        HttpModule.register({
-          timeout: 5000
-        }),
-        ConfigModule.forRoot(),
-        UserModule, 
-        PassportModule,
-        JwtModule.register({
-          secret: process.env.JWT_SECRET_KEY,
-          signOptions: {expiresIn: '60s'}
-        })
-      ],
+      HttpModule.register({
+        timeout: 5000
+      }),
+      ConfigModule.forRoot(),
+      UserModule, 
+      PassportModule,
+      JwtModule.register({
+        secret: process.env.JWT_SECRET_KEY,
+        signOptions: {expiresIn: '300s'}
+      }),
+    ],
     controllers: [AuthController],
-    providers: [AuthService, UserService, JwtStrategy]
+    providers: [
+      AuthService, 
+      UserService
+    ]
 })
 export class AuthModule {}

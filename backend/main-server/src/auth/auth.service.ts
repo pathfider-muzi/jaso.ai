@@ -6,8 +6,9 @@ export class AuthService {
     constructor(private jwtService: JwtService) {}
 
     // generates JWT using Kakao userInfo
-    async generateJWT(user: any) {
-        const payload = { user: user };
+    async generateJWT(kakaoId: number) {
+        const payload = { kakaoId: kakaoId };
+        
         return {
             accessToken: this.jwtService.sign(payload)
         }

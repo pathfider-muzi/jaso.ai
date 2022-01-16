@@ -3,7 +3,7 @@ import { Body, Controller, Get, HttpException, Post, Request, UseGuards } from '
 import { catchError, lastValueFrom } from 'rxjs';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
-import { KakaoToken } from './dto/kakaoToken.dto';
+import { GetAccessTokenRequestDto } from './dto/getAccessTokenRequestDto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
@@ -16,12 +16,13 @@ export class AuthController {
 
     @Get()
     getHello(): string {
+
         return 'Hello';
     }
 
     @Post('kakao-token')
-    async getKakaoToken(@Body() kakaoToken: KakaoToken): Promise<any> {
-        const { accessToken } = kakaoToken;
+    async getAccessToken(@Body() getAccessTokenRequestDto: GetAccessTokenRequestDto): Promise<any> {
+        const { accessToken } = getAccessTokenRequestDto;
 
         // fetch userInfo from Kakao using accessToken
         const { data } = await lastValueFrom(this.httpService.get("https://kapi.kakao.com/v2/user/me", {
@@ -35,15 +36,23 @@ export class AuthController {
             })
         ));
 
-        // add userInfo to mock db
-        this.userService.pushUserData(data.id);
+        const { id, kakao_account: { profile: { nickname, profile_image_url } } } = data;
+        console.log(`[API] POST /auth/kakao-token : ${id}, ${nickname}, ${profile_image_url}`)
+        
+        // find user via kakaoId and insert to db it use does not exist
+        let user = await this.userService.getUser(id);
+        if (!user) {
+            user = await this.userService.createUser(id, nickname, profile_image_url);
+        
+            // generate JWT
+            const jwt = await this.authService.generateJWT(id);
 
-        return this.authService.generateJWT(data.id);
-    }
-    
-    @UseGuards(JwtAuthGuard)
-    @Get('user')
-    getUser(@Request() req) {
-        return req.user;
+            return { jwt, user }
+        }
+
+        // generate JWT
+        const jwt = await this.authService.generateJWT(id);
+
+        return { jwt }
     }
 }
