@@ -33,6 +33,8 @@ export class UserInfo {
     @Column()
     license: string;
 
-    @ManyToOne(() => User, user => user.userInfos)
+    @ManyToOne(() => User, user => user.userInfos, {
+        onDelete: "CASCADE"
+    })
     user: User;
 }

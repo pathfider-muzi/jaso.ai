@@ -1,6 +1,7 @@
 import { Injectable, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AgreeToTermsRequestDto } from './dto/agreeToTermsRequestDto';
 import { CreateUserInfoRequestDto } from './dto/createUserInfoRequestDto';
 import { UpdateUserInfoRequestDto } from './dto/updateUserInfoRequestDto';
 import { User } from './entity/user.entity';
@@ -16,12 +17,8 @@ export class UserService {
     private userInfoRepository: Repository<UserInfo>
   ) {}
 
-  // findAll(): Promise<User[]> {
-  //   return this.userRepository.find();
-  // }
-
   getUser(kakaoId: string): Promise<User> {
-    console.log(`[DB] Get User : ${kakaoId}`)
+    console.log(`[DB] Get User : ${kakaoId}`);
 
     return this.userRepository.findOne({
       where: {
@@ -31,7 +28,7 @@ export class UserService {
   }
 
   getUserWithUserInfo(kakaoId: string): Promise<User> {
-    console.log(`[DB] Get User & UserInfo: ${kakaoId}`)
+    console.log(`[DB] Get User & UserInfo: ${kakaoId}`);
 
     return this.userRepository.findOne({
       relations: ["userInfos"],
@@ -41,12 +38,8 @@ export class UserService {
     });
   }
 
-  // async remove(id: string): Promise<void> {
-  //   await this.userRepository.delete(id);
-  // }
-
   async createUser(kakaoId: number, nickname: string, profile_image_url: string): Promise<any> {
-    console.log(`[DB] Create User : ${kakaoId}, ${nickname}, ${profile_image_url}`)
+    console.log(`[DB] Create User : ${kakaoId}, ${nickname}, ${profile_image_url}`);
     
     return await this.userRepository.insert({
       kakaoId: kakaoId,
@@ -56,10 +49,23 @@ export class UserService {
     })
   }
 
+  async updateUser(kakaoId: number, nickname: string, profile_image_url: string): Promise<any> {
+    console.log(`[DB] Update User : ${kakaoId}, ${nickname}, ${profile_image_url}`);
+
+    return await this.userRepository.update({
+      kakaoId: kakaoId
+    }, {
+      kakaoId: kakaoId,
+      nickname: nickname,
+      profileImage: profile_image_url,
+      agreeToTerms: false
+    })
+  }
+
   async createUserInfo(createUserInfoRequestDto: CreateUserInfoRequestDto, user: User): Promise<any> {
     const { name, email, university, major, grade, languageScore, career, activity, license } = createUserInfoRequestDto;
-    console.log(`[DB] Create UserInfo : ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`)
-    
+    console.log(`[DB] Create UserInfo : ${user.kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
+   
     return await this.userInfoRepository.insert({
       name: name,
       email: email,
@@ -76,7 +82,7 @@ export class UserService {
 
   async updateUserInfo(updateUserInfoRequestDto: UpdateUserInfoRequestDto, user: User): Promise<any> {
     const { name, email, university, major, grade, languageScore, career, activity, license } = updateUserInfoRequestDto;
-    console.log(`[DB] Update UserInfo : ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`)
+    console.log(`[DB] Update UserInfo : ${user.kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
 
     return await this.userInfoRepository.update({
         user: user
@@ -90,6 +96,25 @@ export class UserService {
         career: career,
         activity: activity,
         license: license
+    })
+  }
+
+  async agreeToTerms(agreeToTermsRequestDto: AgreeToTermsRequestDto, kakaoId: number): Promise<any> {
+    const { agreeToTerms } = agreeToTermsRequestDto;
+    console.log(`[DB] Agree To Terms : ${kakaoId}`)
+
+    return await this.userRepository.update({
+      kakaoId: kakaoId
+    }, {
+      agreeToTerms: true
+    })
+  }
+
+  async deleteUser(kakaoId: number): Promise<any> {
+    console.log(`[DB] Delete User : ${kakaoId}`);
+
+    return await this.userRepository.delete({
+      kakaoId: kakaoId
     })
   }
 }

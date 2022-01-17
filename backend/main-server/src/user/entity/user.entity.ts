@@ -1,3 +1,4 @@
+import { SelfIntroduction } from "src/self-introduction/entity/selfIntroduction.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserInfo } from "./userInfo.entity";
 
@@ -18,8 +19,9 @@ export class User {
     @Column({ default: false })
     agreeToTerms: boolean;
 
-    @OneToMany(() => UserInfo, userInfo => userInfo.user, {
-        cascade: true
-    })
+    @OneToMany(() => UserInfo, userInfo => userInfo.user)
     userInfos: UserInfo[];
+
+    @OneToMany(() => SelfIntroduction, selfIntroduction => selfIntroduction.user)
+    selfIntroductions: SelfIntroduction[];
 }

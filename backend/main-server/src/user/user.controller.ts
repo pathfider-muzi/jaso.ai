@@ -1,5 +1,6 @@
-import { Controller, Get, UseGuards, Request, Post, Body, Patch, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Post, Body, Patch, UnauthorizedException, Delete, Req } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AgreeToTermsRequestDto } from './dto/agreeToTermsRequestDto';
 import { CreateUserInfoRequestDto } from './dto/createUserInfoRequestDto';
 import { UpdateUserInfoRequestDto } from './dto/updateUserInfoRequestDto';
 import { UserService } from './user.service';
@@ -18,20 +19,29 @@ export class UserController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Delete()
+    async deleteUser(@Request() req) {
+        const kakaoId = req.user.kakaoId;
+        console.log(`[API] DELETE /user : ${kakaoId}`);
+
+        return await this.userService.deleteUser(kakaoId);
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Get('user-info')
     async getUserWithUserInfo(@Request() req) {
         const kakaoId = req.user.kakaoId;
-        console.log(`[API] GET /user/user-info : ${kakaoId}`)
+        console.log(`[API] GET /user/user-info : ${kakaoId}`);
 
         return await this.userService.getUserWithUserInfo(kakaoId);
     }
 
-
     @UseGuards(JwtAuthGuard)
     @Post('user-info')
-    async createUserInfo(@Body() createUserInfoReqestDto: CreateUserInfoRequestDto, @Request() req) {
+    async createUserInfo(@Body() createUserInfoRequestDto: CreateUserInfoRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        console.log(`[API] POST /user/user-info : ${kakaoId} ${createUserInfoReqestDto}`)
+        const { name, email, university, major, grade, languageScore, career, activity, license } = createUserInfoRequestDto;
+        console.log(`[API] POST /user/user-info : ${kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
         const user = await this.userService.getUserWithUserInfo(kakaoId);
         if (!user) {
             throw new UnauthorizedException();
@@ -40,19 +50,30 @@ export class UserController {
             return user.userInfos;
         }
 
-        return await this.userService.createUserInfo(createUserInfoReqestDto, user);
+        return await this.userService.createUserInfo(createUserInfoRequestDto, user);
     }
 
     @UseGuards(JwtAuthGuard)
     @Patch('user-info')
     async updateUserInfo(@Body() updateUserInfoRequestDto: UpdateUserInfoRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        console.log(`[API] PATCH /user/user-info : ${kakaoId} ${updateUserInfoRequestDto}`)
+        const { name, email, university, major, grade, languageScore, career, activity, license } = updateUserInfoRequestDto;
+        console.log(`[API] PATCH /user/user-info : ${kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
         const user = await this.userService.getUserWithUserInfo(kakaoId);
         if (!user) {
             throw new UnauthorizedException();
         }
 
         return await this.userService.updateUserInfo(updateUserInfoRequestDto, user);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('terms')
+    async agreeToTerms(@Body() agreeToTermsRequestDto: AgreeToTermsRequestDto, @Request() req) {
+        const kakaoId = req.user.kakaoId;
+        const { agreeToTerms } = agreeToTermsRequestDto;
+        console.log(`[API] POST /user/terms : ${kakaoId} ${agreeToTerms}`);
+
+        return await this.userService.agreeToTerms(agreeToTermsRequestDto, kakaoId);
     }
 }

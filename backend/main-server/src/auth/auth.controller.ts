@@ -39,16 +39,17 @@ export class AuthController {
         const { id, kakao_account: { profile: { nickname, profile_image_url } } } = data;
         console.log(`[API] POST /auth/kakao-token : ${id}, ${nickname}, ${profile_image_url}`)
         
-        // find user via kakaoId and insert to db it use does not exist
+        // create user if it does not exist, or update user if it already exists
         let user = await this.userService.getUser(id);
         if (!user) {
             user = await this.userService.createUser(id, nickname, profile_image_url);
-        
+
             // generate JWT
             const jwt = await this.authService.generateJWT(id);
 
             return { jwt, user }
         }
+        user = await this.userService.updateUser(id, nickname, profile_image_url);
 
         // generate JWT
         const jwt = await this.authService.generateJWT(id);
