@@ -28,15 +28,6 @@ export class UserController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('user-info')
-    async getUserWithUserInfo(@Request() req) {
-        const kakaoId = req.user.kakaoId;
-        console.log(`[API] GET /user/user-info : ${kakaoId}`);
-
-        return await this.userService.getUserWithUserInfo(kakaoId);
-    }
-
-    @UseGuards(JwtAuthGuard)
     @Post('user-info')
     async createUserInfo(@Body() createUserInfoRequestDto: CreateUserInfoRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;

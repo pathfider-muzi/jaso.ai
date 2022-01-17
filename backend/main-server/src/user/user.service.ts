@@ -28,17 +28,6 @@ export class UserService {
     });
   }
 
-  getUserWithUserInfo(kakaoId: string): Promise<User> {
-    console.log(`[DB] Get User & UserInfo: ${kakaoId}`);
-
-    return this.userRepository.findOne({
-      relations: ["userInfos"],
-      where: {
-        kakaoId
-      }
-    });
-  }
-
   async createUser(kakaoId: number, nickname: string, profile_image_url: string): Promise<any> {
     console.log(`[DB] Create User : ${kakaoId}, ${nickname}, ${profile_image_url}`);
     
@@ -124,25 +113,6 @@ export class UserService {
       kakaoId
     }, {
       agreeToTerms: true
-    })
-  }
-
-  async agreeToTerms(agreeToTermsRequestDto: AgreeToTermsRequestDto, kakaoId: number): Promise<any> {
-    const { agreeToTerms } = agreeToTermsRequestDto;
-    console.log(`[DB] Agree To Terms : ${kakaoId}`)
-
-    return await this.userRepository.update({
-      kakaoId: kakaoId
-    }, {
-      agreeToTerms: true
-    })
-  }
-
-  async deleteUser(kakaoId: number): Promise<any> {
-    console.log(`[DB] Delete User : ${kakaoId}`);
-
-    return await this.userRepository.delete({
-      kakaoId: kakaoId
     })
   }
 }
