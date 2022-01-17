@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start -p 8080",
     "prestart": "yarn build",
-    "server": "NODE_ENV=production node server.js",
+    "server": "node server.js",
     "preserver": "yarn build",
     "lint": "next lint",
     "storybook": "start-storybook -s ./public -p 6006",
