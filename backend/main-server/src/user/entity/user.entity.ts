@@ -1,4 +1,4 @@
-import { SelfIntroduction } from "src/self-introduction/entity/selfIntroduction.entity";
+import { SelfIntroduction } from "src/selfIntroduction/entity/selfIntroduction.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserInfo } from "./userInfo.entity";
 

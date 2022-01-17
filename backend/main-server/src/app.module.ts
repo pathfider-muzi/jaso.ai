@@ -6,7 +6,8 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { UserModule } from './user/user.module';
-import { SelfIntroductionModule } from './self-introduction/self-introduction.module';
+import { SelfIntroductionModule } from './selfIntroduction/selfIntroduction.module';
+import { QnaModule } from './qna/qna.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { SelfIntroductionModule } from './self-introduction/self-introduction.mo
     TypeOrmModule.forRoot(),
     AuthModule,
     UserModule,
-    SelfIntroductionModule
+    SelfIntroductionModule,
+    QnaModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Request, Post, Body, Patch, UnauthorizedException, Delete, Req } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Post, Body, Patch, Delete, NotFoundException } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AgreeToTermsRequestDto } from './dto/agreeToTermsRequestDto';
 import { CreateUserInfoRequestDto } from './dto/createUserInfoRequestDto';
@@ -42,10 +42,11 @@ export class UserController {
         const kakaoId = req.user.kakaoId;
         const { name, email, university, major, grade, languageScore, career, activity, license } = createUserInfoRequestDto;
         console.log(`[API] POST /user/user-info : ${kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
-        const user = await this.userService.getUserWithUserInfo(kakaoId);
+        const user = await this.userService.getUser(kakaoId);
         if (!user) {
-            throw new UnauthorizedException();
+            throw new NotFoundException();
         }
+        // constraint to avoid multiple userInfo
         if (user.userInfos.length > 0) {
             return user.userInfos;
         }
@@ -59,9 +60,9 @@ export class UserController {
         const kakaoId = req.user.kakaoId;
         const { name, email, university, major, grade, languageScore, career, activity, license } = updateUserInfoRequestDto;
         console.log(`[API] PATCH /user/user-info : ${kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
-        const user = await this.userService.getUserWithUserInfo(kakaoId);
+        const user = await this.userService.getUser(kakaoId);
         if (!user) {
-            throw new UnauthorizedException();
+            throw new NotFoundException();
         }
 
         return await this.userService.updateUserInfo(updateUserInfoRequestDto, user);
