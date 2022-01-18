@@ -1,4 +1,4 @@
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled.textarea<{

@@ -2,8 +2,8 @@
   "name": "jaso.ai",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "NODE_ENV=development next dev",
+    "build": "NODE_ENV=production next build",
     "start": "next start -p 8080",
     "prestart": "yarn build",
     "server": "node server.js",
@@ -18,8 +18,6 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@types/next-redux-wrapper": "^3.0.0",
-    "@types/react-redux": "^7.1.22",
     "axios": "^0.24.0",
     "next": "12.0.7",
     "next-redux-wrapper": "^7.0.5",
@@ -43,6 +41,8 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "@types/redux": "^3.6.0",
+    "@types/next-redux-wrapper": "^3.0.0",
+    "@types/react-redux": "^7.1.22",
     "babel-loader": "^8.2.3",
     "babel-plugin-emotion": "^11.0.0",
     "eslint": "8.6.0",

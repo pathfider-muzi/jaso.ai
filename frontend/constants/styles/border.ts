@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import PALETTE from "../palette";
+import PALETTE from "./palette";
 
 const BORDER = {
   GRAY_150: css`

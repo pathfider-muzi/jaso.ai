@@ -1,5 +1,5 @@
+import COLLEGE_LIST from "@/components/User/CollegeSelector/constants/collegeList";
 import DebouncedSelector from "@/components/_common/DebouncedSelector";
-import COLLEGE_LIST from "@/constants/collegeList";
 import { useMemo } from "react";
 
 const MAX_COLLEGE_ITEM_COUNT = 100;

@@ -1,5 +1,5 @@
+import MAJOR_LIST from "@/components/User/MajorSelector/constants/majorList";
 import DebouncedSelector from "@/components/_common/DebouncedSelector";
-import MAJOR_LIST from "@/constants/majorList";
 import { useMemo } from "react";
 
 const MAX_MAJOR_ITEM_COUNT = 100;

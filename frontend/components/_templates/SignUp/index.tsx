@@ -1,7 +1,7 @@
 import TosCheckBox from "@/components/Auth/TosCheckBox";
 import TosContent from "@/components/Auth/TosContent";
 import KakaoLoginButton from "@/components/_common/LoginButton/KakaoLoginButton";
-import TOS_CONTENT from "@/constants/TosContent";
+import TOS_CONTENT from "@/components/_templates/SignUp/constants/TosContent";
 import { useState } from "react";
 import * as S from "./styles";
 

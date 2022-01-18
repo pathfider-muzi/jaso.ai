@@ -1,7 +1,7 @@
 import TextArea from "@/components/_common/TextArea";
 import VerticalStyle from "@/components/_common/VerticalStyle";
-import { RootState } from "@/reduxFolder";
-import { useState, useCallback } from "react";
+import { RootState } from "@/modules";
+import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { WordCountedText } from "./styles";
 

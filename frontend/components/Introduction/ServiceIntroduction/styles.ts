@@ -1,5 +1,5 @@
 import ButtonComponent from "@/components/_common/Button";
-import BUTTON_THEME from "@/styles/buttonTheme";
+import BUTTON_THEME from "@/constants/styles/buttonTheme";
 import styled from "@emotion/styled";
 
 export const Frame = styled.section`

@@ -1,4 +1,4 @@
-import SERVICE_KEYWORD from "@/constants/serviceKeyword";
+import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
 import * as S from "./styles";
 
 interface Props {

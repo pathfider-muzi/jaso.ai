@@ -1,5 +1,5 @@
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
-import PALETTE from "@/constants/palette";
 
 export const Frame = styled.footer`
   display: flex;

@@ -1,5 +1,5 @@
-import PALETTE from "@/constants/palette";
-import SERVICE_KEYWORD from "@/constants/serviceKeyword";
+import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
+import PALETTE from "@/constants/styles/palette";
 import { css, SerializedStyles } from "@emotion/react";
 
 const SERVICE_KEYWORD_THEME: {

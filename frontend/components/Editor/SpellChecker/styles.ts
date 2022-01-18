@@ -1,8 +1,8 @@
 import ButtonComponent from "@/components/_common/Button";
-import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import NAVER_SPELL_CHECK_RESULT_INFO from "./constants/naverSpellCheckResultInfo";
 
 export const Frame = styled.div`
   display: flex;

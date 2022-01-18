@@ -1,6 +1,6 @@
-import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
+import NAVER_SPELL_CHECK_RESULT_INFO from "@/components/Editor/SpellChecker/constants/naverSpellCheckResultInfo";
 import useSpellCheck from "@/hooks/api/useSpellCheck";
-import { setEditorContent } from "@/reduxFolder/editor/actions";
+import { setEditorContent } from "@/modules/editor/actions";
 import Image from "next/image";
 import { FormEventHandler, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";

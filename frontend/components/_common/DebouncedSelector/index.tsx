@@ -1,4 +1,4 @@
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import { useState } from "react";
 import AsyncSelect from "react-select/async";
 import * as S from "./styles";

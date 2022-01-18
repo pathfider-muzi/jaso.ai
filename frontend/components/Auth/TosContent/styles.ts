@@ -1,5 +1,5 @@
-import PALETTE from "@/constants/palette";
 import BORDER from "@/constants/styles/border";
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`

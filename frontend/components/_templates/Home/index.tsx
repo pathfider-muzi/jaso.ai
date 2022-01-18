@@ -1,6 +1,6 @@
 import Screen from "@/components/_layouts/Screen";
+import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
 import BRAND_NAME from "@/constants/brandName";
-import SERVICE_KEYWORD from "@/constants/serviceKeyword";
 import * as S from "./styles";
 
 const Home = () => {

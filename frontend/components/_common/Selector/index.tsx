@@ -1,4 +1,4 @@
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import SelectComponent from "react-select";
 import * as S from "./styles";
 

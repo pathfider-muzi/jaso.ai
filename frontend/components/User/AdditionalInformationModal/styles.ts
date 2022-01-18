@@ -1,6 +1,6 @@
 import ButtonComponent from "@/components/_common/Button";
 import Modal from "@/components/_common/Modal";
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled(Modal)``;

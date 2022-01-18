@@ -1,11 +1,11 @@
 import VerticalStyle from "@/components/_common/VerticalStyle";
-import { useState } from "react";
 import { TAB_CONTENT_VIEW, TAB_SIDEBAR } from "@/constants/tabSideBarStyle";
+import { RootState } from "@/modules";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import SpellChecker from "../../SpellChecker";
 import TabBar from "../TabBar";
 import TabContentView from "../TabContentView";
-import SpellChecker from "../../SpellChecker";
-import { useSelector } from "react-redux";
-import { RootState } from "@/reduxFolder";
 
 const EditorSideBar = () => {
   const editorContent = useSelector((state: RootState) => state.editorReducer.text);

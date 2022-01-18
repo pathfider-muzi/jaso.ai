@@ -1,4 +1,4 @@
-import { setEditorContent } from "@/reduxFolder/editor/actions";
+import { setEditorContent } from "@/modules/editor/actions";
 import { useDispatch } from "react-redux";
 import * as S from "./styles";
 

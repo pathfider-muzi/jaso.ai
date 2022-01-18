@@ -1,4 +1,4 @@
-import PALETTE from "./palette";
+import PALETTE from "@/constants/styles/palette";
 
 const NAVER_SPELL_CHECK_RESULT_INFO = {
   violet_text: { category: "표준어의심", color: PALETTE.VIOLET },

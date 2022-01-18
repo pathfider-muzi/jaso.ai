@@ -1,4 +1,4 @@
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import {

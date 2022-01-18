@@ -6,9 +6,18 @@ module.exports = {
   exportPathMap: () => {
     return { "/": { page: "/home" } };
   },
-  webpack: (config) => {
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/home",
+        permanent: true
+      }
+    ];
+  },
+  webpack: config => {
     config.resolve.alias["@"] = path.join(__dirname, "src");
 
     return config;
-  },
+  }
 };

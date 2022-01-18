@@ -1,4 +1,4 @@
-import SERVICE_KEYWORD from "@/constants/serviceKeyword";
+import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
 import SERVICE_KEYWORD_THEME from "@/constants/styles/serviceKeywordTheme";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";

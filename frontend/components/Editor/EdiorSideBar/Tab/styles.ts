@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import PALETTE from "@/constants/palette";
+import PALETTE from "@/constants/styles/palette";
 import TAB from "@/constants/tabSideBarStyle";
+import styled from "@emotion/styled";
 
 export const Frame = styled.button`
   width: 100%;
