@@ -19,8 +19,6 @@ export default {
     },
     callback: {
       defaultValue: (inputValue: string) => {
-        console.log(inputValue);
-
         return options.filter(option => option.label.toLowerCase().includes(inputValue.toLowerCase()));
       }
     },

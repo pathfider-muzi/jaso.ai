@@ -1,15 +1,18 @@
 import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
 import useSpellCheck from "@/hooks/api/useSpellCheck";
-import useInput from "@/hooks/useInput";
-import { FormEventHandler } from "react";
+import { setEditorContent } from "@/reduxFolder/editor/actions";
+import Image from "next/image";
+import { FormEventHandler, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import * as S from "./styles";
 
 interface Props {
-  defaultText?: string;
+  text?: string;
 }
 
-const SpellChecker = ({ defaultText, ...props }: Props) => {
-  const { input, onChangeInput } = useInput(defaultText || "");
+const SpellChecker = ({ text, ...props }: Props) => {
+  const [input, setText] = useState(text || "");
+  const dispatch = useDispatch();
   const {
     errorCount,
     fixedText,
@@ -20,24 +23,30 @@ const SpellChecker = ({ defaultText, ...props }: Props) => {
     text: input
   });
 
+  useEffect(() => {
+    setText(text!);
+  }, [text]);
+
   const onSubmit: FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-
     getSpellCheck();
+  };
+
+  const reflectOnEditor = () => {
+    dispatch(setEditorContent(fixedText));
   };
 
   return (
     <S.Frame {...props}>
       <S.SpellCheckForm onSubmit={onSubmit}>
-        <S.TextArea placeholder="입력" onChange={onChangeInput} value={input} spellCheck="true" />
-        <S.SummitButton type="submit">맞춤법검사</S.SummitButton>
+        <S.SummitButton type="submit">맞춤법 검사</S.SummitButton>
       </S.SpellCheckForm>
       <S.ResultArea>
-        <S.ErrorCount>틀린개수: {errorCount}</S.ErrorCount>
         <S.OriginalText dangerouslySetInnerHTML={{ __html: originalHTML }} />
-        <span>To</span>
+        <Image src="/down_arrow.png" width={20} height={30} alt="down arrow"></Image>
         <S.FixedText dangerouslySetInnerHTML={{ __html: fixedHTML }} />
       </S.ResultArea>
+      <S.ReflectButton onClick={reflectOnEditor}>반영하기</S.ReflectButton>
       <S.ColorInfo>
         {Object.keys(NAVER_SPELL_CHECK_RESULT_INFO).map(key => {
           const colorInfo = key as keyof typeof NAVER_SPELL_CHECK_RESULT_INFO;

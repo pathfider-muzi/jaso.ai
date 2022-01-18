@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import {
   Frame as AdditionalInformationFrame,
-  Label as AdditionalInformationLabel,
+  Label as AdditionalInformationLabel
 } from "../../User/AdditionalInformation/styles";
 
 export const Frame = styled(AdditionalInformationFrame)``;

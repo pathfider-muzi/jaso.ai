@@ -6,7 +6,7 @@ export default {
   title: "SpellChecker",
   component: SpellChecker,
   argTypes: {
-    defaultText: {
+    text: {
       defaultValue: "그건 안되",
       control: {
         type: "text"

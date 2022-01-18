@@ -1,20 +1,34 @@
 import Input from "@/components/_common/Input";
-import useInput from "@/hooks/useInput";
-import { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import {
+  ChangeEventHandler,
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  useState,
+} from "react";
 import * as S from "./styles";
 
-interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface Props
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   label: string;
   isRequired?: boolean;
 }
 
 const InputForm = ({ label, value, isRequired = false, ...props }: Props) => {
-  const { input, onChangeInput } = useInput("");
+  const [inputValue, setInputValue] = useState(value);
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const value = event.target.value;
+
+    setInputValue(value);
+  };
 
   return (
     <S.Frame>
       <S.Label isRequired={isRequired}>{label}</S.Label>
-      <Input value={input} type="text" onChange={onChangeInput} {...props} />
+      <Input value={inputValue} type="text" onChange={onChange} {...props} />
     </S.Frame>
   );
 };
