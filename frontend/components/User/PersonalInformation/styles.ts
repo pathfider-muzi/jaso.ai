@@ -1,5 +1,5 @@
 import PALETTE from "@/constants/palette";
-import { BOX_SHADOW } from "@/styles/boxShadow";
+import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`

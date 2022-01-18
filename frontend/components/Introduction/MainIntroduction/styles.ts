@@ -1,6 +1,6 @@
 import ButtonComponent from "@/components/_common/Button";
 import PALETTE from "@/constants/palette";
-import BUTTON_THEME from "@/styles/buttonTheme";
+import BUTTON_THEME from "@/constants/styles/buttonTheme";
 import styled from "@emotion/styled";
 
 export const Frame = styled.section`
@@ -62,12 +62,12 @@ export const PinkCircle = styled.div`
   height: 1500px;
   z-index: -2;
   left: 60%;
-  animation-duration: 10s;
-  animation-name: "pink-circle-rotation";
   position: absolute;
   border-radius: 100%;
-  background-color: ${PALETTE.PINK};
+  background-color: ${PALETTE.HOT_PINK};
   opacity: 0.6;
+  animation-name: "pink-circle-rotation";
+  animation-duration: 10s;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
 
@@ -78,7 +78,6 @@ export const PinkCircle = styled.div`
     25% {
       transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%);
     }
-
     50% {
       transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%);
     }

@@ -1,5 +1,5 @@
 import PALETTE from "@/constants/palette";
-import BORDER from "@/styles/border";
+import BORDER from "@/constants/styles/border";
 import styled from "@emotion/styled";
 
 export const Dimmed = styled.div`

@@ -1,5 +1,5 @@
 import ScreenComponent from "@/components/_layouts/Screen";
-import { BOX_SHADOW } from "@/styles/boxShadow";
+import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import styled from "@emotion/styled";
 
 export const Screen = styled(ScreenComponent)`

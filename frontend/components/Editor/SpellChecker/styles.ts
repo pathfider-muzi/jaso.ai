@@ -1,7 +1,7 @@
 import ButtonComponent from "@/components/_common/Button";
 import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
 import PALETTE from "@/constants/palette";
-import BORDER from "@/styles/border";
+import BORDER from "@/constants/styles/border";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 

@@ -3,17 +3,17 @@ import React from "react";
 import AdditionalInformationContainer from "..";
 
 export default {
-  title: "AdditionalInformationContainer ",
+  title: "AdditionalInformation/AdditionalInformationContainer ",
   component: AdditionalInformationContainer,
-  argTypes: {},
+  argTypes: {}
 } as ComponentMeta<typeof AdditionalInformationContainer>;
 
-const Template: ComponentStory<typeof AdditionalInformationContainer> = (
-  args
-) => <AdditionalInformationContainer {...args} />;
+const Template: ComponentStory<typeof AdditionalInformationContainer> = args => (
+  <AdditionalInformationContainer {...args} />
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
   size: "md",
-  src: "/profile_default.png",
+  src: "/profile_default.png"
 };

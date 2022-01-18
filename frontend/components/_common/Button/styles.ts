@@ -1,7 +1,7 @@
+import BUTTON_THEME from "@/constants/styles/buttonTheme";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Size } from ".";
-import BUTTON_THEME from "@/styles/buttonTheme";
 
 const SIZE_INFO: {
   [key in Size]: ReturnType<typeof css>;
@@ -17,7 +17,7 @@ const SIZE_INFO: {
   lg: css`
     font-size: 16px;
     padding: 12px 24px;
-  `,
+  `
 } as const;
 
 export const Frame = styled.button<{

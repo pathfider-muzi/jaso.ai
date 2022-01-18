@@ -1,5 +1,5 @@
 import PALETTE from "@/constants/palette";
-import BUTTON_THEME from "@/styles/buttonTheme";
+import BUTTON_THEME from "@/constants/styles/buttonTheme";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`

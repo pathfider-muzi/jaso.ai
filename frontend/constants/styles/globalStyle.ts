@@ -9,6 +9,7 @@ const globalStyles = css`
   h4,
   h5,
   input,
+  p,
   textarea {
     padding: 0;
     margin: 0;
@@ -16,8 +17,8 @@ const globalStyles = css`
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     word-wrap: break-word;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+      Helvetica Neue, sans-serif;
   }
 
   * {

@@ -13,7 +13,7 @@ const BUTTON_THEME = {
     &:hover:enabled {
       ${BOX_SHADOW.BOLD.styles}
     }
-  `,
+  `
 } as const;
 
 export default BUTTON_THEME;

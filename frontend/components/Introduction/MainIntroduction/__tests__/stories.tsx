@@ -3,7 +3,7 @@ import React from "react";
 import MainIntroduction from "..";
 
 export default {
-  title: "MainIntroduction",
+  title: "Introduction/MainIntroduction",
   component: MainIntroduction,
   argTypes: {}
 } as ComponentMeta<typeof MainIntroduction>;

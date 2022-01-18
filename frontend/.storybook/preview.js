@@ -1,4 +1,4 @@
-import globalStyles from "@/styles/globalStyle";
+import globalStyles from "@/constants/styles/globalStyle";
 import { Global } from "@emotion/react";
 import * as nextImage from "next/image";
 import { QueryClient, QueryClientProvider } from "react-query";
