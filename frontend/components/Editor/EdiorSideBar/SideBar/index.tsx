@@ -1,6 +1,6 @@
 import VerticalStyle from "@/components/_common/VerticalStyle";
 import { TAB_CONTENT_VIEW, TAB_SIDEBAR } from "@/constants/tabSideBarStyle";
-import { RootState } from "@/modules";
+import { RootState } from "@/modules/rootReducer";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import SpellChecker from "../../SpellChecker";

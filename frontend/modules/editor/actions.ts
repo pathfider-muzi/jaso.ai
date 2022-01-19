@@ -1,8 +1,10 @@
-import { actions } from "./types";
+import ACTION_TYPES from "./actionTypes";
 
-export function setEditorContent(item: string) {
+export const setEditorContent = (text: string) => {
   return {
-    type: actions.SET_TEXT,
-    payload: item
+    type: ACTION_TYPES.SET_TEXT,
+    payload: {
+      text
+    }
   };
-}
+};
