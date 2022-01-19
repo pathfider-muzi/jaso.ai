@@ -6,7 +6,7 @@ interface Props {
   height: number;
   placeholder: string;
   defaultText?: string;
-  onChange: (number: number) => void;
+  onChange?: (number: number) => void;
 }
 
 const TextArea = ({ height, placeholder, onChange, defaultText }: Props) => {
@@ -17,7 +17,10 @@ const TextArea = ({ height, placeholder, onChange, defaultText }: Props) => {
       height={height}
       placeholder={placeholder}
       onChange={(event: any) => {
-        onChange(event.target.value.length);
+        if (onChange === undefined) {
+          return;
+        }
+        onChange!(event.target.value.length);
         dispatch(setEditorContent(event.target.value));
       }}
       value={defaultText}

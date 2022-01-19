@@ -1,12 +1,17 @@
-import { ReactNode } from "react";
 import * as S from "./styles";
 
-interface Props {
-  children: ReactNode;
+interface Tip {
+  link: string;
+  title: string;
 }
 
-const TipRecommend = ({ children }: Props) => {
-  return <S.Frame width={400}></S.Frame>;
+const TipRecommend = ({ link: tipLink, title }: Tip) => {
+  return (
+    <S.Frame height={8}>
+      <S.TipTitle>제목: {title}</S.TipTitle>
+      <S.TipHyperLink href={tipLink}>링크</S.TipHyperLink>
+    </S.Frame>
+  );
 };
 
 export default TipRecommend;

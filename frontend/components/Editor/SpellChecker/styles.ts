@@ -53,11 +53,21 @@ export const ResultArea = styled.div`
 
 export const ErrorCount = styled.span``;
 
-export const Text = styled.div`
+const Text = styled.div`
   width: 300px;
   height: 200px;
   border: 1px solid ${PALETTE.GRAY_150};
   box-shadow: 8px 5px 5px ${PALETTE.GRAY_200};
+`;
+
+export const Label = styled.label`
+  width: 150px;
+  height: 25px;
+  text-align: center;
+  box-shadow: -2px 3px 5px ${PALETTE.GRAY_200};
+  border: 1px solid ${PALETTE.GRAY_200};
+  border-radius: 7px;
+  margin-bottom: 10px;
 `;
 
 export const OriginalText = styled(Text)``;

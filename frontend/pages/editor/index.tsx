@@ -2,7 +2,7 @@ import EditorSideBar from "@/components/Editor/EdiorSideBar/SideBar";
 import PageMarks from "@/components/Editor/PageMarks";
 import HorizontalStyle from "@/components/_common/HorizontalStyle";
 import Screen from "@/components/_layouts/Screen";
-import useEditor from "@/hooks/useEditor";
+import useEditor from "@/hooks/Editor/useEditor";
 import { NextPage } from "next";
 
 const Editor: NextPage = () => {

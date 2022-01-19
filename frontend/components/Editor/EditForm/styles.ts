@@ -13,4 +13,11 @@ export const WordCountedText = styled.div`
   margin-top: 0px;
 `;
 
+export const SaveButton = styled.button`
+  margin-top: 10px;
+  width: 80px;
+  height: 20px;
+  border-radius: 3px;
+`;
+
 export default TitleContainer;

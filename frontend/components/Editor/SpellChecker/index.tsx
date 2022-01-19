@@ -42,9 +42,11 @@ const SpellChecker = ({ text, ...props }: Props) => {
         <S.SummitButton type="submit">맞춤법 검사</S.SummitButton>
       </S.SpellCheckForm>
       <S.ResultArea>
+        <S.Label>자소서 입력</S.Label>
         <S.OriginalText dangerouslySetInnerHTML={{ __html: originalHTML }} />
         <Image src="/down_arrow.png" width={20} height={30} alt="down arrow"></Image>
-        <S.FixedText dangerouslySetInnerHTML={{ __html: fixedHTML }} />
+        <S.Label>맞춤법 교정 결과</S.Label>
+        <S.FixedText placeholder="맞춤법 교정 결과" dangerouslySetInnerHTML={{ __html: fixedHTML }} />
       </S.ResultArea>
       <S.ReflectButton onClick={reflectOnEditor}>반영하기</S.ReflectButton>
       <S.ColorInfo>
