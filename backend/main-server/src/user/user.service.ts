@@ -60,10 +60,19 @@ export class UserService {
     })
   }
 
-  async createUserInfo(createUserInfoRequestDto: CreateUserInfoRequestDto, user: User): Promise<InsertResult> {
-    const { name, email, university, major, grade, languageScore, career, activity, license } = createUserInfoRequestDto;
+  getUserInfo(user: User): Promise<UserInfo> {
+    console.log(`[DB] Get UserInfo : ${user.kakaoId}`);
+    
+    return this.userInfoRepository.findOne({
+      where: {
+        user
+      }
+    });
+  }
+
+  async createUserInfo(name: string, email: string, university: string, major: string, grade: string, languageScore: string, career: string, activity: string, license: string, user: User): Promise<InsertResult> {
     console.log(`[DB] Create UserInfo : ${user.kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
-   
+
     return await this.userInfoRepository.insert({
       name,
       email,

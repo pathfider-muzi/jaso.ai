@@ -20,6 +20,14 @@ describe('UserController', () => {
         userInfos: []
       }
     }),
+    getUserInfo: jest.fn(() => {
+      return {
+        major: 'economics',
+        grade: null,
+        career: "",
+        activity: ""
+      }
+    }),
     deleteUser: jest.fn((kakaoId) => {
       return {
         id: kakaoId
@@ -85,27 +93,14 @@ describe('UserController', () => {
     expect(mockUserService.deleteUser).toHaveBeenCalled();
   })
 
-  it('shoould create a userInfo', async () => {
-    const createUserInfoRequestDto = {
-      name: 'Tom',
-      email: 'tomhanks@gmail.com',
-      university: 'NYU',
-      major: 'Movies',
-      grade: '4.0',
-      languageScore: '990',
-      career: 'Columbia Studios',
-      activity: 'Forest Gump',
-      license: 'walk of fame'
-    }
-
-    expect(await controller.createUserInfo(
-      createUserInfoRequestDto, reqJwtInfo
+  it('shoould get a userInfo', async () => {
+    expect(await controller.checkRequiredFields(
+      reqJwtInfo
     )).toEqual({
-      id: expect.any(Number),
-      ...createUserInfoRequestDto
+      hasFilledInRequiredFields: false
     })
 
-    expect(mockUserService.createUserInfo).toHaveBeenCalled();
+    expect(mockUserService.getUserInfo).toHaveBeenCalled();
   })
 
   it('should update a userInfo', async () => {

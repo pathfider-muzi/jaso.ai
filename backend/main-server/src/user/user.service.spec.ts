@@ -72,6 +72,14 @@ describe('UserService', () => {
           params
         })
       )
+    }),
+    findOne: jest.fn((params) => {
+      return (
+        Promise.resolve({
+          id: Date.now(),
+          params
+        })
+      )
     })
   };
 
@@ -156,18 +164,7 @@ describe('UserService', () => {
     expect(mockUserRepository.delete).toHaveBeenCalled();
   });
 
-  it('should create a userInfo', async () => {
-    const createUserInfoRequestDto = {
-      name: 'Tom',
-      email: 'tomhanks@gmail.com',
-      university: 'NYU',
-      major: 'Movies',
-      grade: '4.0',
-      languageScore: '990',
-      career: 'Columbia Studios',
-      activity: 'Forest Gump',
-      license: 'walk of fame'
-    };
+  it('should get a userInfo', async () => {
     const user = {
       id: 1,
       kakaoId,
@@ -178,16 +175,17 @@ describe('UserService', () => {
       selfIntroductions: []
     };
 
-    expect(await service.createUserInfo(createUserInfoRequestDto, user))
+    expect(await service.getUserInfo(user))
       .toEqual({
         id: expect.any(Number),
         params: {
-          ...createUserInfoRequestDto,
-          user
+          where: {
+            user
+          }
         }
       });
 
-    expect(mockUserInfoRepository.insert).toHaveBeenCalled();
+    expect(mockUserInfoRepository.findOne).toHaveBeenCalled();
   });
 
   it('should update a userInfo', async () => {

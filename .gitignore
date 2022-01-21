@@ -395,8 +395,14 @@ Temporary Items
 =======
 # Local
 .env
+.env copy
 dist
 /.history
 
 # DB
 ormconfig.json
+ormconfig copy.json
+
+# crawling data
+crawling_json_files.zip
+crawling_json_files/

@@ -6,31 +6,49 @@ export class UserInfo {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     name: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     email: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     university: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     major: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     grade: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     languageScore: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     career: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     activity: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     license: string;
 
     @ManyToOne(() => User, user => user.userInfos, {

@@ -28,24 +28,6 @@ export class UserController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Post('user-info')
-    async createUserInfo(@Body() createUserInfoRequestDto: CreateUserInfoRequestDto, @Request() req) {
-        const kakaoId = req.user.kakaoId;
-        const { name, email, university, major, grade, languageScore, career, activity, license } = createUserInfoRequestDto;
-        console.log(`[API] POST /user/user-info : ${kakaoId} ${name}, ${email}, ${university}, ${major}, ${grade}, ${languageScore}, ${career}, ${activity}, ${license}`);
-        const user = await this.userService.getUser(kakaoId);
-        if (!user) {
-            throw new NotFoundException();
-        }
-        // constraint to avoid multiple userInfo
-        if (user.userInfos.length > 0) {
-            return user.userInfos;
-        }
-
-        return await this.userService.createUserInfo(createUserInfoRequestDto, user);
-    }
-
-    @UseGuards(JwtAuthGuard)
     @Patch('user-info')
     async updateUserInfo(@Body() updateUserInfoRequestDto: UpdateUserInfoRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
@@ -67,5 +49,23 @@ export class UserController {
         console.log(`[API] POST /user/terms : ${kakaoId} ${agreeToTerms}`);
 
         return await this.userService.agreeToTerms(agreeToTermsRequestDto, kakaoId);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('user-info/requirements')
+    async checkRequiredFields(@Request() req) {
+        const kakaoId = req.user.kakaoId;
+        console.log(`[API] GET /user/user-info/requirements : ${kakaoId}`);
+        const user = await this.userService.getUser(kakaoId);
+        if(!user) {
+            throw new NotFoundException();
+        }
+
+        const userInfo = await this.userService.getUserInfo(user);
+        if (userInfo.major === null || userInfo.grade === null || userInfo.career === null || userInfo.activity === null) {
+            return { hasFilledInRequiredFields: false };
+        } else {
+            return { hasFilledInRequiredFields: true };
+        }
     }
 }
