@@ -1,5 +1,5 @@
 import { Controller, Get, UseGuards, Request, Post, Body, Patch, Delete, NotFoundException } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AgreeToTermsRequestDto } from './dto/agreeToTermsRequestDto';
 import { CreateUserInfoRequestDto } from './dto/createUserInfoRequestDto';
 import { UpdateUserInfoRequestDto } from './dto/updateUserInfoRequestDto';

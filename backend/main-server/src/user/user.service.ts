@@ -17,7 +17,7 @@ export class UserService {
     private userInfoRepository: Repository<UserInfo>
   ) {}
 
-  getUser(kakaoId: string): Promise<User> {
+  getUser(kakaoId: number): Promise<User> {
     console.log(`[DB] Get User : ${kakaoId}`);
 
     return this.userRepository.findOne({

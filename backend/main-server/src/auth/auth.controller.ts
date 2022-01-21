@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Body, Controller, Get, HttpException, Post, Request, UseGuards } from '@nestjs/common';
 import { catchError, lastValueFrom } from 'rxjs';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { GetAccessTokenRequestDto } from './dto/getAccessTokenRequestDto';
 import { JwtAuthGuard } from './jwt-auth.guard';

@@ -1,10 +1,10 @@
 import { Controller, Get, UseGuards, Request, Body, Post, Patch, Delete, NotFoundException } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { UserService } from 'src/user/user.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { UserService } from '../user/user.service';
 import { CreateSelfIntroductionRequestDto } from './dto/createSelfIntroductionRequestDto';
-import { deleteSelfIntroductionRequestDto } from './dto/deleteSelfIntroductionRequestDto';
+import { DeleteSelfIntroductionRequestDto } from './dto/deleteSelfIntroductionRequestDto';
 import { GetSelfIntroductionRequestDto } from './dto/getSelfIntroductionRequestDto';
-import { updateSelfIntroductionRequestDto } from './dto/updateSelfIntroductionRequestDto';
+import { UpdateSelfIntroductionRequestDto } from './dto/updateSelfIntroductionRequestDto';
 import { SelfIntroductionService } from './selfIntroduction.service';
 
 @Controller()
@@ -62,7 +62,7 @@ export class SelfIntroductionController {
 
     @UseGuards(JwtAuthGuard)
     @Patch('self-introduction')
-    async updateSelfIntroduction(@Body() updateSelfIntroductionRequestDto: updateSelfIntroductionRequestDto, @Request() req) {
+    async updateSelfIntroduction(@Body() updateSelfIntroductionRequestDto: UpdateSelfIntroductionRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
         const { id, title, organisationName, role } = updateSelfIntroductionRequestDto;
         console.log(`[API] PATCH /self-introduction : ${kakaoId} ${id} ${title} ${organisationName} ${role}`);
@@ -76,7 +76,7 @@ export class SelfIntroductionController {
 
     @UseGuards(JwtAuthGuard)
     @Delete('self-introduction')
-    async deleteSelfIntroduction(@Body() deleteSelfIntroductionRequestDto: deleteSelfIntroductionRequestDto, @Request() req) {
+    async deleteSelfIntroduction(@Body() deleteSelfIntroductionRequestDto: DeleteSelfIntroductionRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
         const { id } = deleteSelfIntroductionRequestDto;
         console.log(`[API] DELETE /self-introduction : ${kakaoId} ${id}`);

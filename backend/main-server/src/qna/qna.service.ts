@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SelfIntroduction } from 'src/selfIntroduction/entity/selfIntroduction.entity';
-import { User } from 'src/user/entity/user.entity';
+import { SelfIntroduction } from '../selfIntroduction/entity/selfIntroduction.entity';
+import { User } from '../user/entity/user.entity';
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm';
 import { Qna } from './entity/qna.entity';
 

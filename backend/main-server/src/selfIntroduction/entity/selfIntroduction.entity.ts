@@ -1,5 +1,5 @@
-import { Qna } from "src/qna/entity/qna.entity";
-import { User } from "src/user/entity/user.entity";
+import { Qna } from "../../qna/entity/qna.entity";
+import { User } from "../../user/entity/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()

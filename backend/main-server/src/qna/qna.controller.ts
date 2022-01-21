@@ -1,10 +1,9 @@
 import { Body, Controller, Get, UseGuards, Request, NotFoundException, Post, Patch, Delete } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { SelfIntroductionService } from 'src/selfIntroduction/selfIntroduction.service';
-import { UserService } from 'src/user/user.service';
-import { UpdateDateColumn } from 'typeorm';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { SelfIntroductionService } from '../selfIntroduction/selfIntroduction.service';
+import { UserService } from '../user/user.service';
 import { CreateQnaRequestDto } from './dto/createQnaRequestDto';
-import { CreateQnasRequestDto } from './dto/createQnasRequestDto';
+import { GetQnasRequestDto } from './dto/getQnasRequestDto';
 import { DeleteQnaRequestDto } from './dto/deleteQnaRequestDto';
 import { GetQnaRequestDto } from './dto/getQnaRequestDto';
 import { UpdateQnaRequestDto } from './dto/updateQnaRequestDto';
@@ -45,9 +44,9 @@ export class QnaController {
 
     @UseGuards(JwtAuthGuard)
     @Get('qnas')
-    async getQnas(@Body() createQnasRequestDto: CreateQnasRequestDto, @Request() req) {
+    async getQnas(@Body() getQnasRequestDto: GetQnasRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { selfIntroductionId } = createQnasRequestDto;
+        const { selfIntroductionId } = getQnasRequestDto;
         console.log(`[API] POST /qna : ${kakaoId} ${selfIntroductionId}`);
     
         const user = await this.userService.getUser(kakaoId);

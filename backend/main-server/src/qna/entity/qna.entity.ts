@@ -1,4 +1,4 @@
-import { SelfIntroduction } from "src/selfIntroduction/entity/selfIntroduction.entity";
+import { SelfIntroduction } from "../../selfIntroduction/entity/selfIntroduction.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()

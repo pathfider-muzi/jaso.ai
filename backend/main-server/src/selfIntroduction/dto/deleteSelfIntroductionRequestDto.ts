@@ -1,3 +1,3 @@
-export class deleteSelfIntroductionRequestDto {
+export class DeleteSelfIntroductionRequestDto {
     id: number;
 }
