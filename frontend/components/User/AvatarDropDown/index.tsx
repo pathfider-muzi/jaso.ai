@@ -1,5 +1,9 @@
 import Avatar from "@/components/_common/Avatar";
 import { Option as DropDownOptionType } from "@/components/_common/DropDownOption";
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
+import ROUTE from "@/constants/routes";
+import { removeLocalStorage } from "@/utils/localStorage";
+import { useRouter } from "next/router";
 import * as S from "./styles";
 
 interface Props {
@@ -8,20 +12,27 @@ interface Props {
   profileImage: string;
 }
 
-const AvatarDropDown = ({ isOpen, profileImage, onToggle }: Props) => {
+const AvatarDropDown = ({ isOpen, profileImage, onToggle, ...props }: Props) => {
+  const router = useRouter();
   const options: DropDownOptionType[] = [
     {
       label: "내 정보",
-      onClick: () => alert("내 정보 클릭"),
+      onClick: () => {
+        router.push(ROUTE.USER_PROFILE);
+      }
     },
     {
       label: "로그아웃",
-      onClick: () => alert("로그아웃 클릭"),
-    },
+      onClick: () => {
+        removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+
+        router.push(ROUTE.HOME);
+      }
+    }
   ];
 
   return (
-    <S.Frame>
+    <S.Frame {...props}>
       <S.AvatarWrapper type="button" onClick={onToggle}>
         <Avatar src={profileImage} alt="avatar image" size="sm" />
       </S.AvatarWrapper>

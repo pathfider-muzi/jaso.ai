@@ -1,7 +1,7 @@
-import TAB, { TAB_SIDEBAR } from "@/constants/tabSideBarStyle";
 import HorizontalStyle from "@/components/_common/HorizontalStyle";
-import Tab from "../Tab";
+import TAB, { TAB_SIDEBAR } from "@/constants/styles/tabSideBarStyle";
 import { useState } from "react";
+import Tab from "../Tab";
 
 interface Props {
   changeTabContent: (index: number) => void;

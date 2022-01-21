@@ -1,5 +1,5 @@
 import PALETTE from "@/constants/styles/palette";
-import TAB from "@/constants/tabSideBarStyle";
+import TAB from "@/constants/styles/tabSideBarStyle";
 import styled from "@emotion/styled";
 
 export const Frame = styled.button<{
@@ -7,7 +7,6 @@ export const Frame = styled.button<{
 }>`
   ${({ isClicked }) => {
     if (isClicked) {
-      console.log(isClicked + " styles in tab ui");
       return {
         color: PALETTE.WHITE
       };

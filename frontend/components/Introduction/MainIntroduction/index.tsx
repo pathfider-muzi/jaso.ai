@@ -1,12 +1,24 @@
 import LoginModal from "@/components/Auth/LoginModal";
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
+import ROUTE from "@/constants/routes";
 import useModal from "@/hooks/useModal";
+import useUser from "@/hooks/useUser";
+import { removeLocalStorage } from "@/utils/localStorage";
+import { useRouter } from "next/router";
 import * as S from "./styles";
 
 const MainIntroduction = ({ ...props }) => {
   const { isModalOpen, openModal, closeModal } = useModal({});
+  const { user } = useUser({});
+  const router = useRouter();
 
   const onClickGetStartButton = () => {
-    openModal();
+    if (user?.agreeToTerms) {
+      router.push(ROUTE.EDITOR);
+    } else {
+      removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+      openModal();
+    }
   };
 
   return (

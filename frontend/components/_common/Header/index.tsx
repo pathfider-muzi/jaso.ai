@@ -1,27 +1,20 @@
 import LoginModal from "@/components/Auth/LoginModal";
-import AvatarDropDown from "@/components/User/AvatarDropDown";
 import BRAND_NAME from "@/constants/brandName";
 import ROUTE from "@/constants/routes";
 import useModal from "@/hooks/useModal";
+import useUser from "@/hooks/useUser";
 import Link from "next/link";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";
 
-interface Props {
-  user?: boolean;
-}
+interface Props {}
 
-const Header = ({ user, ...props }: Props) => {
-  const {
-    isModalOpen: isLoginModalOpen,
-    openModal: openLoginModal,
-    closeModal: closeLoginModal,
-  } = useModal({});
-  const {
-    isModalOpen: isAvatarDropDownOpen,
-    toggleModal: toggleAvatarDropdown,
-  } = useModal({});
+const Header = ({ ...props }: Props) => {
+  const { user } = useUser({});
+
+  const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal({});
+  const { isModalOpen: isAvatarDropDownOpen, toggleModal: toggleAvatarDropdown } = useModal({});
 
   const onClickLoginButton = () => {
     openLoginModal();
@@ -37,10 +30,10 @@ const Header = ({ user, ...props }: Props) => {
           </S.BrandInfoWrapper>
         </Link>
         <div>
-          {user ? (
-            <AvatarDropDown
+          {!!user?.agreeToTerms ? (
+            <S.AvatarDropDown
               isOpen={isAvatarDropDownOpen}
-              profileImage={"/profile_default.png"}
+              profileImage={user.profileImage}
               onToggle={toggleAvatarDropdown}
             />
           ) : (

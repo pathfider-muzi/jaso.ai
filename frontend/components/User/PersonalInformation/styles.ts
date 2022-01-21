@@ -25,8 +25,3 @@ export const Email = styled.span`
   margin-top: 0.5rem;
   color: ${PALETTE.GRAY_500};
 `;
-
-export const PhoneNumber = styled.span`
-  margin-top: 0.3rem;
-  color: ${PALETTE.GRAY_500};
-`;

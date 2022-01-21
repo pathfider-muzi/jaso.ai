@@ -11,10 +11,6 @@ interface Props {
 const Tab = ({ children, onClick, activeTabValue, curNumber }: Props) => {
   const [activeTab, setActiveTab] = useState(activeTabValue);
 
-  console.log(activeTab);
-  console.log(curNumber);
-  console.log(activeTab === curNumber);
-
   useEffect(() => {
     setActiveTab(activeTabValue);
   }, [activeTabValue]);

@@ -1,9 +1,9 @@
 import Home from "@/components/_templates/Home";
+import useUser from "@/hooks/useUser";
 import type { NextPage } from "next";
 
 const HomePage: NextPage = () => {
-  console.log(process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
-  console.log(process.env.NODE_ENV);
+  useUser({ enabled: true });
 
   return <Home />;
 };

@@ -1,16 +1,30 @@
 import TosCheckBox from "@/components/Auth/TosCheckBox";
 import TosContent from "@/components/Auth/TosContent";
+import OAUTH_END_POINT from "@/components/_common/LoginButton/constants/oauthEndPoiint";
 import KakaoLoginButton from "@/components/_common/LoginButton/KakaoLoginButton";
 import TOS_CONTENT from "@/components/_templates/SignUp/constants/TosContent";
-import { useState } from "react";
+import { setLocalStorage } from "@/utils/localStorage";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import * as S from "./styles";
 
 const SignUp = () => {
+  const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
 
   const onToggle = () => {
     setIsChecked(state => !state);
   };
+
+  const onClickKakaoLoginButton = async () => {
+    if (isChecked) {
+      router.push(OAUTH_END_POINT.KAKAO);
+    }
+  };
+
+  useEffect(() => {
+    setLocalStorage("tos", isChecked);
+  }, [isChecked]);
 
   return (
     <S.Screen title="회원가입" description="회원가입 페이지">
@@ -23,7 +37,7 @@ const SignUp = () => {
           </S.InputsWrapper>
 
           <S.ButtonsWrapper>
-            <KakaoLoginButton disabled={!isChecked} />
+            <KakaoLoginButton disabled={!isChecked} onClick={onClickKakaoLoginButton} />
           </S.ButtonsWrapper>
         </S.Body>
       </S.Frame>

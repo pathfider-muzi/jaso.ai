@@ -15,6 +15,9 @@ module.exports = {
       }
     ];
   },
+  images: {
+    domains: ["k.kakaocdn.net"]
+  },
   webpack: config => {
     config.resolve.alias["@"] = path.join(__dirname, "src");
 

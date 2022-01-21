@@ -5,4 +5,4 @@ const UserProfilePage: NextPage = () => {
   return <UserProfile />;
 };
 
-export default UserProfile;
+export default UserProfilePage;
