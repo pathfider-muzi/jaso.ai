@@ -3,6 +3,7 @@ import React from "react";
 import TipRecommend from "..";
 
 export default {
+  title: "Editor/TipRecommend",
   component: TipRecommend,
   argTypes: {}
 } as ComponentMeta<typeof TipRecommend>;

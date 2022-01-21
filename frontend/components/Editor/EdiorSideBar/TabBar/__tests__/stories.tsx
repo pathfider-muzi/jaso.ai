@@ -3,10 +3,11 @@ import React from "react";
 import TabBar from "..";
 
 export default {
+  title: "Editor/EditorSideBar/TabBar",
   component: TabBar,
-  argTypes: {},
+  argTypes: {}
 } as ComponentMeta<typeof TabBar>;
-const Template: ComponentStory<typeof TabBar> = (args) => <TabBar {...args} />;
+const Template: ComponentStory<typeof TabBar> = args => <TabBar {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

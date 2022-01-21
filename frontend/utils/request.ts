@@ -1,10 +1,10 @@
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
-import { bearerAxios } from "./bearerAxios";
+import customAxios from "./customAxios";
 import { getLocalStorage } from "./localStorage";
 
 const request = {
   get: async (query: string, headers?: { [key in string]: string }) => {
-    return await bearerAxios.get(query, {
+    return await customAxios.get(query, {
       headers: {
         Authorization: `Bearer ${getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
         ...headers
@@ -14,7 +14,7 @@ const request = {
   },
 
   post: async <T>(query: string, data: T, headers?: { [key in string]: string }) => {
-    return await bearerAxios.post(query, data, {
+    return await customAxios.post(query, data, {
       headers: {
         Authorization: `Bearer ${getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
         ...headers
@@ -24,7 +24,7 @@ const request = {
   },
 
   patch: async <T>(query: string, data: T, headers?: { [key in string]: string }) => {
-    return await bearerAxios.patch(query, data, {
+    return await customAxios.patch(query, data, {
       headers: {
         Authorization: `Bearer ${getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
         ...headers
@@ -34,7 +34,7 @@ const request = {
   },
 
   delete: async (query: string, headers?: { [key in string]: string }) => {
-    return await bearerAxios.delete(query, {
+    return await customAxios.delete(query, {
       headers: {
         Authorization: `Bearer ${getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)}`,
         ...headers

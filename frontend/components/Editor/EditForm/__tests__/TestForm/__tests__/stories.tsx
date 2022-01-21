@@ -1,14 +1,14 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import Tab from "..";
+import TestForm from "..";
 
 export default {
-  title: "Editor/EditorSideBar/Tab",
-  component: Tab,
+  title: "Editor/TestForm",
+  component: TestForm,
   argTypes: {}
-} as ComponentMeta<typeof Tab>;
+} as ComponentMeta<typeof TestForm>;
 
-const Template: ComponentStory<typeof Tab> = args => <Tab {...args} />;
+const Template: ComponentStory<typeof TestForm> = args => <TestForm />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

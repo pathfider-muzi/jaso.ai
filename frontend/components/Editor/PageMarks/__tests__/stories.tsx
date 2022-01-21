@@ -3,7 +3,7 @@ import React from "react";
 import PageMarks from "..";
 
 export default {
-  title: "PageMarks",
+  title: "Editor/PageMarks",
   component: PageMarks,
   argTypes: {
     size: {

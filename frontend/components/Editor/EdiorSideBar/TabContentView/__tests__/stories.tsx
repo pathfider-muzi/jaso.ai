@@ -2,8 +2,9 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import TabContentView from "..";
 
 export default {
+  title: "Editor/EditorSideBar/TabContentView",
   component: TabContentView,
-  argTypes: {},
+  argTypes: {}
 } as ComponentMeta<typeof TabContentView>;
 const Template: ComponentStory<typeof TabContentView> = () => (
   <TabContentView width={600} height={800}>

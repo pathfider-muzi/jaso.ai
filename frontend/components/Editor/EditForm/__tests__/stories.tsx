@@ -1,16 +1,14 @@
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
 import EditForm from "..";
 
 export default {
-  title: "EditForm",
+  title: "Editor/EditForm",
   component: EditForm,
-  argTypes: {},
+  argTypes: {}
 } as ComponentMeta<typeof EditForm>;
 
-const Template: ComponentStory<typeof EditForm> = (args) => (
-  <EditForm {...args} />
-);
+const Template: ComponentStory<typeof EditForm> = args => <EditForm {...args} />;
 
 export const Primary = Template.bind({});
 

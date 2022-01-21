@@ -1,13 +1,8 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useQueries } from "react-query";
 import getSpellCheckResult from "../api/getSpellCheckResult";
 import NAVER_SPELL_CHECK_RESULT_INFO from "../constants/naverSpellCheckResultInfo";
-
-interface Props {
-  text: string;
-}
-
-const SPLITTER = " ";
+import useCreateSpellingResultComponentsInfo from "./useCreateSpellingResultComponentsInfo";
 
 const getErrorInfo = (fixedHTML: string) => {
   const errorTextInfo = Object.keys(NAVER_SPELL_CHECK_RESULT_INFO).find(className => {
@@ -17,12 +12,22 @@ const getErrorInfo = (fixedHTML: string) => {
   return NAVER_SPELL_CHECK_RESULT_INFO[errorTextInfo];
 };
 
-const refineText = (str: string) => {
-  return str.trim().replaceAll("\n", " ").replaceAll("<br>", " ");
-};
+export interface SpellingCorrecterData {
+  positionIndex: number;
+  fixedText: string;
+  originalHTML: string;
+  errorInfo?: ReturnType<typeof getErrorInfo>;
+  isCorrect: boolean;
+}
+
+interface Props {
+  text: string;
+}
 
 const useSpellingCorrecter = ({ text }: Props) => {
-  const words = text.split(SPLITTER).map(refineText);
+  const words = text.split(" ");
+  const [data, setData] = useState<SpellingCorrecterData[]>([]);
+  const [isTurnOnSpellCheck, setIsTurnOnSpellCheck] = useState(true);
 
   const results = useQueries(
     words.map(word => {
@@ -38,39 +43,70 @@ const useSpellingCorrecter = ({ text }: Props) => {
     })
   );
 
-  const { isLoadingAll, isFetchedAll } = useMemo(() => {
-    return {
-      isLoadingAll: results.every(result => result.isLoading),
-      isFetchedAll: results.every(result => result.isFetched)
-    };
-  }, [results]);
-
-  const data = useMemo(() => {
-    if (!isFetchedAll) return;
-
-    return results.map((result, index) => {
-      const fixedText = result.data?.message.result.notag_html || "";
-
-      return {
-        positionIndex: index,
-        fixedText,
-        errorInfo: getErrorInfo(result.data?.message.result.html || ""),
-        isCorrect: fixedText === words[index]
-      };
-    });
-  }, [isFetchedAll, results, words]);
-
-  const errorData = useMemo(() => {
-    return data?.filter(_data => !_data.isCorrect);
-  }, [data]);
+  const isLoadingAll = results.every(result => result.isLoading);
+  const isFetchedAll = results.every(result => result.isFetched);
+  const errorData = data?.filter(_data => !_data.isCorrect) || [];
 
   const getSpellInfo = () => {
-    results.map(result => result.refetch());
+    Promise.allSettled(results.map(result => result.refetch()));
+    setIsTurnOnSpellCheck(true);
   };
 
+  const { refs: spellingResultsRefs, components: SpellingResultComponents } = useCreateSpellingResultComponentsInfo({
+    spellingCorrecterResults: data,
+    originalWords: words
+  });
+
+  useEffect(() => {
+    setIsTurnOnSpellCheck(false);
+  }, [text]);
+
+  useEffect(() => {
+    if (isTurnOnSpellCheck) {
+      if (isLoadingAll) return;
+
+      const newData: SpellingCorrecterData[] = results.map((result, index) => {
+        const fixedText = result.data?.message.result.notag_html.replaceAll("<br>", "\n") || "";
+        const originalHTML = result.data?.message.result.origin_html.replaceAll("<br>", "\n") || "";
+        const isCorrect = result.data?.message.result.errata_count === 0;
+
+        return {
+          positionIndex: index,
+          fixedText,
+          originalHTML,
+          errorInfo: result.data ? getErrorInfo(result.data.message.result.html) : undefined,
+          isCorrect
+        };
+      });
+
+      setData(newData);
+    } else {
+      if (isLoadingAll) return;
+
+      const newData: SpellingCorrecterData[] = words.map((word, index) => {
+        return {
+          positionIndex: index,
+          fixedText: word,
+          originalHTML: word,
+          errorInfo: undefined,
+          isCorrect: true
+        };
+      });
+
+      setData(newData);
+    }
+  }, [
+    text,
+    isTurnOnSpellCheck,
+    isLoadingAll,
+    JSON.stringify(results.map(result => result.data?.message.result.origin_html))
+  ]);
+
   return {
-    errorCount: errorData?.length,
+    errorCount: errorData?.length || 0,
     data,
+    children: SpellingResultComponents,
+    spellingResultsRefs,
     errorData,
     originalData: words,
     getSpellInfo,

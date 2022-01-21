@@ -4,7 +4,7 @@ import SpellingCorrectResult from "..";
 import { JASO_TEXT_1 } from "./__fixtures__/jasoText";
 
 export default {
-  title: "SpellingCorrectResult",
+  title: "Editor/SpellingCorrectResult",
   component: SpellingCorrectResult,
   argTypes: {
     text: {
