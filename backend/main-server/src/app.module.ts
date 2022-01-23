@@ -6,6 +6,7 @@ import { Connection } from 'typeorm';
 import { UserModule } from './user/user.module';
 import { SelfIntroductionModule } from './selfIntroduction/selfIntroduction.module';
 import { QnaModule } from './qna/qna.module';
+import { RecommendationModule } from './recommendation/recommendation.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { QnaModule } from './qna/qna.module';
     AuthModule,
     UserModule,
     SelfIntroductionModule,
-    QnaModule
+    QnaModule,
+    RecommendationModule
   ],
   controllers: [],
   providers: [],
