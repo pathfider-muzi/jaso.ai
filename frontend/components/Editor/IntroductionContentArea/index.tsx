@@ -1,6 +1,6 @@
-import { setEditorContent } from "@/modules/editor/actions";
+import { TextAreaStyle } from "@/constants/styles/textArea";
+import { setEditorContent } from "@/modules/spellCheck/actions";
 import { useDispatch } from "react-redux";
-import * as S from "./styles";
 
 interface Props {
   height: number;
@@ -9,11 +9,11 @@ interface Props {
   onChange?: (number: number) => void;
 }
 
-const TextArea = ({ height, placeholder, onChange, defaultText }: Props) => {
+const TextContentArea = ({ height, placeholder, onChange, defaultText }: Props) => {
   const dispatch = useDispatch();
 
   return (
-    <S.Frame
+    <TextAreaStyle
       height={height}
       placeholder={placeholder}
       onChange={(event: any) => {
@@ -24,8 +24,8 @@ const TextArea = ({ height, placeholder, onChange, defaultText }: Props) => {
         dispatch(setEditorContent(event.target.value));
       }}
       value={defaultText}
-    ></S.Frame>
+    ></TextAreaStyle>
   );
 };
 
-export default TextArea;
+export default TextContentArea;

@@ -3,25 +3,28 @@ import { AnyAction } from "redux";
 import * as actions from "./actions";
 import ACTION_TYPES from "./actionTypes";
 
-export interface EditorState {
+export interface SpellCheckState {
   text: string;
 }
-export type EditorActions =
+export type SpellCheckActions =
   | ReturnType<typeof actions[keyof typeof actions]>
   | {
       type: typeof HYDRATE;
-      payload: EditorState;
+      payload: SpellCheckState;
     };
 
-const initialState: EditorState = {
+const initialState: SpellCheckState = {
   text: ""
 };
 
-export default function editorReducer(state = initialState, action: EditorActions | AnyAction): EditorState {
+export default function introductionSpellCheckReducer(
+  state = initialState,
+  action: SpellCheckActions | AnyAction
+): SpellCheckState {
   switch (action.type) {
     case HYDRATE:
       return { ...state, ...action.payload };
-    case ACTION_TYPES.SET_TEXT:
+    case ACTION_TYPES.SET_INTRODUCTION_CONTENT:
       return {
         text: action.payload.text
       };

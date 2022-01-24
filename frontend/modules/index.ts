@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import editorReducer from "./editor/reducer";
+import introductionRecommendReducer from "./introductionRecommend/reducer";
+import introductionSpellCheckReducer from "./spellCheck/reducer";
 
 const rootReducer = combineReducers({
-  editorReducer
+  introductionSpellCheckReducer: introductionSpellCheckReducer,
+  introductionRecommendReducer: introductionRecommendReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

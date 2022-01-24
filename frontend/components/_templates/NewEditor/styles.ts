@@ -1,3 +1,4 @@
+import EditorSideBar from "@/components/Editor/EdiorSideBar/SideBar";
 import EditorFormComponent from "@/components/NewEditor/EditorForm";
 import EditorSidebarComponent from "@/components/NewEditor/EditorSidebar";
 import ScreenComponent from "@/components/_layouts/Screen";
@@ -27,7 +28,7 @@ export const EditorForm = styled(EditorFormComponent)`
   }
 `;
 
-export const EditorSidebar = styled(EditorSidebarComponent)`
+export const EditorSidebar = styled(EditorSideBar)`
   height: 46rem;
   ${BORDER.GRAY_150};
   ${BOX_SHADOW.DEFAULT}

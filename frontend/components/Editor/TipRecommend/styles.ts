@@ -9,8 +9,11 @@ export const TipTitle = styled.div`
   font-size: 13px;
   margin-right: 8px;
   width: 150px;
-  border: 1px solid black;
-  text-align: center;
+  border: 1px solid ${PALETTE.GRAY_200};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.09);
 `;
 
 export const TipHyperLink = styled.a`
@@ -18,7 +21,9 @@ export const TipHyperLink = styled.a`
   border-radius: 5px;
   height: 30px;
   border: 1px solid ${PALETTE.GRAY_400};
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.08);
 
   &:hover {

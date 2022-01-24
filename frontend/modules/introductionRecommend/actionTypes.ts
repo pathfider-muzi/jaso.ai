@@ -1,0 +1,5 @@
+const ACTION_TYPES = {
+  SET_INTRODUCTION_TITLE: "SET_INTRODUCTION_TITLE"
+} as const;
+
+export default ACTION_TYPES;

@@ -1,7 +1,7 @@
-import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
+import PALETTE from "./palette";
 
-export const Frame = styled.textarea<{
+export const TextAreaStyle = styled.textarea<{
   height: number;
 }>`
   ${({ height }) => {

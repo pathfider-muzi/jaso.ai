@@ -8,7 +8,7 @@ const EditorSidebar = ({ ...props }) => {
   const [selectedTab, setSelectedTab] = useState(3);
   const { input, onChangeInput, textAreaRef } = useTextArea(`안녕하세요. 외안되
   
-  
+
   아버지가방에들어가신다`);
 
   const { getSpellInfo, children, originalData, isFetchedAll, errorData, spellingResultsRefs, data } =
