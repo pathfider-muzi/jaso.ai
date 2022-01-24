@@ -1,31 +1,31 @@
 #coding=utf-8
 
-import io
-import os
-import json
 import pickle
 import faiss
-import argparse
 import numpy as np    
 
-from tqdm import tqdm
 from glob import glob
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 
 from transformers import ElectraModel, ElectraTokenizer
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from datetime import datetime
 
 device = 'cuda'
 checkpoint_dir = 'models/experiment/model_batch_16_lr_1e-05_norm_false/checkpoints+'
 feature_path = 'models/experiment/model_batch_16_lr_1e-05_norm_false/data_features.pkl'
 pretrained_model_path = 'models'
 max_length = 512
+pattern = ['달', '번', '회']
+tagging_special = ['-', 'x', 'X', '무', '있음', '다수', '0', '없음', '무...', '.', '성', 'ㄴ', 'H', '중', '토익: ',
+					'토익스피킹: ', '오픽: ', '기타: ', '사회생활 경험: ', '사회생활 경험: .', '2', '7', 'K', '오픽', '해외']
+for i in range(1, 11):
+	for p in pattern:
+		index_p = str(i) + p
+		tagging_special.append(index_p)
 
 class ELECTRAEncoder(torch.nn.Module):
 	def __init__(self, pretrained_model_path, ckpt_dir=None, norm=True):
@@ -106,8 +106,13 @@ def recommendation(data, num):
 		near_title = doc['title']
 		near_spec = doc['spec']
 		near_body = doc['body']
-		tags = near_title.split(' / ')
-		tags.extend(near_spec.split(' / '))
+		raw_tag_title = near_title.replace(',', ' / ').replace('\n', ' / ').replace('\r', ' / ')
+		raw_tag_spec = near_spec.replace(',', ' / ').replace('\n', ' / ').replace('\r', ' / ')
+		tags = raw_tag_title.split(' / ')
+		tags.extend(raw_tag_spec.split(' / '))
+		for t in tags[:]:
+			if len(t) == 0 or t in tagging_special:
+				tags.remove(t)
 
 		if len(near_spec)==0 or len(near_body)==0:
 			continue
