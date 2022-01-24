@@ -1,11 +1,8 @@
-import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
 import PALETTE from "@/constants/styles/palette";
-import { css, SerializedStyles } from "@emotion/react";
+import { css } from "@emotion/react";
 
-const SERVICE_KEYWORD_THEME: {
-  [key in typeof SERVICE_KEYWORD[number]]: SerializedStyles;
-} = {
-  Write: css`
+const SERVICE_KEYWORD_THEME = [
+  css`
     background-image: linear-gradient(90deg, ${PALETTE.BLUE}, ${PALETTE.MINT});
 
     @keyframes first-flick {
@@ -38,7 +35,7 @@ const SERVICE_KEYWORD_THEME: {
       }
     }
   `,
-  "Be Recommended": css`
+  css`
     background-image: linear-gradient(90deg, ${PALETTE.VIOLET}, ${PALETTE.HOT_PINK});
 
     @keyframes second-flick {
@@ -71,7 +68,7 @@ const SERVICE_KEYWORD_THEME: {
       }
     }
   `,
-  Complete: css`
+  css`
     background-image: linear-gradient(90deg, ${PALETTE.PINK}, ${PALETTE.YELLOW});
 
     @keyframes third-flick {
@@ -104,6 +101,6 @@ const SERVICE_KEYWORD_THEME: {
       }
     }
   `
-} as const;
+] as const;
 
 export default SERVICE_KEYWORD_THEME;

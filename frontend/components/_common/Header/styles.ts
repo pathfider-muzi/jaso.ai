@@ -27,6 +27,25 @@ export const BrandName = styled.h1`
   vertical-align: top;
 `;
 
+export const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+`;
+
+export const NavButton = styled.button`
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 1rem;
+  height: 100%;
+  line-height: 1rem;
+`;
+
+export const AuthInfoWrapper = styled.div``;
+
 export const AvatarDropDown = styled(AvatarDropDownComponent)`
   margin-right: 2rem;
 `;

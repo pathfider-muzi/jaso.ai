@@ -1,29 +1,25 @@
 import TosCheckBox from "@/components/Auth/TosCheckBox";
 import TosContent from "@/components/Auth/TosContent";
-import OAUTH_END_POINT from "@/components/_common/LoginButton/constants/oauthEndPoiint";
 import KakaoLoginButton from "@/components/_common/LoginButton/KakaoLoginButton";
 import TOS_CONTENT from "@/components/_templates/SignUp/constants/TosContent";
-import { setLocalStorage } from "@/utils/localStorage";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
+import { removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import * as S from "./styles";
 
 const SignUp = () => {
-  const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
 
-  const onToggle = () => {
+  const onChangeCheckBox: ChangeEventHandler<HTMLInputElement> = () => {
     setIsChecked(state => !state);
   };
 
-  const onClickKakaoLoginButton = async () => {
-    if (isChecked) {
-      router.push(OAUTH_END_POINT.KAKAO);
-    }
-  };
-
   useEffect(() => {
-    setLocalStorage("tos", isChecked);
+    if (isChecked) {
+      setLocalStorage(LOCAL_STORAGE_KEY.TOS_AGREE, true);
+    } else {
+      removeLocalStorage(LOCAL_STORAGE_KEY.TOS_AGREE);
+    }
   }, [isChecked]);
 
   return (
@@ -33,11 +29,15 @@ const SignUp = () => {
         <S.Body>
           <S.InputsWrapper>
             <TosContent label="약관" textContent={TOS_CONTENT} />
-            <TosCheckBox isChecked={isChecked} text="이용약관 및 개인정보 처리방침에 동의합니다." onClick={onToggle} />
+            <TosCheckBox
+              isChecked={isChecked}
+              text="이용약관 및 개인정보 처리방침에 동의합니다."
+              onChange={onChangeCheckBox}
+            />
           </S.InputsWrapper>
 
           <S.ButtonsWrapper>
-            <KakaoLoginButton disabled={!isChecked} onClick={onClickKakaoLoginButton} />
+            <KakaoLoginButton disabled={!isChecked} />
           </S.ButtonsWrapper>
         </S.Body>
       </S.Frame>

@@ -9,13 +9,13 @@ const Home = () => {
       <S.MainIntroduction />
       <S.SubIntroduction />
       <S.SubIntroductionDetailWrapper>
-        {SERVICE_KEYWORD.map((keyword, index) => {
+        {SERVICE_KEYWORD.map(({ keyword, title, content }, index) => {
           return (
             <S.SubIntroductionDetail
               keyword={keyword}
               key={keyword}
-              order={index + 1}
-              title="제목"
+              order={index}
+              title={title}
               text="-------------서비스특징---------------"
             />
           );

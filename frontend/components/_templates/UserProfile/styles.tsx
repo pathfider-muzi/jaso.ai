@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
+import AdditionalInformationContainerComponent from "@/components/User/AdditionalInformationContainer";
 import PersonalInformationComponent from "@/components/User/PersonalInformation";
 import ScreenComponent from "@/components/_layouts/Screen";
-import AdditionalInformationContainerComponent from "@/components/User/AdditionalInformationContainer";
+import styled from "@emotion/styled";
 
 export const Screen = styled(ScreenComponent)`
   width: 100%;
@@ -29,8 +29,6 @@ export const PersonalInformation = styled(PersonalInformationComponent)`
   }
 `;
 
-export const AdditionalInformationContainer = styled(
-  AdditionalInformationContainerComponent
-)`
+export const AdditionalInformationContainer = styled(AdditionalInformationContainerComponent)`
   height: fit-content;
 `;

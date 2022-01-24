@@ -4,9 +4,9 @@ import * as S from "./styles";
 const SubIntroduction = ({ ...props }) => {
   return (
     <S.Frame {...props}>
-      {SERVICE_KEYWORD.map(keyword => {
+      {SERVICE_KEYWORD.map(({ keyword }, index) => {
         return (
-          <S.Text key={keyword} keyword={keyword}>
+          <S.Text key={keyword} order={index}>
             {keyword}
           </S.Text>
         );

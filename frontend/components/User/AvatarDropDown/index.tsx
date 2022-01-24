@@ -34,7 +34,7 @@ const AvatarDropDown = ({ isOpen, profileImage, onToggle, ...props }: Props) => 
   return (
     <S.Frame {...props}>
       <S.AvatarWrapper type="button" onClick={onToggle}>
-        <Avatar src={profileImage} alt="avatar image" size="sm" />
+        <Avatar src={profileImage} alt="avatar image" size="md" />
       </S.AvatarWrapper>
       {isOpen && <S.DropDownOption options={options} />}
     </S.Frame>

@@ -1,4 +1,3 @@
-import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
 import SERVICE_KEYWORD_THEME from "@/constants/styles/serviceKeywordTheme";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -16,7 +15,7 @@ export const Frame = styled.section`
 `;
 
 export const Text = styled.span<{
-  keyword: typeof SERVICE_KEYWORD[number];
+  order: number;
 }>`
   margin-bottom: 1rem;
   padding: 0 0.05rem;
@@ -24,21 +23,21 @@ export const Text = styled.span<{
   -webkit-text-fill-color: transparent;
   opacity: 0.3;
 
-  ${({ keyword }) => {
-    if (keyword === "Write") {
+  ${({ order }) => {
+    if (order === 0) {
       return css`
         animation: "first-flick" 6s infinite 0s ease-in-out forwards;
-        ${SERVICE_KEYWORD_THEME.Write.styles}
+        ${SERVICE_KEYWORD_THEME[order].styles}
       `;
-    } else if (keyword === "Be Recommended") {
+    } else if (order === 1) {
       return css`
         animation: "second-flick" 6s infinite 0s ease-in-out forwards;
-        ${SERVICE_KEYWORD_THEME["Be Recommended"].styles}
+        ${SERVICE_KEYWORD_THEME[order].styles}
       `;
-    } else if (keyword === "Complete") {
+    } else if (order === 2) {
       return css`
         animation: "third-flick" 6s infinite 0s ease-in-out forwards;
-        ${SERVICE_KEYWORD_THEME.Complete.styles}
+        ${SERVICE_KEYWORD_THEME[order].styles}
       `;
     }
   }}

@@ -7,7 +7,7 @@ const getServerAccessToken = async (kakaoAccessToken: string) => {
 
   const data = response.data.jwt as { accessToken: string };
 
-  return data;
+  return data.accessToken;
 };
 
 export default getServerAccessToken;

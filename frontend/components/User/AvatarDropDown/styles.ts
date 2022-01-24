@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 export const Frame = styled.div`
   position: relative;
+  z-index: 1;
 `;
 
 export const AvatarWrapper = styled.button`
@@ -12,6 +13,6 @@ export const AvatarWrapper = styled.button`
 
 export const DropDownOption = styled(DropDownOptionComponent)`
   position: absolute;
-  top: 2.5rem;
-  left: -2.5rem;
+  top: 3.5rem;
+  left: -2rem;
 `;

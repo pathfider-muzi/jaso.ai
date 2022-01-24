@@ -13,8 +13,8 @@ const MainIntroduction = ({ ...props }) => {
   const router = useRouter();
 
   const onClickGetStartButton = () => {
-    if (user?.agreeToTerms) {
-      router.push(ROUTE.EDITOR);
+    if (user) {
+      router.push(ROUTE.MY_RESUMES);
     } else {
       removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
       openModal();

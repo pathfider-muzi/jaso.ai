@@ -1,25 +1,22 @@
 import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
-import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
   position: relative;
-  height: 29rem;
-  width: 28rem;
+  height: 100%;
+  width: 100%;
+  max-height: 36rem;
 `;
 
 export const SpellErrorWrapper = styled.div`
   color: ${PALETTE.BLACK_900};
   z-index: 0;
-  overflow-y: hidden;
   white-space: pre-wrap;
-  height: 29rem;
-  width: 28rem;
-  padding: 1rem;
+  height: 100%;
+  width: 100%;
   border: none;
   outline: none;
-  font-size: 1rem;
 
   > {
     color: ${PALETTE.BLACK_900};
@@ -43,9 +40,9 @@ export const TextArea = styled.textarea`
   background-color: transparent;
   color: transparent;
   caret-color: ${PALETTE.BLACK_900};
-  height: 29rem;
-  width: 28rem;
-  padding: 1rem;
+  height: 100%;
+  width: 100%;
+  max-height: 36rem;
   outline: none;
   resize: none;
   box-shadow: none;
@@ -53,5 +50,5 @@ export const TextArea = styled.textarea`
   position: absolute;
   top: 0px;
   left: 0px;
-  ${BORDER.GRAY_150};
+  border: none;
 `;

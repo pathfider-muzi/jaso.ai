@@ -1,4 +1,3 @@
-import SERVICE_KEYWORD from "@/components/_templates/Home/constants/serviceKeyword";
 import PALETTE from "@/constants/styles/palette";
 import SERVICE_KEYWORD_THEME from "@/constants/styles/serviceKeywordTheme";
 import styled from "@emotion/styled";
@@ -12,7 +11,7 @@ export const Frame = styled.div`
 `;
 
 export const OrderCircle = styled.div<{
-  keyword: typeof SERVICE_KEYWORD[number];
+  order: number;
 }>`
   display: inline-flex;
   border-radius: 100%;
@@ -23,13 +22,13 @@ export const OrderCircle = styled.div<{
   justify-content: center;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  ${({ keyword }) => {
-    return SERVICE_KEYWORD_THEME[keyword];
+  ${({ order }) => {
+    return SERVICE_KEYWORD_THEME[order];
   }}
 `;
 
 export const Keyword = styled.div<{
-  keyword: typeof SERVICE_KEYWORD[number];
+  order: number;
 }>`
   font-size: 2rem;
   text-align: center;
@@ -40,8 +39,8 @@ export const Keyword = styled.div<{
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   padding: 0 0.05rem;
-  ${({ keyword }) => {
-    return SERVICE_KEYWORD_THEME[keyword];
+  ${({ order }) => {
+    return SERVICE_KEYWORD_THEME[order];
   }}
 `;
 

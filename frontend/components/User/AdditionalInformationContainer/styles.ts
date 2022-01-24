@@ -1,4 +1,6 @@
+import ButtonComponent from "@/components/_common/Button";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
@@ -31,4 +33,19 @@ export const InfoList = styled.div`
   & > div {
     margin-top: 2rem;
   }
+`;
+
+export const Footer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+export const DeleteUserButton = styled(ButtonComponent)`
+  background-color: ${PALETTE.RED};
+  color: ${PALETTE.WHITE};
+  font-size: 1.1rem;
+  border: none;
+  font-weight: 900;
 `;

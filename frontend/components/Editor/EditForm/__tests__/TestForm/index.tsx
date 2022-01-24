@@ -1,10 +1,10 @@
 import SelfIntroductionContent from "@/components/Editor/SelfIntroductionContent";
 import SpellingCorrectResult from "@/components/Editor/SpellingCorrectResult";
-import useInput from "@/hooks/useInput";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
+import useTextArea from "@/hooks/useTextArea";
 
 const TestForm = () => {
-  const { input, onChangeInput } = useInput(`안녕하세요. 외안되
+  const { input, onChangeInput, textAreaRef } = useTextArea(`안녕하세요. 외안되
   
   
   아버지가방에들어가신다`);
@@ -20,7 +20,7 @@ const TestForm = () => {
 
   return (
     <>
-      <SelfIntroductionContent text={input} onChange={onChangeInput}>
+      <SelfIntroductionContent text={input} onChange={onChangeInput} textareaRef={textAreaRef}>
         {children}
       </SelfIntroductionContent>
       <SpellingCorrectResult

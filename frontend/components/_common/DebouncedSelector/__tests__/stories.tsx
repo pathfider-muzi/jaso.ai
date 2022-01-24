@@ -27,6 +27,9 @@ export default {
     },
     title: {
       defaultValue: "라벨"
+    },
+    defaultValue: {
+      defaultValue: { label: "E", value: "EE" }
     }
   }
 } as ComponentMeta<typeof DebouncedSelector>;

@@ -1,29 +1,29 @@
-import { ChangeEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, MutableRefObject, ReactNode } from "react";
 import * as S from "./styles";
 
 interface Props {
   text: string;
   children: ReactNode;
+  textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
-const SelfIntroductionContent = ({ text, children, onChange, ...props }: Props) => {
+const SelfIntroductionContent = ({ text, children, onChange, textareaRef, ...props }: Props) => {
   return (
-    <>
-      <S.Frame {...props}>
-        <S.SpellErrorWrapper>{children}</S.SpellErrorWrapper>
+    <S.Frame {...props}>
+      <S.SpellErrorWrapper>{children}</S.SpellErrorWrapper>
 
-        <S.TextArea
-          value={text}
-          onChange={onChange}
-          placeholder="내용을 입력해주세요."
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
-      </S.Frame>
-    </>
+      <S.TextArea
+        ref={textareaRef}
+        value={text}
+        onChange={onChange}
+        placeholder="내용을 입력해주세요."
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
+      />
+    </S.Frame>
   );
 };
 

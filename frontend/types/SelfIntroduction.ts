@@ -1,5 +1,3 @@
-import { Qna } from "./Qna";
-
 export interface SelfIntroduction {
   id: number;
   createdDate: Date;
@@ -7,5 +5,4 @@ export interface SelfIntroduction {
   title: string;
   organisationName: string;
   role: string;
-  qnas: Qna[];
 }

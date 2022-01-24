@@ -7,9 +7,7 @@ const agreeTos = async () => {
 
   const isSuccess = response.data.affected === 1;
 
-  return {
-    isSuccess
-  };
+  return isSuccess;
 };
 
 export default agreeTos;

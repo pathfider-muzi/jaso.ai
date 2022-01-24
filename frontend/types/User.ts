@@ -19,6 +19,6 @@ export interface User {
   nickname: string;
   profileImage: string;
   agreeToTerms: boolean;
-  userInfo: UserInfo;
+  userInfos: UserInfo[];
   selfIntroductions: SelfIntroduction[];
 }

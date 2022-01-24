@@ -1,11 +1,17 @@
 import MAJOR_LIST from "@/components/User/MajorSelector/constants/majorList";
 import DebouncedSelector from "@/components/_common/DebouncedSelector";
 import { useMemo } from "react";
+import { SingleValue } from "react-select";
 
 const MAX_MAJOR_ITEM_COUNT = 100;
 interface Props {
   defaultValue: string;
-  onChange: () => void;
+  onChange: (
+    newValue: SingleValue<{
+      label: string;
+      value: string;
+    }>
+  ) => void;
 }
 
 const MajorSelector = ({ defaultValue, onChange }: Props) => {
@@ -28,6 +34,7 @@ const MajorSelector = ({ defaultValue, onChange }: Props) => {
     <DebouncedSelector
       title="전공"
       isClearable={true}
+      isRequired={true}
       defaultValue={defaultValue}
       onChange={onChange}
       delayMs={1000}

@@ -1,13 +1,29 @@
+import deleteUser from "@/api/deleteUser";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
 import AdditionalInformation from "../AdditionalInformation";
 import AdditionalInformationModal from "../AdditionalInformationModal";
 import * as S from "./styles";
 
 const AdditionalInformationContainer = ({ ...props }) => {
-  const { isModalOpen, closeModal, openModal } = useModal({});
+  const router = useRouter();
+  const isFilledAdditionalInfo = Boolean(router.query.isFilledAdditionalInfo !== "false");
+  const { isModalOpen, closeModal, openModal } = useModal({
+    defaultValue: !isFilledAdditionalInfo
+  });
   const { user } = useUser({});
+  const { refetch: refetchDeleteUser } = useQuery("", deleteUser, {
+    enabled: false
+  });
+
+  const onClickDeleteUserButton = () => {
+    if (confirm("정말로 회원탈퇴하시겠습니까?")) {
+      refetchDeleteUser();
+    }
+  };
 
   return (
     <S.Frame {...props}>
@@ -18,14 +34,18 @@ const AdditionalInformationContainer = ({ ...props }) => {
         </S.EditButton>
       </S.Header>
       <S.InfoList>
-        <AdditionalInformation label="대학교" value={user?.userInfo?.university || "-"} />
-        <AdditionalInformation label="전공" value={user?.userInfo?.major || "-"} />
-        <AdditionalInformation label="성적" value={user?.userInfo?.grade || "-"} />
-        <AdditionalInformation label="직군" value={user?.userInfo?.career || "-"} />
-        <AdditionalInformation label="자격증" value={user?.userInfo?.languageScore || "-"} />
-        <AdditionalInformation label="활동" value={user?.userInfo?.activity || "-"} />
-        <AdditionalInformation label="어학점수" value={user?.userInfo?.languageScore || "-"} />
+        <AdditionalInformation label="대학교" value={user?.userInfos[0].university || "-"} />
+        <AdditionalInformation label="전공" value={user?.userInfos[0].major || "-"} />
+        <AdditionalInformation label="성적" value={user?.userInfos[0].grade || "-"} />
+        <AdditionalInformation label="직군" value={user?.userInfos[0].career || "-"} />
+        <AdditionalInformation label="자격증" value={user?.userInfos[0].languageScore || "-"} />
+        <AdditionalInformation label="활동" value={user?.userInfos[0].activity || "-"} />
+        <AdditionalInformation label="어학점수" value={user?.userInfos[0].languageScore || "-"} />
       </S.InfoList>
+
+      <S.Footer>
+        <S.DeleteUserButton onClick={onClickDeleteUserButton}>회원탈퇴</S.DeleteUserButton>
+      </S.Footer>
 
       <AdditionalInformationModal isOpen={isModalOpen} onClose={closeModal} />
     </S.Frame>
