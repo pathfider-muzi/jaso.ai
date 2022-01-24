@@ -1,9 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Body, Controller, Get, HttpException, NotFoundException, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, NotFoundException, Query, Request, UseGuards } from '@nestjs/common';
 import { catchError, lastValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
-import { RecommendFullTextRequestDto } from './dto/recommendWholeSelfIntroductionRequestDto';
 
 @Controller('recommendation')
 export class RecommendationController {
@@ -14,9 +13,8 @@ export class RecommendationController {
 
     @UseGuards(JwtAuthGuard)
     @Get('full-text')
-    async recommendFullText(@Body() recommendFullTextRequestDto: RecommendFullTextRequestDto, @Request() req) {
+    async recommendFullText(@Query('listNum') listNum, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { listNum } = recommendFullTextRequestDto;
         console.log(`[API] GET /recommendation/full-text : ${kakaoId} ${listNum}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
@@ -46,7 +44,7 @@ export class RecommendationController {
             spec.concat(` / ${userInfo.license}`);
         }
         const postData = {
-            "listNum": listNum,
+            "listNum": parseInt(listNum),
             "spec": spec
         }
 
@@ -58,6 +56,7 @@ export class RecommendationController {
                 throw new HttpException(error.response.data, error.response.status);
             })
         ));
+
         return {
             hasFilledInRequiredFields: true,
             data: {

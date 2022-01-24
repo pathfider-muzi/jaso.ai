@@ -13,6 +13,8 @@ const user = {
   userInfos: []
 };
 
+const id = 3;
+
 describe('SelfIntroductionService', () => {
   let service: SelfIntroductionService;
 
@@ -155,11 +157,11 @@ describe('SelfIntroductionService', () => {
       id: 3
     };
 
-    expect(await service.deleteSelfIntroduction(deleteSelfIntroductionRequestDto, user))
+    expect(await service.deleteSelfIntroduction(id, user))
       .toEqual({
         id: expect.any(Number),
         params: {
-          ...deleteSelfIntroductionRequestDto,
+          id,
           user
         }
       });

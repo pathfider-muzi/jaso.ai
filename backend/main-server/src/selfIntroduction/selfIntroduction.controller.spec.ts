@@ -10,14 +10,15 @@ const reqJwtInfo = {
     'kakaoId': 101
   }
 };
+const id = 1;
 
 describe('SelfIntroductionController', () => {
   let controller: SelfIntroductionController;
 
   const mockSelfIntroductionService = {
-    getSelfIntroduction: jest.fn((getSelfIntroductionRequestDto, user) => {
+    getSelfIntroduction: jest.fn((id, user) => {
       return {
-        ...getSelfIntroductionRequestDto,
+        id,
         ...user
       }
     }),
@@ -33,9 +34,9 @@ describe('SelfIntroductionController', () => {
         user
       }
     }),
-    deleteSelfIntroduction: jest.fn((deleteSelfIntroductionRequestDto, user) => {
+    deleteSelfIntroduction: jest.fn((id, user) => {
       return {
-        ...deleteSelfIntroductionRequestDto,
+        id,
         user
       }
     })
@@ -74,11 +75,7 @@ describe('SelfIntroductionController', () => {
   });
 
   it('should get a self introduction', async () => {
-    const getSelfIntroductionRequestDto = {
-      id: 1
-    };
-
-    expect(await controller.getSelfIntroduction(getSelfIntroductionRequestDto, reqJwtInfo))
+    expect(await controller.getSelfIntroduction(reqJwtInfo, id))
       .toEqual({
         id: expect.any(Number),
         selfIntroductions: []
@@ -122,9 +119,9 @@ describe('SelfIntroductionController', () => {
       id: 3
     };
 
-    expect(await controller.deleteSelfIntroduction(deleteSelfIntroductionRequestDto, reqJwtInfo))
+    expect(await controller.deleteSelfIntroduction(id, reqJwtInfo))
     .toEqual({
-      ...deleteSelfIntroductionRequestDto,
+      id,
       user: {
         id: 101,
         selfIntroductions: []

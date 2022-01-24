@@ -1,11 +1,8 @@
-import { Body, Controller, Get, UseGuards, Request, NotFoundException, Post, Patch, Delete } from '@nestjs/common';
+import { Body, Controller, Get, UseGuards, Request, NotFoundException, Post, Patch, Delete, Param, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { SelfIntroductionService } from '../selfIntroduction/selfIntroduction.service';
 import { UserService } from '../user/user.service';
 import { CreateQnaRequestDto } from './dto/createQnaRequestDto';
-import { GetQnasRequestDto } from './dto/getQnasRequestDto';
-import { DeleteQnaRequestDto } from './dto/deleteQnaRequestDto';
-import { GetQnaRequestDto } from './dto/getQnaRequestDto';
 import { UpdateQnaRequestDto } from './dto/updateQnaRequestDto';
 import { QnaService } from './qna.service';
 
@@ -18,10 +15,9 @@ export class QnaController {
     ) {}
 
     @UseGuards(JwtAuthGuard)
-    @Get('qna')
-    async getQna(@Body() getQnaRequestDto: GetQnaRequestDto, @Request() req) {
+    @Get('qna/:id')
+    async getQna(@Param('id') id, @Query('selfIntroductionId') selfIntroductionId, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { selfIntroductionId, id } = getQnaRequestDto;
         console.log(`[API] GET /qna : ${kakaoId} ${selfIntroductionId} ${id}`);
         
         const user = await this.userService.getUser(kakaoId);
@@ -44,9 +40,8 @@ export class QnaController {
 
     @UseGuards(JwtAuthGuard)
     @Get('qnas')
-    async getQnas(@Body() getQnasRequestDto: GetQnasRequestDto, @Request() req) {
+    async getQnas(@Query('selfIntroductionId') selfIntroductionId, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { selfIntroductionId } = getQnasRequestDto;
         console.log(`[API] POST /qna : ${kakaoId} ${selfIntroductionId}`);
     
         const user = await this.userService.getUser(kakaoId);
@@ -103,10 +98,9 @@ export class QnaController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Delete('qna')
-    async deleteQna(@Body() deleteQnaRequestDto: DeleteQnaRequestDto, @Request() req) {
+    @Delete('qna/:id')
+    async deleteQna(@Param('id') id, @Query('selfIntroductionId') selfIntroductionId, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { selfIntroductionId, id } = deleteQnaRequestDto;
         console.log(`[API] DELETE /qna : ${kakaoId} ${id}`);
     
         const user = await this.userService.getUser(kakaoId);

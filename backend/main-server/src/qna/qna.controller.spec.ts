@@ -22,6 +22,9 @@ const selfIntroduction = {
   qnas: []
 };
 
+const selfIntroductionId = 1;
+const id = 6;
+
 describe('QnaController', () => {
   let controller: QnaController;
 
@@ -111,13 +114,12 @@ describe('QnaController', () => {
 
   it('should get a qna', async () => {
     const getQnaRequestDto = {
-      selfIntroductionId: 1,
-      id: 2
+      
     };
 
-    expect(await controller.getQna(getQnaRequestDto, reqJwtInfo))
+    expect(await controller.getQna(id, selfIntroductionId, reqJwtInfo))
       .toEqual({
-        id: getQnaRequestDto.id,
+        id,
         selfIntroduction,
         user
       });
@@ -126,11 +128,7 @@ describe('QnaController', () => {
   });
 
   it('should get qnas', async () => {
-    const getQnasRequestDto = {
-      selfIntroductionId: 1,
-    };
-
-    expect(await controller.getQnas(getQnasRequestDto, reqJwtInfo))
+    expect(await controller.getQnas(selfIntroductionId, reqJwtInfo))
       .toEqual({
         where: {
           selfIntroduction,
@@ -182,14 +180,9 @@ describe('QnaController', () => {
   });
 
   it('should delete a qna', async () => {
-    const deleteQnaRequestDto = {
-      selfIntroductionId: 1,
-      id: 4
-    };
-
-    expect(await controller.deleteQna(deleteQnaRequestDto, reqJwtInfo))
+    expect(await controller.deleteQna(id, selfIntroductionId, reqJwtInfo))
       .toEqual({
-        id: deleteQnaRequestDto.id,
+        id,
         selfIntroduction
       });
     

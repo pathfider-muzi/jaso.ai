@@ -61,8 +61,7 @@ export class SelfIntroductionService {
         })
     }
 
-    async deleteSelfIntroduction(deleteSelfIntroductionRequestDto: DeleteSelfIntroductionRequestDto, user: User): Promise<any> {
-        const { id } = deleteSelfIntroductionRequestDto;
+    async deleteSelfIntroduction(id: number, user: User): Promise<any> {
         console.log(`[DB] Delete Self-Introduction : ${user.kakaoId} ${id}`);
 
         return await this.selfIntroductionRepository.delete({

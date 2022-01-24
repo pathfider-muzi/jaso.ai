@@ -406,6 +406,11 @@ ormconfig copy.json
 # crawling data
 crawling_json_files.zip
 crawling_json_files/
+pre/
+prepre/
+preprepre/
+pre_2/
+raw/
 
 # ai models
 models

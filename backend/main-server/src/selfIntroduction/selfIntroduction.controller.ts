@@ -1,9 +1,8 @@
-import { Controller, Get, UseGuards, Request, Body, Post, Patch, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Body, Post, Patch, Delete, NotFoundException, Param } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
 import { CreateSelfIntroductionRequestDto } from './dto/createSelfIntroductionRequestDto';
 import { DeleteSelfIntroductionRequestDto } from './dto/deleteSelfIntroductionRequestDto';
-import { GetSelfIntroductionRequestDto } from './dto/getSelfIntroductionRequestDto';
 import { UpdateSelfIntroductionRequestDto } from './dto/updateSelfIntroductionRequestDto';
 import { SelfIntroductionService } from './selfIntroduction.service';
 
@@ -15,10 +14,9 @@ export class SelfIntroductionController {
     ) {}
 
     @UseGuards(JwtAuthGuard)
-    @Get('self-introduction')
-    async getSelfIntroduction(@Body() getSelfIntroductionRequestDto: GetSelfIntroductionRequestDto, @Request() req) {
+    @Get('self-introduction/:id')
+    async getSelfIntroduction(@Request() req, @Param('id') id: Number): Promise<any> {
         const kakaoId = req.user.kakaoId;
-        const { id } = getSelfIntroductionRequestDto;
         console.log(`[API] GET /self-introduction : ${kakaoId} ${id}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
@@ -75,16 +73,15 @@ export class SelfIntroductionController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Delete('self-introduction')
-    async deleteSelfIntroduction(@Body() deleteSelfIntroductionRequestDto: DeleteSelfIntroductionRequestDto, @Request() req) {
+    @Delete('self-introduction/:id')
+    async deleteSelfIntroduction(@Param('id') id, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { id } = deleteSelfIntroductionRequestDto;
         console.log(`[API] DELETE /self-introduction : ${kakaoId} ${id}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
             throw new NotFoundException();
         }
 
-        return await this.selfIntroductionService.deleteSelfIntroduction(deleteSelfIntroductionRequestDto, user);
+        return await this.selfIntroductionService.deleteSelfIntroduction(id, user);
     }
 }
