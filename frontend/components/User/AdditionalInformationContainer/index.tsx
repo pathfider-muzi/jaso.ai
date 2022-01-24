@@ -1,6 +1,9 @@
 import deleteUser from "@/api/deleteUser";
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
+import ROUTE from "@/constants/routes";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
+import { removeLocalStorage } from "@/utils/localStorage";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
@@ -16,7 +19,11 @@ const AdditionalInformationContainer = ({ ...props }) => {
   });
   const { user } = useUser({});
   const { refetch: refetchDeleteUser } = useQuery("", deleteUser, {
-    enabled: false
+    enabled: false,
+    onSuccess: () => {
+      removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+      router.replace(ROUTE.HOME);
+    }
   });
 
   const onClickDeleteUserButton = () => {

@@ -13,6 +13,6 @@ export const AvatarWrapper = styled.button`
 
 export const DropDownOption = styled(DropDownOptionComponent)`
   position: absolute;
-  top: 3.5rem;
-  left: -2rem;
+  top: 3rem;
+  left: -2.5rem;
 `;

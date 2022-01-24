@@ -9,7 +9,7 @@ const PersonalInformation = ({ ...props }) => {
     <S.Frame {...props}>
       <Avatar src={user?.profileImage || "/default_profile.png"} alt={`${user?.nickname} avatar`} size="lg" />
       <S.Name>{user?.nickname}</S.Name>
-      <S.Email>{user?.userInfos[0].email}</S.Email>
+      <S.Email>{user?.userInfos[0]?.email}</S.Email>
     </S.Frame>
   );
 };
