@@ -6,7 +6,7 @@ import useInput from "@/hooks/useInput";
 import useQnas from "@/hooks/useQnas";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
-import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useState } from "react";
+import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { useMutation } from "react-query";
 import * as S from "./styles";
 
@@ -125,6 +125,41 @@ const EditorForm = ({
     );
   };
 
+  const [isEditable, setEditable] = useState(false);
+
+  const textCountRef = useRef<HTMLSpanElement>(null);
+  const changeMaxTextCount = (event: React.KeyboardEvent<HTMLSpanElement>) => {
+    const target = event.target as HTMLSpanElement;
+
+    if (event.key === "Enter") {
+      event.preventDefault();
+
+      const newMaxCount = parseInt(target.textContent!);
+      if (newMaxCount <= 0) {
+        alert("최대 글자 수는 최소 1글자 이상이어야 합니다.");
+        return;
+      }
+      const selectedQna = qnaList![selectedPageNumber - 1];
+      qnaUpdateMutation.mutate(
+        {
+          id: selectedQna.id,
+          question,
+          answer,
+          maxCount: newMaxCount,
+          selfIntroductionId: selfIntroduction.id
+        },
+        {
+          onSuccess: () => {
+            refetchQnaList();
+            alert("최대 글자수가 변경되었습니다.");
+          }
+        }
+      );
+
+      textCountRef!.current!.blur();
+      setEditable(false);
+    }
+  };
   useEffect(() => {
     if (!qnaList) return;
 
@@ -183,7 +218,12 @@ const EditorForm = ({
       </S.QuestionWrapper>
 
       <S.AnswerWrapper>
-        <S.SelfIntroductionContent text={answer} onChange={onChangeAnswer} textareaRef={answerTextAreaRef}>
+        <S.SelfIntroductionContent
+          text={answer}
+          onChange={onChangeAnswer}
+          textareaRef={answerTextAreaRef}
+          maxLength={qnaList[selectedPageNumber - 1].maxCount}
+        >
           <>
             {spellingCorrectorData.map((spellingCorrecterResult, index) => {
               const element = (
@@ -208,9 +248,25 @@ const EditorForm = ({
       </S.AnswerWrapper>
 
       <S.Footer>
-        <S.TextCount>
-          글자수: {answer.length} / {qnaList[selectedPageNumber - 1].maxCount}
-        </S.TextCount>
+        <S.TextCountWrapper>
+          글자수: {answer.length} /
+          <S.TextCount
+            onKeyDown={changeMaxTextCount}
+            suppressContentEditableWarning={true}
+            contentEditable={isEditable}
+            ref={textCountRef}
+          >
+            {qnaList[selectedPageNumber - 1].maxCount}
+          </S.TextCount>
+          <S.ChangeTextCount
+            onClick={() => {
+              setEditable(true);
+              textCountRef.current?.focus();
+            }}
+          >
+            글자수 변경
+          </S.ChangeTextCount>
+        </S.TextCountWrapper>
 
         <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
       </S.Footer>

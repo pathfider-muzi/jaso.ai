@@ -14,7 +14,6 @@ export const Screen = styled(ScreenComponent)`
 
 export const Frame = styled.div`
   display: flex;
-
   @media (max-width: 780px) {
     flex-direction: column;
   }

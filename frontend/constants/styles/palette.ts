@@ -15,6 +15,7 @@ const PALETTE = {
   HOT_PINK: "#FF0080",
   PINK: "#ff4d4d",
   YELLOW: "#f9cb28",
+  ORANGE: "#ff7f00",
   MINT: "#50E3C2"
 } as const;
 
