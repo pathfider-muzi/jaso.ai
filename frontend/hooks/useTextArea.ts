@@ -7,7 +7,11 @@ export const resizeTextArea = (textAreaElement: HTMLTextAreaElement) => {
 
 const useTextArea = (defaultValue: string) => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [input, setInput] = useState(defaultValue);
+  const [input, _setInput] = useState(defaultValue);
+
+  const setInput = (value: string) => {
+    _setInput(value);
+  };
 
   const onChangeInput: ChangeEventHandler<HTMLTextAreaElement> = event => {
     resizeTextArea(event.target);

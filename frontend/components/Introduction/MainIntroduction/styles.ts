@@ -1,13 +1,11 @@
 import ButtonComponent from "@/components/_common/Button";
 import BUTTON_THEME from "@/constants/styles/buttonTheme";
 import PALETTE from "@/constants/styles/palette";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
 
 export const Frame = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${verticalStyle};
 `;
 
 export const Title = styled.h1`

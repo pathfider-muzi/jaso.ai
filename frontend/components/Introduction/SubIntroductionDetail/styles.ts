@@ -1,13 +1,12 @@
 import PALETTE from "@/constants/styles/palette";
 import SERVICE_KEYWORD_THEME from "@/constants/styles/serviceKeywordTheme";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${verticalStyle};
   width: 100;
   justify-content: space-around;
-  align-items: center;
 `;
 
 export const OrderCircle = styled.div<{

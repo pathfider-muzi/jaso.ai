@@ -13,7 +13,7 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
   const {
     data: _selfIntroductions,
     refetch: refetchSelfIntroductions,
-    isError,
+    error,
     isFetched,
     isLoading
   } = useQuery(["selfIntroductions"], getSelfIntroductions, {
@@ -41,7 +41,7 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
   return {
     selfIntroductions: sortedSelfIntroductions,
     refetchSelfIntroductions,
-    isError,
+    error,
     isFetched,
     isLoading,
     createSelfIntroduction: mutation.mutate

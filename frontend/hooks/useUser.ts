@@ -20,8 +20,11 @@ const useUser = ({ enabled = false, onSuccess, onError }: Props) => {
   });
 
   useEffect(() => {
-    if (error) removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
-  }, [error]);
+    if (error) {
+      removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+      refetch();
+    }
+  }, [error, isLoading]);
 
   return {
     user: data,

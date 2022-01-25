@@ -1,42 +1,55 @@
-import VerticalStyle from "@/components/_common/VerticalStyle";
+import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
 
-export const Frame = styled(VerticalStyle)<{ width: number; isLoginned: boolean; minHeight: number }>`
-  border: 1px solid ${PALETTE.GRAY_200};
+export const Frame = styled.div`
+  ${BORDER.GRAY_150};
+  border-radius: 10px;
+  width: 20rem;
+  padding: 1rem;
 
-  padding-top: 10px;
-  filter: ${props => (props.isLoginned ? "" : "blur(4px)")};
+  & > *:not(:last-child) {
+    border-bottom: 1px solid ${PALETTE.GRAY_150};
+    margin-bottom: 0.5rem;
+  }
 `;
 
-export const IntroductionTitle = styled.div`
-  font-size: 18px;
-  width: 200px;
-  height: 40px;
-  border-radius: 8px;
-  background-color: ${PALETTE.GRAY_300};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
+export const Header = styled.div`
+  width: 100%;
+  ${verticalStyle};
 `;
 
-export const Introduction = styled.section`
-  padding: 8px;
-  width: 400px;
-  border: 1px solid ${PALETTE.GRAY_200};
-  height: 200px;
-  overflow: -moz-scrollbars-vertical;
+export const Title = styled.h2`
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.5rem;
+`;
+
+export const ContentWrapper = styled.div`
   overflow-y: scroll;
+  height: 15rem;
 `;
 
-export const SpecTag = styled.div`
-  width: 100px;
-  height: 40px;
-  border-radius: 8px;
-  margin-right: 6px;
+export const Content = styled.span``;
+
+export const Footer = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid ${PALETTE.GRAY_150};
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
+export const Tag = styled.div`
+  min-width: 3rem;
+  width: fit-content;
+  padding: 0.5rem;
+  background-color: ${PALETTE.VIOLET};
+  color: ${PALETTE.WHITE};
+  border-radius: 10px;
+  text-align: center;
 `;

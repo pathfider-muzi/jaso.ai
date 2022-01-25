@@ -3,7 +3,7 @@ const ROUTE = {
   EDITOR: "/editor",
   USER_PROFILE: "/userProfile",
   SIGN_UP: "/signup",
-  MY_RESUMES: "/my-resumes"
+  MY_RESUMES: "/myResumes"
 } as const;
 
 export default ROUTE;

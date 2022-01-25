@@ -1,5 +1,6 @@
 import BUTTON_THEME from "@/constants/styles/buttonTheme";
 import PALETTE from "@/constants/styles/palette";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
@@ -7,8 +8,7 @@ export const Frame = styled.div`
   min-width: 7rem;
   height: fit-content;
   padding: 1rem;
-  display: flex;
-  flex-direction: column;
+  ${verticalStyle};
   align-items: flex-start;
   justify-content: flex-start;
   background-color: ${PALETTE.WHITE};

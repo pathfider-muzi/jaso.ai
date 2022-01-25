@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import getSpellCheckResult from "@/api/getSpellCheckResult";
+import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
+import { createRef, RefObject, useEffect, useRef, useState } from "react";
 import { useQueries } from "react-query";
-import getSpellCheckResult from "../api/getSpellCheckResult";
-import NAVER_SPELL_CHECK_RESULT_INFO from "../constants/naverSpellCheckResultInfo";
-import useCreateSpellingResultComponentsInfo from "./useCreateSpellingResultComponentsInfo";
 
 const getErrorInfo = (fixedHTML: string) => {
   const errorTextInfo = Object.keys(NAVER_SPELL_CHECK_RESULT_INFO).find(className => {
@@ -28,6 +27,7 @@ const useSpellingCorrecter = ({ text }: Props) => {
   const words = text.split(" ");
   const [data, setData] = useState<SpellingCorrecterData[]>([]);
   const [isTurnOnSpellCheck, setIsTurnOnSpellCheck] = useState(true);
+  const spellingResultsRefs = useRef<RefObject<HTMLSpanElement>[]>();
 
   const results = useQueries(
     words.map(word => {
@@ -52,22 +52,30 @@ const useSpellingCorrecter = ({ text }: Props) => {
     setIsTurnOnSpellCheck(true);
   };
 
-  const { refs: spellingResultsRefs, components: SpellingResultComponents } = useCreateSpellingResultComponentsInfo({
-    spellingCorrecterResults: data,
-    originalWords: words
-  });
-
   useEffect(() => {
-    setIsTurnOnSpellCheck(false);
-  }, [text]);
+    spellingResultsRefs.current = Array.from(
+      {
+        length: 10000
+      },
+      () => createRef<HTMLSpanElement>()
+    );
+  }, [words.length]);
 
   useEffect(() => {
     if (isTurnOnSpellCheck) {
       if (isLoadingAll) return;
 
       const newData: SpellingCorrecterData[] = results.map((result, index) => {
-        const fixedText = result.data?.message.result.notag_html.replaceAll("<br>", "\n") || "";
-        const originalHTML = result.data?.message.result.origin_html.replaceAll("<br>", "\n") || "";
+        const fixedText =
+          result.data?.message.result.notag_html
+            .replaceAll("<br>", "\n")
+            .replaceAll("&lt;", "<")
+            .replaceAll("&gt;", ">") || "";
+        const originalHTML =
+          result.data?.message.result.origin_html
+            .replaceAll("<br>", "\n")
+            .replaceAll("&lt;", "<")
+            .replaceAll("&gt;", ">") || "";
         const isCorrect = result.data?.message.result.errata_count === 0;
 
         return {
@@ -105,7 +113,6 @@ const useSpellingCorrecter = ({ text }: Props) => {
   return {
     errorCount: errorData?.length || 0,
     data,
-    children: SpellingResultComponents,
     spellingResultsRefs,
     errorData,
     originalData: words,

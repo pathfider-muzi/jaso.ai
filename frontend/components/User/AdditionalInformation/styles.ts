@@ -1,10 +1,9 @@
 import PALETTE from "@/constants/styles/palette";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  ${verticalStyle};
   align-items: flex-start;
 `;
 

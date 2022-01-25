@@ -1,10 +1,10 @@
 import SERVICE_KEYWORD_THEME from "@/constants/styles/serviceKeywordTheme";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Frame = styled.section`
-  display: flex;
-  flex-direction: column;
+  ${verticalStyle};
   width: 100%;
   user-select: none;
   text-align: center;

@@ -1,5 +1,6 @@
 import deleteSelfIntroduction from "@/api/deleteSelfIntroduction";
 import BRAND_NAME from "@/constants/brandName";
+import ROUTE from "@/constants/routes";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
 import Link from "next/link";
@@ -34,7 +35,7 @@ const MyResumes = ({ ...props }: Props) => {
     <S.Screen title="내 자기소개서" description={`내가 작성한 자기소개서 목록, ${BRAND_NAME}`}>
       <S.Frame {...props}>
         <S.Header>
-          <S.Title>내 자기소개서</S.Title>
+          <S.Title>내 자기소개서 목록</S.Title>
         </S.Header>
         <S.CardsWrapper>
           <S.PlusCard text="+" onClick={onClickPlusCard} />
@@ -42,7 +43,7 @@ const MyResumes = ({ ...props }: Props) => {
           {selfIntroductions?.map(selfIntroduction => {
             return (
               <S.CardWrapper key={selfIntroduction.id}>
-                <Link href={`/my-resumes/${selfIntroduction.id}`} passHref={true}>
+                <Link href={`${ROUTE.MY_RESUMES}/${selfIntroduction.id}`} passHref={true}>
                   <a>
                     <S.Card text={selfIntroduction.title} />
                   </a>

@@ -1,11 +1,10 @@
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
+import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${verticalStyle};
   padding: 2rem;
   height: 100%;
   justify-content: space-between;

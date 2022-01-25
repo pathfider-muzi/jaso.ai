@@ -56,7 +56,6 @@
     "lint-staged": "^12.1.7",
     "prettier": "^2.5.1",
     "redux-devtools-extension": "^2.13.9",
-    "typesafe-actions": "^5.1.0",
     "typescript": "4.5.4"
   },
   "husky": {
