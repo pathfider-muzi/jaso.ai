@@ -13,5 +13,17 @@ services:
       - "3000:3000"
     volumes:
       - ./:/app/
+    restart: always
     command: "npm run start:dev"
     
+  db:
+    image: "mysql"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - ../../../volumes-mysql/mysql/:/var/lib/mysql/
+    ports:
+      - "3307:3306"
+    restart: always
