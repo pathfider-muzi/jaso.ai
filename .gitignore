@@ -411,6 +411,11 @@ prepre/
 preprepre/
 pre_2/
 raw/
+org/
+new/
 
 # ai models
 models
+
+# ci/cd
+main.yml
