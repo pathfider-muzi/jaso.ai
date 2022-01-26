@@ -8,5 +8,5 @@ export const Header = styled(HeaderComponent)`
 export const MainWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 7rem 4rem 2rem 4rem;
 `;

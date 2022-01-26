@@ -8,16 +8,21 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
+  width: 100%;
+  min-width: 35rem;
   border-radius: 10px;
-  position: relative;
-  width: 37.5rem;
   margin-right: 1rem;
-  height: 46rem;
   ${BORDER.GRAY_150};
   ${BOX_SHADOW.DEFAULT}
   color: ${PALETTE.BLACK_900};
   ${verticalStyle};
-  padding: 0 1.5rem;
+  justify-content: flex-start;
+  padding: 0.5rem 1.5rem;
+  height: 100%;
+
+  @media (max-width: 1000px) {
+    min-height: 30rem;
+  }
 `;
 
 export const SelfIntroductionTitleWrapper = styled.div`
@@ -46,16 +51,19 @@ export const Question = styled.textarea`
   border: none;
   resize: none;
   font-size: 1rem;
+  height: 3.5rem;
 `;
 
 export const AnswerWrapper = styled.div`
   width: 100%;
-  height: 85%;
+  height: 100%;
   padding: 0.5rem 0;
   border-bottom: 1px solid ${PALETTE.GRAY_200};
 `;
 
-export const SelfIntroductionContent = styled(SelfIntroductionContentComponent)``;
+export const SelfIntroductionContent = styled(SelfIntroductionContentComponent)`
+  height: 100%;
+`;
 
 export const Footer = styled.div`
   width: 100%;
@@ -96,7 +104,7 @@ export const MaxCountChangeButton = styled.button`
 
 export const PageMarksWrapper = styled.ul`
   position: absolute;
-  left: -4.5rem;
+  left: -0.5rem;
   width: 5rem;
   height: 100%;
 

@@ -6,7 +6,6 @@ export const Frame = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
-  max-height: 36rem;
 `;
 
 export const SpellErrorWrapper = styled.div`
@@ -17,6 +16,8 @@ export const SpellErrorWrapper = styled.div`
   width: 100%;
   border: none;
   outline: none;
+  overflow-y: scroll;
+  max-height: 52rem;
 
   > {
     color: ${PALETTE.BLACK_900};
@@ -42,7 +43,6 @@ export const TextArea = styled.textarea`
   caret-color: ${PALETTE.BLACK_900};
   height: 100%;
   width: 100%;
-  max-height: 36rem;
   outline: none;
   resize: none;
   box-shadow: none;
@@ -51,4 +51,6 @@ export const TextArea = styled.textarea`
   top: 0px;
   left: 0px;
   border: none;
+  max-height: 52rem;
+  overflow-y: scroll;
 `;

@@ -1,8 +1,6 @@
 import EditorFormComponent from "@/components/Editor/EditorForm";
 import EditorSidebarComponent from "@/components/Editor/EditorSidebar";
 import ScreenComponent from "@/components/_layouts/Screen";
-import BORDER from "@/constants/styles/border";
-import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
@@ -13,22 +11,28 @@ export const Screen = styled(ScreenComponent)`
 `;
 
 export const Frame = styled.div`
+  width: 100%;
   display: flex;
-  @media (max-width: 780px) {
+  justify-content: center;
+  min-height: 60rem;
+  max-height: 90vh;
+  overflow-y: scroll;
+  overflow: hidden;
+
+  @media (max-width: 1000px) {
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 `;
 
 export const EditorForm = styled(EditorFormComponent)`
-  @media (max-width: 780px) {
+  @media (max-width: 1000px) {
     width: 100%;
     margin-bottom: 1rem;
   }
 `;
 
 export const EditorSidebar = styled(EditorSidebarComponent)`
-  height: 46rem;
-  ${BORDER.GRAY_150};
-  ${BOX_SHADOW.DEFAULT}
   color: ${PALETTE.BLACK_900};
 `;

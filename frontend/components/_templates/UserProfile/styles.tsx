@@ -12,9 +12,9 @@ export const Screen = styled(ScreenComponent)`
 export const Frame = styled.div`
   display: flex;
   margin-top: 3rem;
-  max-width: 780px;
+  max-width: 1000px;
 
-  @media (max-width: 780px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
   }
 `;
@@ -23,7 +23,7 @@ export const PersonalInformation = styled(PersonalInformationComponent)`
   margin-right: 10px;
   height: fit-content;
 
-  @media (max-width: 780px) {
+  @media (max-width: 1000px) {
     margin-right: 0;
     margin-bottom: 10px;
   }

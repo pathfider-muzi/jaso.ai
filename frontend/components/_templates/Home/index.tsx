@@ -10,15 +10,7 @@ const Home = () => {
       <S.SubIntroduction />
       <S.SubIntroductionDetailWrapper>
         {SERVICE_KEYWORD.map(({ keyword, title, content }, index) => {
-          return (
-            <S.SubIntroductionDetail
-              keyword={keyword}
-              key={keyword}
-              order={index}
-              title={title}
-              text="-------------서비스특징---------------"
-            />
-          );
+          return <S.SubIntroductionDetail keyword={keyword} key={keyword} order={index} title={title} text={content} />;
         })}
       </S.SubIntroductionDetailWrapper>
       <S.StatisticsIntroduction

@@ -34,12 +34,18 @@ export const LabeledText = styled.span<{
   }
 `;
 
+export const ErrorResultWrapper = styled.div`
+  margin-bottom: 0.5rem;
+`;
+
 export const OriginalText = styled.span`
   color: ${PALETTE.BLACK_700};
 `;
 
-export const FixedText = styled.button`
-  background-color: ${PALETTE.GRAY_400};
+export const FixedText = styled.button<{
+  errorColor: string;
+}>`
+  background-color: ${({ errorColor }) => `${errorColor}`};
   color: ${PALETTE.WHITE};
   border-radius: 10px;
   font-size: 1rem;

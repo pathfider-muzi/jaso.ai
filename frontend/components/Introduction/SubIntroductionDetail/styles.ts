@@ -53,9 +53,8 @@ export const Title = styled.h4`
 `;
 
 export const Text = styled.p`
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.6;
   letter-spacing: -0.02em;
   margin: 0;
-  font-weight: 300;
 `;

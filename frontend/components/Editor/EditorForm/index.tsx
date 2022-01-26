@@ -16,8 +16,6 @@ interface Props {
   setAnswer: (value: string) => void;
   onChangeQuestion: ChangeEventHandler<HTMLTextAreaElement>;
   onChangeAnswer: ChangeEventHandler<HTMLTextAreaElement>;
-  questionTextAreaRef: MutableRefObject<HTMLTextAreaElement | null>;
-  answerTextAreaRef: MutableRefObject<HTMLTextAreaElement | null>;
   spellingCorrectorData: SpellingCorrecterData[];
   spellingResultsRefs: MutableRefObject<RefObject<HTMLSpanElement>[] | undefined>;
   originalSpellingData: string[];
@@ -31,8 +29,6 @@ const EditorForm = ({
   setAnswer,
   onChangeQuestion,
   onChangeAnswer,
-  questionTextAreaRef,
-  answerTextAreaRef,
   spellingCorrectorData,
   spellingResultsRefs,
   originalSpellingData,
@@ -172,32 +168,8 @@ const EditorForm = ({
     } else textCountRef.current?.blur();
   }, [textCountRef, isEditableTextCount]);
 
-  if (qnaList.length === 0) return null;
   return (
     <S.Frame {...props}>
-      <S.PageMarksWrapper>
-        {qnaList.map((qna, index) => {
-          return (
-            <S.PageMarkButtonWrapper key={qna.id + index} active={index + 1 === selectedPageNumber}>
-              <S.PageMarkButton type="button" onClick={() => onClickPageMarkButton(index + 1)}>
-                {index + 1}
-              </S.PageMarkButton>
-            </S.PageMarkButtonWrapper>
-          );
-        })}
-
-        <S.PageMarkButtonWrapper isOptionButton>
-          <S.PageMarkButton type="button" onClick={onClickAddQnaButton}>
-            {"+"}
-          </S.PageMarkButton>
-        </S.PageMarkButtonWrapper>
-        <S.PageMarkButtonWrapper isOptionButton>
-          <S.PageMarkButton type="button" onClick={onClickRemoveQnaButton} disabled={qnaList?.length === 1}>
-            {"-"}
-          </S.PageMarkButton>
-        </S.PageMarkButtonWrapper>
-      </S.PageMarksWrapper>
-
       <S.SelfIntroductionTitleWrapper>
         <S.SelfIntroductionTitle
           type="text"
@@ -218,7 +190,6 @@ const EditorForm = ({
           autoCapitalize="off"
           spellCheck="false"
           required={true}
-          ref={questionTextAreaRef}
         />
       </S.QuestionWrapper>
 
@@ -226,7 +197,6 @@ const EditorForm = ({
         <S.SelfIntroductionContent
           text={answer}
           onChange={onChangeAnswer}
-          textareaRef={answerTextAreaRef}
           maxLength={qnaList[selectedPageNumber - 1]?.maxCount}
         >
           <>
@@ -267,7 +237,7 @@ const EditorForm = ({
               ref={textCountRef}
             />
           ) : (
-            <S.TextCount>{qnaList[selectedPageNumber - 1].maxCount}</S.TextCount>
+            <S.TextCount>{qnaList[selectedPageNumber - 1]?.maxCount || 0}</S.TextCount>
           )}
 
           <S.MaxCountChangeButton type="button" onClick={onClickChangeTextCountButton}>
@@ -277,6 +247,29 @@ const EditorForm = ({
 
         <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
       </S.Footer>
+
+      <S.PageMarksWrapper>
+        {qnaList.map((qna, index) => {
+          return (
+            <S.PageMarkButtonWrapper key={qna.id + index} active={index + 1 === selectedPageNumber}>
+              <S.PageMarkButton type="button" onClick={() => onClickPageMarkButton(index + 1)}>
+                {index + 1}
+              </S.PageMarkButton>
+            </S.PageMarkButtonWrapper>
+          );
+        })}
+
+        <S.PageMarkButtonWrapper isOptionButton>
+          <S.PageMarkButton type="button" onClick={onClickAddQnaButton}>
+            {"+"}
+          </S.PageMarkButton>
+        </S.PageMarkButtonWrapper>
+        <S.PageMarkButtonWrapper isOptionButton>
+          <S.PageMarkButton type="button" onClick={onClickRemoveQnaButton} disabled={qnaList?.length === 1}>
+            {"-"}
+          </S.PageMarkButton>
+        </S.PageMarkButtonWrapper>
+      </S.PageMarksWrapper>
     </S.Frame>
   );
 };

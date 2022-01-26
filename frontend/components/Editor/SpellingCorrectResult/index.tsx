@@ -11,6 +11,7 @@ interface Props {
   spellingResultsRefs: MutableRefObject<RefObject<HTMLSpanElement>[] | undefined>;
   setAnswer: (value: string) => void;
   answer: string;
+  getSpellInfo: () => void;
 }
 
 const SpellingCorrectResult = ({
@@ -21,6 +22,7 @@ const SpellingCorrectResult = ({
   data,
   spellingResultsRefs,
   errorSpellingData,
+  getSpellInfo,
   ...props
 }: Props) => {
   const onMouseOverFixedText: MouseEventHandler<HTMLButtonElement> = event => {
@@ -47,22 +49,23 @@ const SpellingCorrectResult = ({
     const { wordIndex } = (event.target as HTMLElement).dataset;
     if (!wordIndex) return;
     if (!spellingResultsRefs.current) return;
+
     const wordIndexAsNumber = Number(wordIndex);
     const $element = spellingResultsRefs.current[wordIndexAsNumber].current as HTMLElement;
-    if (!$element) return;
+    if (!$element?.textContent) return;
 
-    if ($element.textContent) {
-      const newAnswerTextAreaInput = answer.replaceAll($element.textContent.trim(), data[wordIndexAsNumber].fixedText);
+    const newAnswerTextAreaInput = answer.replaceAll($element.textContent.trim(), data[wordIndexAsNumber].fixedText);
+    getSpellInfo();
 
-      setAnswer(newAnswerTextAreaInput);
-    }
+    setAnswer(newAnswerTextAreaInput);
+
     $element.textContent = data[wordIndexAsNumber].fixedText;
     $element.classList.remove(`error-color-${data[wordIndexAsNumber].errorInfo?.className}`);
   };
 
   return (
     <S.Frame {...props}>
-      {isFetchedAll && (
+      {
         <>
           {errorSpellingData.length > 0 ? (
             errorSpellingData.map(result => {
@@ -70,7 +73,7 @@ const SpellingCorrectResult = ({
 
               return (
                 <div key={result.fixedText + result.positionIndex}>
-                  <div>
+                  <S.ErrorResultWrapper>
                     <S.OriginalText>{originalData[result.positionIndex]}</S.OriginalText>
                     <span>{" → "}</span>
                     <S.FixedText
@@ -79,10 +82,11 @@ const SpellingCorrectResult = ({
                       onMouseOver={onMouseOverFixedText}
                       onMouseOut={onMouseOutFixedText}
                       onClick={onClickFixedText}
+                      errorColor={result.errorInfo.color}
                     >
                       {result.fixedText}
                     </S.FixedText>
-                  </div>
+                  </S.ErrorResultWrapper>
                 </div>
               );
             })
@@ -90,7 +94,7 @@ const SpellingCorrectResult = ({
             <>틀린 맞춤법이 없습니다.</>
           )}
         </>
-      )}
+      }
 
       <S.ColorInfo>
         {Object.keys(NAVER_SPELL_CHECK_RESULT_INFO).map(key => {

@@ -9,19 +9,8 @@ interface Props {
 }
 
 const Editor = ({ selfIntroduction }: Props) => {
-  const {
-    input: question,
-    setInput: setQuestion,
-    onChangeInput: onChangeQuestion,
-    textAreaRef: questionTextAreaRef
-  } = useTextArea("");
-
-  const {
-    input: answer,
-    setInput: setAnswer,
-    onChangeInput: onChangeAnswer,
-    textAreaRef: answerTextAreaRef
-  } = useTextArea("");
+  const { input: question, setInput: setQuestion, onChangeInput: onChangeQuestion } = useTextArea("");
+  const { input: answer, setInput: setAnswer, onChangeInput: onChangeAnswer } = useTextArea("");
 
   const {
     getSpellInfo,
@@ -42,11 +31,9 @@ const Editor = ({ selfIntroduction }: Props) => {
           question={question}
           setQuestion={setQuestion}
           onChangeQuestion={onChangeQuestion}
-          questionTextAreaRef={questionTextAreaRef}
           answer={answer}
           setAnswer={setAnswer}
           onChangeAnswer={onChangeAnswer}
-          answerTextAreaRef={answerTextAreaRef}
           spellingCorrectorData={spellingCorrectorData}
           spellingResultsRefs={spellingResultsRefs}
           originalSpellingData={originalSpellingData}

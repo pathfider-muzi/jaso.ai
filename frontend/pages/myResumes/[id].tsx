@@ -15,9 +15,9 @@ const SelfIntroductionPage: NextPage = () => {
   const { user } = useUser({ enabled: false });
 
   const { data: isFilledAdditionalInfo, isFetched: isFilledAdditionalInfoFetched } = useQuery(
-    [""],
+    ["isFilledAdditionalInfo"],
     getIsFilledAdditionalInfo,
-    {}
+    { enabled: true }
   );
   const selfIntroductionId = Number(router.query.id as string);
   const { selfIntroductions, isFetched: isSelfIntroductionsFetched } = useSelfIntroductions({ enabled: true });

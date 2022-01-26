@@ -8,14 +8,15 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
-  height: 46rem;
   ${BORDER.GRAY_150};
   ${BOX_SHADOW.DEFAULT}
   color: ${PALETTE.BLACK_900};
   border-radius: 10px;
-  width: 22rem;
+  width: 100%;
+  min-width: 22rem;
+  max-width: 32rem;
 
-  @media (max-width: 780px) {
+  @media (max-width: 1000px) {
     width: 100%;
   }
 `;
@@ -66,10 +67,12 @@ export const TabWrapper = styled.div`
 `;
 
 export const SpellingCheckButton = styled(ButtonComponent)`
-  width: 100%;
+  width: 80%;
   background-color: ${PALETTE.BLUE};
   border: none;
   color: ${PALETTE.WHITE};
+  font-size: 1rem;
+  font-weight: 600;
 `;
 
 export const SpellingCorrectResult = styled(SpellingCorrectResultComponent)`

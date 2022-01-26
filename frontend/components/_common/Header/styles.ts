@@ -1,5 +1,6 @@
 import AvatarDropDownComponent from "@/components/User/AvatarDropDown";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled.header`
@@ -9,6 +10,11 @@ export const Frame = styled.header`
   align-items: center;
   justify-content: space-between;
   ${BOX_SHADOW.HEADER}
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: ${PALETTE.WHITE};
+  z-index: 1;
 `;
 
 export const BrandInfoWrapper = styled.div`

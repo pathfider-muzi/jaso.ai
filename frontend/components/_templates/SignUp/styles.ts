@@ -12,7 +12,7 @@ export const Frame = styled.div`
   border-radius: 10px;
   padding: 2rem;
   min-width: 540px;
-  max-width: 780px;
+  max-width: 1000px;
   height: fit-content;
   ${BOX_SHADOW.DEFAULT}
 `;

@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 export const Frame = styled.div`
   ${BORDER.GRAY_150};
   border-radius: 10px;
-  width: 20rem;
+  width: 100%;
   padding: 1rem;
 
   & > *:not(:last-child) {

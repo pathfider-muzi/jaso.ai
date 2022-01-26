@@ -3,6 +3,7 @@ import RecommendedIntroduction from "@/components/Editor/RecommendedIntroduction
 import SELF_INTRODUCTION_ARTICLE_INFO from "@/constants/selfIntroductionArticleInfo";
 import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
+import Image from "next/image";
 import { MutableRefObject, RefObject, useState } from "react";
 import * as S from "./styles";
 
@@ -83,6 +84,7 @@ const EditorSidebar = ({
       <S.SideBarContentWrapper>
         {selectedTab === "RecommendedIntroductions" && (
           <S.TabWrapper>
+            {!recommendedIntroductions && <Image src="/loading.svg" alt="loading image" width="100" height="100" />}
             {recommendedIntroductions
               ?.slice(0, recommendedSelfIntroductionAmount)
               .map((recommendedIntroduction, index) => {
@@ -117,6 +119,7 @@ const EditorSidebar = ({
               setAnswer={setAnswer}
               answer={answer}
               errorSpellingData={errorSpellingData}
+              getSpellInfo={getSpellInfo}
             />
           </S.TabWrapper>
         )}
