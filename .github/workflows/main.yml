@@ -45,4 +45,4 @@ jobs:
 
       - name: Connect GCE And execute continuous_deployment.sh
         run: |
-          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd /home/jam_min && ./continuous_deployment.sh'
+          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd /home/jam_min && sudo su root && ./continuous_deployment.sh'
