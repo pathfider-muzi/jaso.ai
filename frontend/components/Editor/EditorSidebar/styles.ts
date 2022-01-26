@@ -50,6 +50,14 @@ export const NavButton = styled.button<{
   }}
 `;
 
+export const LoadingImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const SideBarContentWrapper = styled.div`
   padding: 1rem;
   height: 90%;

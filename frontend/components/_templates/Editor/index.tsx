@@ -16,6 +16,7 @@ const Editor = ({ selfIntroduction }: Props) => {
     getSpellInfo,
     originalData: originalSpellingData,
     isFetchedAll,
+    isLoadingAll,
     spellingResultsRefs,
     data: spellingCorrectorData,
     errorData: errorSpellingData
@@ -43,6 +44,7 @@ const Editor = ({ selfIntroduction }: Props) => {
           spellingCorrectorData={spellingCorrectorData}
           originalSpellingData={originalSpellingData}
           isFetchedAll={isFetchedAll}
+          isLoadingAll={isLoadingAll}
           spellingResultsRefs={spellingResultsRefs}
           getSpellInfo={getSpellInfo}
           answer={answer}

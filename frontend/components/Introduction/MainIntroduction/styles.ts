@@ -65,7 +65,7 @@ export const PinkCircle = styled.div`
   background-color: ${PALETTE.HOT_PINK};
   opacity: 0.6;
   animation-name: "pink-circle-rotation";
-  animation-duration: 10s;
+  animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
 
@@ -94,7 +94,7 @@ export const GreenCircle = styled.div`
   height: 1000px;
   z-index: -1;
   top: 50%;
-  animation-duration: 10s;
+  animation-duration: 5s;
   animation-name: "green-circle-rotation";
   animation-direction: reverse;
   position: absolute;
@@ -133,7 +133,7 @@ export const VioletCircle = styled.div`
   background-color: ${PALETTE.VIOLET};
   opacity: 0.6;
   position: absolute;
-  animation-duration: 10s;
+  animation-duration: 5s;
   animation-name: "violet-circle-rotation";
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);

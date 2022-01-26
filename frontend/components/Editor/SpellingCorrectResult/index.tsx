@@ -1,5 +1,6 @@
 import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
+import Image from "next/image";
 import { MouseEventHandler, MutableRefObject, RefObject } from "react";
 import * as S from "./styles";
 
@@ -8,6 +9,7 @@ interface Props {
   errorSpellingData: ReturnType<typeof useSpellingCorrecter>["errorData"];
   data: ReturnType<typeof useSpellingCorrecter>["data"];
   isFetchedAll: boolean;
+  isLoadingAll: boolean;
   spellingResultsRefs: MutableRefObject<RefObject<HTMLSpanElement>[] | undefined>;
   setAnswer: (value: string) => void;
   answer: string;
@@ -19,6 +21,7 @@ const SpellingCorrectResult = ({
   setAnswer,
   originalData,
   isFetchedAll,
+  isLoadingAll,
   data,
   spellingResultsRefs,
   errorSpellingData,
@@ -65,7 +68,11 @@ const SpellingCorrectResult = ({
 
   return (
     <S.Frame {...props}>
-      {
+      {isLoadingAll ? (
+        <S.LoadingImageWrapper>
+          <Image src="/loading.svg" alt="loading image" width="100" height="100" />
+        </S.LoadingImageWrapper>
+      ) : (
         <>
           {errorSpellingData.length > 0 ? (
             errorSpellingData.map(result => {
@@ -94,7 +101,7 @@ const SpellingCorrectResult = ({
             <>틀린 맞춤법이 없습니다.</>
           )}
         </>
-      }
+      )}
 
       <S.ColorInfo>
         {Object.keys(NAVER_SPELL_CHECK_RESULT_INFO).map(key => {

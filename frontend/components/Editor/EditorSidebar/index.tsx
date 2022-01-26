@@ -14,6 +14,7 @@ interface Props {
   errorSpellingData: ReturnType<typeof useSpellingCorrecter>["errorData"];
   originalSpellingData: string[];
   isFetchedAll: boolean;
+  isLoadingAll: boolean;
   spellingResultsRefs: MutableRefObject<RefObject<HTMLSpanElement>[] | undefined>;
   getSpellInfo: () => void;
   answer: string;
@@ -24,6 +25,7 @@ const EditorSidebar = ({
   spellingCorrectorData,
   originalSpellingData,
   isFetchedAll,
+  isLoadingAll,
   spellingResultsRefs,
   getSpellInfo,
   setAnswer,
@@ -84,7 +86,11 @@ const EditorSidebar = ({
       <S.SideBarContentWrapper>
         {selectedTab === "RecommendedIntroductions" && (
           <S.TabWrapper>
-            {!recommendedIntroductions && <Image src="/loading.svg" alt="loading image" width="100" height="100" />}
+            {!recommendedIntroductions && (
+              <S.LoadingImageWrapper>
+                <Image src="/loading.svg" alt="loading image" width="100" height="100" />
+              </S.LoadingImageWrapper>
+            )}
             {recommendedIntroductions
               ?.slice(0, recommendedSelfIntroductionAmount)
               .map((recommendedIntroduction, index) => {
@@ -108,12 +114,13 @@ const EditorSidebar = ({
         )}
         {selectedTab === "SpellingCheck" && (
           <S.TabWrapper>
-            <S.SpellingCheckButton type="button" onClick={onClickSpellingCheckButton}>
+            <S.SpellingCheckButton type="button" onClick={onClickSpellingCheckButton} disabled={isLoadingAll}>
               맞춤법검사
             </S.SpellingCheckButton>
             <S.SpellingCorrectResult
               originalData={originalSpellingData}
               isFetchedAll={isFetchedAll}
+              isLoadingAll={isLoadingAll}
               data={spellingCorrectorData}
               spellingResultsRefs={spellingResultsRefs}
               setAnswer={setAnswer}

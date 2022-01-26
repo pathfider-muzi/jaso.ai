@@ -153,6 +153,10 @@ export const PageMarkButton = styled.button`
   color: inherit;
   font-size: inherit;
   font-weight: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export const SaveButton = styled(ButtonComponent)`

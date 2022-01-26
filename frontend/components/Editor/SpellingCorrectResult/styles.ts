@@ -12,6 +12,14 @@ export const Frame = styled.div`
   width: 100%;
 `;
 
+export const LoadingImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ColorInfo = styled.div`
   margin-top: 13px;
   ${verticalStyle};
