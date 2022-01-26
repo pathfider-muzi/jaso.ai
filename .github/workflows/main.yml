@@ -1,0 +1,48 @@
+# This is a basic workflow to help you get started with Actions
+
+name: GCE Connect And Execute Script
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+        logLevel:
+          description: 'Log level'     
+          required: true
+          default: 'warning'
+        tags:
+          description: 'Test scenario tags'  
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCE_INSTANCE: api-server
+  GCE_INSTANCE_ZONE: asia-northeast3-a
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  setup-pull-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: GCP Github Action
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+            project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Connect GCE And execute continuous_deployment.sh
+        run: |
+          gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" -- 'cd /home/jam_min && sudo su root && ./continuous_deployment.sh'
