@@ -3,6 +3,7 @@ import RecommendedIntroduction from "@/components/Editor/RecommendedIntroduction
 import SELF_INTRODUCTION_ARTICLE_INFO from "@/constants/selfIntroductionArticleInfo";
 import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
+import shuffle from "@/utils/shuffle";
 import Image from "next/image";
 import { MutableRefObject, RefObject, useState } from "react";
 import * as S from "./styles";
@@ -107,7 +108,7 @@ const EditorSidebar = ({
         )}
         {selectedTab === "RecommendedArticle" && (
           <S.TabWrapper>
-            {SELF_INTRODUCTION_ARTICLE_INFO.map(({ title, link }, index) => {
+            {shuffle(SELF_INTRODUCTION_ARTICLE_INFO).map(({ title, link }, index) => {
               return <RecommendArticle key={index + link} link={link} title={title} />;
             })}
           </S.TabWrapper>

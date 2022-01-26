@@ -15,8 +15,8 @@ const Template: ComponentStory<typeof Editor> = args => (
       title: "제목없음",
       organisationName: "회사명",
       role: "역할",
-      createdDate: new Date(),
-      updatedDate: new Date()
+      createdDate: "10",
+      updatedDate: "10"
     }}
   />
 );

@@ -1,7 +1,7 @@
 export interface SelfIntroduction {
   id: number;
-  createdDate: Date;
-  updatedDate: Date;
+  createdDate: string;
+  updatedDate: string;
   title: string;
   organisationName: string;
   role: string;

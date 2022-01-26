@@ -12,7 +12,7 @@ export const Button = styled.button`
   ${BORDER.GRAY_150}
   border-radius: 10px;
   padding: 1rem;
-  width: 20rem;
+  width: 100%;
   transition: all 0.1s linear;
   white-space: nowrap;
   overflow: hidden;

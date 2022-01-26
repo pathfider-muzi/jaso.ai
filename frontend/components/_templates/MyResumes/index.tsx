@@ -40,20 +40,22 @@ const MyResumes = ({ ...props }: Props) => {
         <S.CardsWrapper>
           <S.PlusCard text="+" onClick={onClickPlusCard} />
 
-          {selfIntroductions?.map(selfIntroduction => {
-            return (
-              <S.CardWrapper key={selfIntroduction.id}>
-                <Link href={`${ROUTE.MY_RESUMES}/${selfIntroduction.id}`} passHref={true}>
-                  <a>
-                    <S.Card text={selfIntroduction.title} />
-                  </a>
-                </Link>
-                <S.DeleteButton type="button" onClick={() => onClickDeleteButton(selfIntroduction.id)}>
-                  {"×"}
-                </S.DeleteButton>
-              </S.CardWrapper>
-            );
-          })}
+          {selfIntroductions
+            ?.sort((prev, next) => new Date(next.updatedDate).getTime() - new Date(prev.updatedDate).getTime())
+            .map(selfIntroduction => {
+              return (
+                <S.CardWrapper key={selfIntroduction.id}>
+                  <Link href={`${ROUTE.MY_RESUMES}/${selfIntroduction.id}`} passHref={true}>
+                    <a>
+                      <S.Card text={selfIntroduction.title} />
+                    </a>
+                  </Link>
+                  <S.DeleteButton type="button" onClick={() => onClickDeleteButton(selfIntroduction.id)}>
+                    {"×"}
+                  </S.DeleteButton>
+                </S.CardWrapper>
+              );
+            })}
         </S.CardsWrapper>
       </S.Frame>
     </S.Screen>
