@@ -13,7 +13,7 @@ export class SelfIntroduction {
     @UpdateDateColumn()
     updatedDate: Date;
 
-    @Column()
+    @Column("longtext")
     title: string;
 
     @Column()

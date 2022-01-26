@@ -12,10 +12,10 @@ export class Qna {
     @UpdateDateColumn()
     updatedDate: Date;
 
-    @Column()
+    @Column("longtext")
     question: string;
 
-    @Column()
+    @Column("longtext")
     answer: string;
 
     @Column()
