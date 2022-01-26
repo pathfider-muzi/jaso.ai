@@ -1,9 +1,12 @@
+import deleteUser from "@/api/deleteUser";
 import getUser from "@/api/getUser";
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
+import ROUTE from "@/constants/routes";
 import { User } from "@/types/User";
 import { removeLocalStorage } from "@/utils/localStorage";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 interface Props {
   enabled?: boolean;
@@ -12,17 +15,29 @@ interface Props {
 }
 
 const useUser = ({ enabled = false, onSuccess, onError }: Props) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const { data, isLoading, isFetched, error, refetch } = useQuery<User>(["user"], getUser, {
     enabled,
     onSuccess,
     onError,
-    refetchOnWindowFocus: true
+    refetchOnWindowFocus: true,
+    retry: 0
+  });
+
+  const deleteUserMutation = useMutation(deleteUser, {
+    onSuccess: () => {
+      removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+      router.replace(ROUTE.HOME);
+    }
   });
 
   useEffect(() => {
     if (error) {
       removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
-      refetch();
+
+      queryClient.setQueryData(["user"], () => undefined);
     }
   }, [error, isLoading]);
 
@@ -31,7 +46,8 @@ const useUser = ({ enabled = false, onSuccess, onError }: Props) => {
     isLoading,
     isFetched,
     error,
-    getUser: refetch
+    getUser: refetch,
+    deleteUser: deleteUserMutation.mutate
   };
 };
 

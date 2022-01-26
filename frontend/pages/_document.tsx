@@ -1,8 +1,9 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { Head, Html, Main, NextScript } from "next/document";
 
 const MyDocument = () => {
   return (
     <Html>
+      {/* <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" /> */}
       <Head />
       <body>
         <Main />

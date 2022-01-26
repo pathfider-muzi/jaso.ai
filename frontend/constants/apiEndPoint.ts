@@ -1,3 +1,3 @@
-const API_ENDPOINT = "http://34.64.193.152:3000";
+const API_ENDPOINT = "https://api-jasoai.kro.kr";
 
 export default API_ENDPOINT;

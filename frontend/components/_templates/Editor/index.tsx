@@ -15,6 +15,7 @@ const Editor = ({ selfIntroduction }: Props) => {
     onChangeInput: onChangeQuestion,
     textAreaRef: questionTextAreaRef
   } = useTextArea("");
+
   const {
     input: answer,
     setInput: setAnswer,

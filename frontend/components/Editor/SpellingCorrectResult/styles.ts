@@ -15,6 +15,7 @@ export const Frame = styled.div`
 export const ColorInfo = styled.div`
   margin-top: 13px;
   ${verticalStyle};
+  align-items: flex-start;
   position: absolute;
   bottom: 0;
   right: 0;

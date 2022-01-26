@@ -1,12 +1,7 @@
-import deleteUser from "@/api/deleteUser";
-import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
-import ROUTE from "@/constants/routes";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
-import { removeLocalStorage } from "@/utils/localStorage";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
 import AdditionalInformation from "../AdditionalInformation";
 import AdditionalInformationModal from "../AdditionalInformationModal";
 import * as S from "./styles";
@@ -17,19 +12,10 @@ const AdditionalInformationContainer = ({ ...props }) => {
   const { isModalOpen, closeModal, openModal } = useModal({
     defaultValue: !isFilledAdditionalInfo
   });
-  const { user } = useUser({});
-  const { refetch: refetchDeleteUser } = useQuery("", deleteUser, {
-    enabled: false,
-    onSuccess: () => {
-      removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
-      router.replace(ROUTE.HOME);
-    }
-  });
+  const { user, deleteUser } = useUser({ enabled: false });
 
   const onClickDeleteUserButton = () => {
-    if (confirm("정말로 회원탈퇴하시겠습니까?")) {
-      refetchDeleteUser();
-    }
+    if (confirm("정말로 회원탈퇴하시겠습니까?")) deleteUser();
   };
 
   return (

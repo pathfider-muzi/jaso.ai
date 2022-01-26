@@ -66,19 +66,31 @@ export const Footer = styled.div`
   color: ${PALETTE.GRAY_500};
 `;
 
-export const TextCountWrapper = styled.span``;
+export const TextCountWrapper = styled.div``;
 
-export const TextCount = styled.span``;
+export const TextCount = styled.span`
+  &:focus {
+    ${BORDER.GRAY_300};
+  }
+`;
 
-export const ChangeTextCount = styled.button`
-  width: 100px;
-  margin-left: 2rem;
-  background-color: ${PALETTE.ORANGE};
-  height: 30px;
-  border-radius: 1rem;
+export const TextCountInput = styled.input`
+  width: 3rem;
+  color: inherit;
+  font-size: inherit;
+`;
+
+export const MaxCountChangeButton = styled.button`
+  background-color: ${PALETTE.WHITE};
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: ${PALETTE.BLACK_700};
+  ${BORDER.GRAY_150};
+  margin-left: 0.5rem;
+  transition: all 0.1s linear;
 
   &:hover {
-    color: ${PALETTE.WHITE};
+    ${BOX_SHADOW.DEFAULT};
   }
 `;
 

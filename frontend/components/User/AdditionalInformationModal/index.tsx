@@ -2,7 +2,7 @@ import updateUserInfo from "@/api/updateUserInfo";
 import Button from "@/components/_common/Button";
 import InputForm from "@/components/_common/InputForm";
 import useUser from "@/hooks/useUser";
-import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import CollegeSelector from "../CollegeSelector";
 import useAdditionalInfoInput from "../CollegeSelector/hooks/useAdditionalInfoInput";
 import MajorSelector from "../MajorSelector";
@@ -35,31 +35,25 @@ const AdditionalInformationModal = ({ isOpen, onClose }: Props) => {
     onChangeLicense
   } = useAdditionalInfoInput();
 
-  const { refetch: refetchUpdateUserInfo, isFetched: isUpdateInfoFetched } = useQuery<boolean>(
-    ["user-info", user?.id],
-    () =>
-      updateUserInfo({
-        name: user?.userInfos[0].name || "",
-        email: user?.userInfos[0].email || "",
-        university,
-        major,
-        grade,
-        languageScore,
-        career,
-        activity,
-        license
-      }),
-    {
-      enabled: false,
-      onSettled: () => {
-        onClose();
-        getUser();
-      }
+  const updateUserInfoMutation = useMutation(updateUserInfo, {
+    onSettled: () => {
+      onClose();
+      getUser();
     }
-  );
+  });
 
   const onClickSaveButton = () => {
-    refetchUpdateUserInfo();
+    updateUserInfoMutation.mutate({
+      name: user?.userInfos[0].name || "",
+      email: user?.userInfos[0].email || "",
+      university,
+      major,
+      grade,
+      languageScore,
+      career,
+      activity,
+      license
+    });
   };
 
   const isFieldAllSettled = [university, major, grade, languageScore, career, activity, license].every(

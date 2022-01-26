@@ -1,6 +1,7 @@
 import createQna from "@/api/createQna";
 import createSelfIntroduction from "@/api/createSelfIntroduction";
 import getSelfIntroductions from "@/api/getSelfIntroductions";
+import updateSelfIntroduction from "@/api/updateSelfIntroduction";
 import { parseISO } from "date-fns";
 import compareAsc from "date-fns/compareAsc";
 import { useMutation, useQuery } from "react-query";
@@ -21,7 +22,7 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
   });
 
   const qnaCreateMutation = useMutation(createQna);
-  const mutation = useMutation(createSelfIntroduction, {
+  const selfIntroductionCreateMutation = useMutation(createSelfIntroduction, {
     onSuccess: ({ id }) => {
       qnaCreateMutation.mutate({
         selfIntroductionId: id,
@@ -32,6 +33,8 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
       refetchSelfIntroductions();
     }
   });
+
+  const selfIntroductionUpdateMutation = useMutation(updateSelfIntroduction);
 
   const sortedSelfIntroductions =
     _selfIntroductions?.sort((prev, curr) => {
@@ -44,7 +47,8 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
     error,
     isFetched,
     isLoading,
-    createSelfIntroduction: mutation.mutate
+    createSelfIntroduction: selfIntroductionCreateMutation.mutate,
+    updateSelfIntroduction: selfIntroductionUpdateMutation.mutate
   };
 };
 

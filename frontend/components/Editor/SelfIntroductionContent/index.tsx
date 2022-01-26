@@ -10,15 +10,6 @@ interface Props {
 }
 
 const SelfIntroductionContent = ({ text, children, onChange, textareaRef, maxLength, ...props }: Props) => {
-  const limitMaxLength = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const target = event.target as HTMLTextAreaElement;
-
-    if (target.textLength > maxLength) {
-      alert("글자수가 " + maxLength + "자 이하로 제한됩니다");
-      target.textContent = target.textContent!.replace(target.textContent![maxLength], "");
-    }
-  };
-
   return (
     <S.Frame {...props}>
       <S.SpellErrorWrapper>{children}</S.SpellErrorWrapper>
@@ -33,7 +24,6 @@ const SelfIntroductionContent = ({ text, children, onChange, textareaRef, maxLen
         autoCapitalize="off"
         spellCheck="false"
         maxLength={maxLength}
-        onKeyUp={limitMaxLength}
       />
     </S.Frame>
   );

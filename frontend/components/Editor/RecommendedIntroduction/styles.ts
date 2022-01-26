@@ -52,4 +52,6 @@ export const Tag = styled.div`
   color: ${PALETTE.WHITE};
   border-radius: 10px;
   text-align: center;
+  font-weight: 600;
+  font-size: 0.8rem;
 `;

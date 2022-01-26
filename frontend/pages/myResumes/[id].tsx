@@ -3,6 +3,7 @@ import Editor from "@/components/_templates/Editor";
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import ROUTE from "@/constants/routes";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
+import useUser from "@/hooks/useUser";
 import { getLocalStorage } from "@/utils/localStorage";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -11,6 +12,7 @@ import { useQuery } from "react-query";
 
 const SelfIntroductionPage: NextPage = () => {
   const router = useRouter();
+  const { user } = useUser({ enabled: false });
 
   const { data: isFilledAdditionalInfo, isFetched: isFilledAdditionalInfoFetched } = useQuery(
     [""],
@@ -30,13 +32,13 @@ const SelfIntroductionPage: NextPage = () => {
 
       router.push({ pathname: ROUTE.USER_PROFILE, query: { isFilledAdditionalInfo: "false" } });
     }
-  }, [isFilledAdditionalInfo, isFilledAdditionalInfoFetched]);
+  }, [isFilledAdditionalInfo, isFilledAdditionalInfoFetched, router, user]);
 
   useEffect(() => {
     if (!isSelfIntroductionsFetched) return;
 
     if (!selfIntroduction) router.push(ROUTE.MY_RESUMES);
-  }, [selfIntroduction, isSelfIntroductionsFetched]);
+  }, [selfIntroduction, isSelfIntroductionsFetched, router]);
 
   if (!selfIntroduction) return <></>;
   return <Editor selfIntroduction={selfIntroduction} />;

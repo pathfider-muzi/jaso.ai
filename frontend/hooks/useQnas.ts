@@ -1,6 +1,9 @@
+import _createQna from "@/api/createQna";
+import _deleteQna from "@/api/deleteQna";
 import getQnas from "@/api/getQnas";
+import _updateQna from "@/api/updateQna";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 interface Props {
   enabled?: boolean;
@@ -16,12 +19,19 @@ const useQnas = ({ enabled = true, selfIntroductionId }: Props) => {
     }
   );
 
+  const qnaCreateMutation = useMutation(_createQna);
+  const qnaDeleteMutation = useMutation(_deleteQna);
+  const qnaUpdateMutation = useMutation(_updateQna);
+
   return {
-    data,
+    data: data || [],
     refetch,
     isLoading,
     isFetched,
-    error
+    error,
+    deleteQna: qnaDeleteMutation.mutate,
+    creatQna: qnaCreateMutation.mutate,
+    updateQna: qnaUpdateMutation.mutate
   };
 };
 

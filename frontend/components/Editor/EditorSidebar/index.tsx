@@ -6,6 +6,8 @@ import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
 import { MutableRefObject, RefObject, useState } from "react";
 import * as S from "./styles";
 
+const SELF_INTRODUCTION_AMOUNT_UNIT = 3;
+
 interface Props {
   spellingCorrectorData: ReturnType<typeof useSpellingCorrecter>["data"];
   errorSpellingData: ReturnType<typeof useSpellingCorrecter>["errorData"];
@@ -32,7 +34,21 @@ const EditorSidebar = ({
     "RecommendedIntroductions"
   );
 
+  const [recommendedSelfIntroductionAmount, setRecommendedSelfIntroductionAmount] =
+    useState(SELF_INTRODUCTION_AMOUNT_UNIT);
+
   const { recommendedIntroductions } = useSelfIntroductionRecommend({ enabled: true });
+
+  const canShowMoreRecommendedSelfIntroductions =
+    recommendedSelfIntroductionAmount + SELF_INTRODUCTION_AMOUNT_UNIT <= (recommendedIntroductions?.length || 0);
+
+  const onClickShowMoreRecommendedSelfIntroductionButton = () => {
+    if (!canShowMoreRecommendedSelfIntroductions) return;
+
+    setRecommendedSelfIntroductionAmount(state => {
+      return state + SELF_INTRODUCTION_AMOUNT_UNIT;
+    });
+  };
 
   const onClickSpellingCheckButton = () => {
     getSpellInfo();
@@ -67,11 +83,18 @@ const EditorSidebar = ({
       <S.SideBarContentWrapper>
         {selectedTab === "RecommendedIntroductions" && (
           <S.TabWrapper>
-            {recommendedIntroductions?.map((recommendedIntroduction, index) => {
-              return (
-                <RecommendedIntroduction key={recommendedIntroduction.title + index} {...recommendedIntroduction} />
-              );
-            })}
+            {recommendedIntroductions
+              ?.slice(0, recommendedSelfIntroductionAmount)
+              .map((recommendedIntroduction, index) => {
+                return (
+                  <RecommendedIntroduction key={recommendedIntroduction.title + index} {...recommendedIntroduction} />
+                );
+              })}
+            {canShowMoreRecommendedSelfIntroductions && (
+              <S.ShowMoreButton onClick={onClickShowMoreRecommendedSelfIntroductionButton} type="button">
+                더보기
+              </S.ShowMoreButton>
+            )}
           </S.TabWrapper>
         )}
         {selectedTab === "RecommendedArticle" && (

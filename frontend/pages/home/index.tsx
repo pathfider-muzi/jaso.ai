@@ -13,7 +13,7 @@ const HomePage: NextPage = () => {
     router.prefetch(ROUTE.EDITOR);
     router.prefetch(ROUTE.SIGN_UP);
     router.prefetch(ROUTE.USER_PROFILE);
-  }, []);
+  }, [router]);
 
   return <Home />;
 };

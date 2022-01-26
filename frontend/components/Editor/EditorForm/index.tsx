@@ -1,13 +1,9 @@
-import createQna from "@/api/createQna";
-import deleteQna from "@/api/deleteQna";
-import updateQna from "@/api/updateQna";
-import updateSelfIntroduction from "@/api/updateSelfIntroduction";
 import useInput from "@/hooks/useInput";
 import useQnas from "@/hooks/useQnas";
+import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
-import { useMutation } from "react-query";
 import * as S from "./styles";
 
 const INITIAL_PAGE_NUMBER = 1;
@@ -42,25 +38,30 @@ const EditorForm = ({
   originalSpellingData,
   ...props
 }: Props) => {
-  const qnaCreateMutation = useMutation(createQna);
-  const qnaDeleteMutation = useMutation(deleteQna);
-  const qnaUpdateMutation = useMutation(updateQna);
-  const selfIntroductionUpdateMutation = useMutation(updateSelfIntroduction);
-
-  const { input: title, onChangeInput: onChangeTitle } = useInput(selfIntroduction.title);
-  const { data: qnaList, refetch: refetchQnaList } = useQnas({
+  const {
+    data: qnaList,
+    refetch: refetchQnaList,
+    deleteQna,
+    creatQna,
+    updateQna
+  } = useQnas({
     enabled: true,
     selfIntroductionId: selfIntroduction.id
   });
 
   const [selectedPageNumber, setSelectedPageNumber] = useState(INITIAL_PAGE_NUMBER);
+  const [isEditableTextCount, setIsEditableTextCount] = useState(false);
+  const textCountRef = useRef<HTMLInputElement>(null);
+  const { updateSelfIntroduction } = useSelfIntroductions({ enabled: false });
+  const { input: title, onChangeInput: onChangeTitle } = useInput(selfIntroduction.title);
+  const { input: textCountInput, setInput: setTextCount, onChangeInput: onChangeTextCountInput } = useInput("0");
 
   const onClickPageMarkButton = (pageNum: number) => {
     setSelectedPageNumber(pageNum);
   };
 
   const onClickAddQnaButton = () => {
-    qnaCreateMutation.mutate(
+    creatQna(
       {
         selfIntroductionId: selfIntroduction.id,
         question: "",
@@ -78,7 +79,7 @@ const EditorForm = ({
   const onClickRemoveQnaButton = () => {
     if (!qnaList) return;
 
-    qnaDeleteMutation.mutate(
+    deleteQna(
       {
         selfIntroductionId: selfIntroduction.id,
         qnaId: qnaList[selectedPageNumber - 1]?.id
@@ -96,7 +97,7 @@ const EditorForm = ({
     if (!qnaList) return;
     const selectedQna = qnaList[selectedPageNumber - 1];
 
-    selfIntroductionUpdateMutation.mutate(
+    updateSelfIntroduction(
       {
         id: selfIntroduction.id,
         title: title,
@@ -105,7 +106,7 @@ const EditorForm = ({
       },
       {
         onSuccess: () => {
-          qnaUpdateMutation.mutate(
+          updateQna(
             {
               id: selectedQna.id,
               question,
@@ -125,53 +126,57 @@ const EditorForm = ({
     );
   };
 
-  const [isEditable, setEditable] = useState(false);
+  const onClickChangeTextCountButton = () => {
+    if (!isEditableTextCount) {
+      setIsEditableTextCount(true);
 
-  const textCountRef = useRef<HTMLSpanElement>(null);
-  const changeMaxTextCount = (event: React.KeyboardEvent<HTMLSpanElement>) => {
-    const target = event.target as HTMLSpanElement;
-
-    if (event.key === "Enter") {
-      event.preventDefault();
-
-      const newMaxCount = parseInt(target.textContent!);
-      if (newMaxCount <= 0) {
-        alert("최대 글자 수는 최소 1글자 이상이어야 합니다.");
-        return;
-      }
-      const selectedQna = qnaList![selectedPageNumber - 1];
-      qnaUpdateMutation.mutate(
-        {
-          id: selectedQna.id,
-          question,
-          answer,
-          maxCount: newMaxCount,
-          selfIntroductionId: selfIntroduction.id
-        },
-        {
-          onSuccess: () => {
-            refetchQnaList();
-            alert("최대 글자수가 변경되었습니다.");
-          }
-        }
-      );
-
-      textCountRef!.current!.blur();
-      setEditable(false);
+      return;
     }
-  };
-  useEffect(() => {
-    if (!qnaList) return;
 
+    if (answer.length > Number(textCountInput)) {
+      alert(`현재글자수 ${answer.length} 보다 높게 설정해야합니다.`);
+
+      return;
+    }
+
+    updateQna(
+      {
+        id: qnaList[selectedPageNumber - 1].id,
+        question,
+        answer,
+        maxCount: Number(textCountInput),
+        selfIntroductionId: selfIntroduction.id
+      },
+      {
+        onSuccess: () => {
+          refetchQnaList();
+          setIsEditableTextCount(false);
+          alert("최대 글자수가 변경되었습니다.");
+        }
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (qnaList.length === 0) return;
+
+    setIsEditableTextCount(false);
     setQuestion(qnaList[selectedPageNumber - 1].question);
     setAnswer(qnaList[selectedPageNumber - 1].answer);
   }, [qnaList, selectedPageNumber]);
 
-  if (!qnaList) return null;
+  useEffect(() => {
+    if (isEditableTextCount) {
+      textCountRef.current?.focus();
+      setTextCount(`${qnaList[selectedPageNumber - 1]?.maxCount || 0}`);
+    } else textCountRef.current?.blur();
+  }, [textCountRef, isEditableTextCount]);
+
+  if (qnaList.length === 0) return null;
   return (
     <S.Frame {...props}>
       <S.PageMarksWrapper>
-        {qnaList?.map((qna, index) => {
+        {qnaList.map((qna, index) => {
           return (
             <S.PageMarkButtonWrapper key={qna.id + index} active={index + 1 === selectedPageNumber}>
               <S.PageMarkButton type="button" onClick={() => onClickPageMarkButton(index + 1)}>
@@ -222,7 +227,7 @@ const EditorForm = ({
           text={answer}
           onChange={onChangeAnswer}
           textareaRef={answerTextAreaRef}
-          maxLength={qnaList[selectedPageNumber - 1].maxCount}
+          maxLength={qnaList[selectedPageNumber - 1]?.maxCount}
         >
           <>
             {spellingCorrectorData.map((spellingCorrecterResult, index) => {
@@ -249,23 +254,25 @@ const EditorForm = ({
 
       <S.Footer>
         <S.TextCountWrapper>
-          글자수: {answer.length} /
-          <S.TextCount
-            onKeyDown={changeMaxTextCount}
-            suppressContentEditableWarning={true}
-            contentEditable={isEditable}
-            ref={textCountRef}
-          >
-            {qnaList[selectedPageNumber - 1].maxCount}
-          </S.TextCount>
-          <S.ChangeTextCount
-            onClick={() => {
-              setEditable(true);
-              textCountRef.current?.focus();
-            }}
-          >
-            글자수 변경
-          </S.ChangeTextCount>
+          <span>{`글자수: ${answer.length} / `}</span>
+
+          {isEditableTextCount ? (
+            <S.TextCountInput
+              type="number"
+              value={textCountInput}
+              onChange={onChangeTextCountInput}
+              required
+              min={0}
+              max={answer.length}
+              ref={textCountRef}
+            />
+          ) : (
+            <S.TextCount>{qnaList[selectedPageNumber - 1].maxCount}</S.TextCount>
+          )}
+
+          <S.MaxCountChangeButton type="button" onClick={onClickChangeTextCountButton}>
+            {isEditableTextCount ? "확인" : "변경"}
+          </S.MaxCountChangeButton>
         </S.TextCountWrapper>
 
         <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
