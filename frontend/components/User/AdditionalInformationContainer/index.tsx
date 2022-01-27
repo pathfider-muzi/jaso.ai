@@ -31,7 +31,7 @@ const AdditionalInformationContainer = ({ ...props }) => {
         <AdditionalInformation label="전공" value={user?.userInfos[0].major || "-"} />
         <AdditionalInformation label="성적" value={user?.userInfos[0].grade || "-"} />
         <AdditionalInformation label="직군" value={user?.userInfos[0].career || "-"} />
-        <AdditionalInformation label="자격증" value={user?.userInfos[0].languageScore || "-"} />
+        <AdditionalInformation label="자격증" value={user?.userInfos[0].license || "-"} />
         <AdditionalInformation label="활동" value={user?.userInfos[0].activity || "-"} />
         <AdditionalInformation label="어학점수" value={user?.userInfos[0].languageScore || "-"} />
       </S.InfoList>

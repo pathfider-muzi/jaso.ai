@@ -1,11 +1,12 @@
-import COLLEGE_LIST from "@/components/User/CollegeSelector/constants/collegeList";
 import DebouncedSelector from "@/components/_common/DebouncedSelector";
+import COLLEGE_LIST from "@/constants/collegeList";
 import { useMemo } from "react";
 import { SingleValue } from "react-select";
 
 const MAX_COLLEGE_ITEM_COUNT = 100;
 interface Props {
   defaultValue: string;
+  isRequired: boolean;
   onChange: (
     newValue: SingleValue<{
       label: string;
@@ -14,7 +15,7 @@ interface Props {
   ) => void;
 }
 
-const CollegeSelector = ({ defaultValue, onChange }: Props) => {
+const CollegeSelector = ({ defaultValue, onChange, isRequired }: Props) => {
   const options = useMemo(() => {
     return COLLEGE_LIST.map(name => {
       return {
@@ -34,7 +35,7 @@ const CollegeSelector = ({ defaultValue, onChange }: Props) => {
     <DebouncedSelector
       title="대학교"
       isClearable={true}
-      isRequired={true}
+      isRequired={isRequired}
       defaultValue={defaultValue}
       onChange={onChange}
       delayMs={1000}

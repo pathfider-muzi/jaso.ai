@@ -1,4 +1,7 @@
+import NON_SELECT_VALUE from "./nonSelectValue";
+
 const COLLEGE_LIST = [
+  NON_SELECT_VALUE,
   "ICT폴리텍대학",
   "가야대학교(고령) 제2캠퍼스",
   "가야대학교(김해)",

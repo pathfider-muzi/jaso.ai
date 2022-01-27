@@ -1,4 +1,7 @@
+import NON_SELECT_VALUE from "./nonSelectValue";
+
 const MAJOR_LIST = [
+  NON_SELECT_VALUE,
   "선교언어학과",
   "선교언어학부",
   "선교언어학전공",
