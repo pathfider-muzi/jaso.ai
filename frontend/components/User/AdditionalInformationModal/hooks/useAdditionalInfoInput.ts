@@ -18,13 +18,13 @@ const useAdditionalInfoInput = () => {
   useEffect(() => {
     if (!user) return;
 
-    setUniversity(user.userInfos[0].university || "");
+    setUniversity(user.userInfos[0]?.university || "");
     setMajor(user.userInfos[0].major || "");
     setGrade(user.userInfos[0].grade || "");
     setLanguageScore(user.userInfos[0].languageScore || "");
     setCareer(user.userInfos[0].career || "");
     setActivity(user.userInfos[0].activity || "");
-    setLicenses(user.userInfos[0].license.split(" / ") || [""]);
+    setLicenses(user.userInfos[0].license?.split(" / ") || [""]);
   }, [user]);
 
   return {
