@@ -2,6 +2,7 @@ import getSpellCheckResult from "@/api/getSpellCheckResult";
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
 import { SpellCorrecterResponseType } from "@/types/SpellCorrecterResponse";
+import decodeHTML from "@/utils/decodeHTML";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { createRef, RefObject, useEffect, useMemo, useRef } from "react";
 import { useQueries } from "react-query";
@@ -85,16 +86,8 @@ const useSpellingCorrecter = ({ text }: Props) => {
 
   const data = useMemo(() => {
     return results.map((result, index) => {
-      const fixedText =
-        result.data?.message.result.notag_html
-          .replaceAll("<br>", "\n")
-          .replaceAll("&lt;", "<")
-          .replaceAll("&gt;", ">") || "";
-      const originalHTML =
-        result.data?.message.result.origin_html
-          .replaceAll("<br>", "\n")
-          .replaceAll("&lt;", "<")
-          .replaceAll("&gt;", ">") || "";
+      const fixedText = decodeHTML(result.data?.message.result.notag_html.replaceAll("<br>", "\n") || "");
+      const originalHTML = decodeHTML(result.data?.message.result.origin_html.replaceAll("<br>", "\n") || "");
 
       const errorInfo = result.data ? getErrorInfo(result.data.message.result.html) : undefined;
       const isCorrect = !errorInfo;

@@ -1,24 +1,26 @@
+import MAJOR_LIST from "@/constants/majorList";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 import Selector from "..";
-
-const options = [
-  { label: "A", value: "AA" },
-  { label: "B", value: "BB" },
-  { label: "C", value: "CC" },
-  { label: "D", value: "DD" },
-  { label: "E", value: "EE" }
-];
 
 export default {
   title: "Selector/Selector",
   component: Selector,
   argTypes: {
-    options: {
-      defaultValue: options
+    defaultValue: {
+      defaultValue: MAJOR_LIST[0]
     },
-    title: {
-      defaultValue: "라벨"
+    label: {
+      defaultValue: "학과"
+    },
+    isRequired: {
+      defaultValue: true
+    },
+    data: {
+      defaultValue: MAJOR_LIST
+    },
+    onChange: {
+      defaultValue: () => {}
     }
   }
 } as ComponentMeta<typeof Selector>;

@@ -1,16 +1,16 @@
 import { useMemo } from "react";
-import { SingleValue } from "react-select";
-import DebouncedSelector from "../DebouncedSelector";
+import { MultiValue } from "react-select";
+import DebouncedMultiSelector from "../DebouncedMultiSelector";
 import * as S from "./styles";
 
 const MAX_COLLEGE_ITEM_COUNT = 100;
 
 interface Props {
-  defaultValue: string;
+  defaultValue: string[];
   label: string;
   isRequired: boolean;
   onChange: (
-    newValue: SingleValue<{
+    newValue: MultiValue<{
       label: string;
       value: string;
     }>
@@ -18,7 +18,7 @@ interface Props {
   data: string[];
 }
 
-const Selector = ({ label, defaultValue, isRequired, onChange, data, ...props }: Props) => {
+const MultiSelector = ({ label, defaultValue, isRequired, onChange, data, ...props }: Props) => {
   const options = useMemo(() => {
     return data.map(_data => {
       return {
@@ -37,9 +37,10 @@ const Selector = ({ label, defaultValue, isRequired, onChange, data, ...props }:
 
   return (
     <S.Frame {...props}>
-      <DebouncedSelector
+      <DebouncedMultiSelector
         title={label}
         isClearable={true}
+        isMulti={true}
         isRequired={isRequired}
         defaultValue={defaultValue}
         onChange={onChange}
@@ -50,4 +51,4 @@ const Selector = ({ label, defaultValue, isRequired, onChange, data, ...props }:
   );
 };
 
-export default Selector;
+export default MultiSelector;

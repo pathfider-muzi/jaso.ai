@@ -1,12 +1,12 @@
 import PALETTE from "@/constants/styles/palette";
 import { useState } from "react";
-import { SingleValue } from "react-select";
+import { MultiValue } from "react-select";
 import AsyncSelect from "react-select/async";
 import * as S from "./styles";
 
 interface Props {
   title: string;
-  defaultValue: string;
+  defaultValue: string[];
   placeholder?: string;
   isClearable?: boolean;
   isDisabled?: boolean;
@@ -15,14 +15,14 @@ interface Props {
   delayMs: number;
   callback: (inputValue: string) => void;
   onChange: (
-    newValue: SingleValue<{
+    newValue: MultiValue<{
       label: string;
       value: string;
     }>
   ) => void;
 }
 
-const DebouncedSelector = ({
+const DebouncedMultiSelector = ({
   defaultValue,
   title,
   isClearable = false,
@@ -60,8 +60,14 @@ const DebouncedSelector = ({
       <AsyncSelect
         loadOptions={getAsyncOptions}
         onChange={onChange}
+        isMulti={true}
         defaultOptions
-        value={{ label: defaultValue, value: defaultValue }}
+        value={defaultValue.map(_option => {
+          return {
+            label: _option,
+            value: _option
+          };
+        })}
         cacheOptions={true}
         isLoading={isLoading}
         styles={{
@@ -79,4 +85,4 @@ const DebouncedSelector = ({
   );
 };
 
-export default DebouncedSelector;
+export default DebouncedMultiSelector;

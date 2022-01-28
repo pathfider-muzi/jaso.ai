@@ -453,6 +453,6 @@ const COLLEGE_LIST = [
   "홍익대학교",
   "홍익대학교 제2캠퍼스(세종)",
   "화신사이버대학교"
-] as const;
+];
 
 export default COLLEGE_LIST;

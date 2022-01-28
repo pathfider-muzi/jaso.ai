@@ -11847,6 +11847,6 @@ const MAJOR_LIST = [
   "뮤지컬ㆍ실용음악과",
   "뮤직테크놀로지학과",
   "음악학과 실용음악전공"
-] as const;
+];
 
 export default MAJOR_LIST;

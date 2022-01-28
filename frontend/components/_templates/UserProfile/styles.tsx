@@ -31,4 +31,5 @@ export const PersonalInformation = styled(PersonalInformationComponent)`
 
 export const AdditionalInformationContainer = styled(AdditionalInformationContainerComponent)`
   height: fit-content;
+  max-width: 60rem;
 `;

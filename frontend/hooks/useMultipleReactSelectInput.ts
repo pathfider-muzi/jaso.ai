@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { SingleValue } from "react-select";
+import { MultiValue } from "react-select";
 
-const useReactSelectInput = (defaultValue: string) => {
+const useMultipleReactSelectInput = (defaultValue: string[]) => {
   const [input, setInput] = useState(defaultValue);
 
   const onChangeInput = (
-    option: SingleValue<{
+    options: MultiValue<{
       label: string;
       value: string;
     }>
   ) => {
-    setInput(option?.value || "");
+    setInput(options?.map(option => option.value) || [""]);
   };
 
   return {
@@ -20,4 +20,4 @@ const useReactSelectInput = (defaultValue: string) => {
   };
 };
 
-export default useReactSelectInput;
+export default useMultipleReactSelectInput;

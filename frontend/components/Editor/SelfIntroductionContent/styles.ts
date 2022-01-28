@@ -17,7 +17,7 @@ export const SpellErrorWrapper = styled.div`
   border: none;
   outline: none;
   overflow-y: scroll;
-  max-height: 52rem;
+  max-height: 46.5rem;
 
   > {
     color: ${PALETTE.BLACK_900};
@@ -51,6 +51,6 @@ export const TextArea = styled.textarea`
   top: 0px;
   left: 0px;
   border: none;
-  max-height: 52rem;
+  max-height: 46.5rem;
   overflow-y: scroll;
 `;

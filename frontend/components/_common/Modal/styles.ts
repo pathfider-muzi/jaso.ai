@@ -21,8 +21,10 @@ export const Dimmed = styled.div`
 export const Frame = styled.div`
   ${BORDER.GRAY_150}
   background-color: ${PALETTE.WHITE};
-  min-width: 540px;
-  min-height: 600px;
+  min-width: 33rem;
+  max-width: 35rem;
+  min-height: 37.5rem;
+  max-height: 60rem;
   border-radius: 10px;
   padding: 1.5rem;
 `;
