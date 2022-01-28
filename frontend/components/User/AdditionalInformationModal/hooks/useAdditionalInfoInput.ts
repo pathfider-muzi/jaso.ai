@@ -24,7 +24,7 @@ const useAdditionalInfoInput = () => {
     setLanguageScore(user.userInfos[0].languageScore || "");
     setCareer(user.userInfos[0].career || "");
     setActivity(user.userInfos[0].activity || "");
-    setLicenses(user.userInfos[0].license?.split(" / ") || [""]);
+    setLicenses(user.userInfos[0].license?.split(" / ") || []);
   }, [user]);
 
   return {
