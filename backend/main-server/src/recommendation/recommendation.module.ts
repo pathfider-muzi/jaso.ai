@@ -1,7 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from '../user/user.module';
 import { JwtStrategy } from '../auth/jwt.strategy';
 import { RecommendationController } from './recommendation.controller';
 

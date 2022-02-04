@@ -2,7 +2,6 @@ import { Injectable, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm';
 import { AgreeToTermsRequestDto } from './dto/agreeToTermsRequestDto';
-import { CreateUserInfoRequestDto } from './dto/createUserInfoRequestDto';
 import { UpdateUserInfoRequestDto } from './dto/updateUserInfoRequestDto';
 import { User } from './entity/user.entity';
 import { UserInfo } from './entity/userInfo.entity';
@@ -103,14 +102,6 @@ export class UserService {
         career,
         activity,
         license
-    })
-  }
-
-  async deleteUserInfo(user: User): Promise<DeleteResult> {
-    console.log(`[DB] Delete UserInfo : ${user.kakaoId}`);
-
-    return await this.userInfoRepository.delete({
-      user
     })
   }
 

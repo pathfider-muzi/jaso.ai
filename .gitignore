@@ -402,6 +402,7 @@ dist
 # DB
 ormconfig.json
 ormconfig copy.json
+orm_config_2.json
 
 # crawling data
 crawling_json_files.zip
@@ -417,3 +418,14 @@ new/
 # ai models
 models
 
+# data
+valid_data_question_seperated_paragraph.zip
+valid_data_question_seperated.zip
+valid_data_question_seperated_paragraph*.json
+valid_data_question_seperated*.json
+
+# vs code
+settings.json
+
+# docker
+docker-compose_2.yml

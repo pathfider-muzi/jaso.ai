@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { CreateSelfIntroductionRequestDto } from './dto/createSelfIntroductionRequestDto';
-import { DeleteSelfIntroductionRequestDto } from './dto/deleteSelfIntroductionRequestDto';
 import { UpdateSelfIntroductionRequestDto } from './dto/updateSelfIntroductionRequestDto';
 import { SelfIntroduction } from './entity/selfIntroduction.entity';
 

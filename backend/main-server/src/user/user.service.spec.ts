@@ -65,14 +65,6 @@ describe('UserService', () => {
         })
       )
     }),
-    delete: jest.fn((params) => {
-      return (
-        Promise.resolve({
-          id: Date.now(),
-          params
-        })
-      )
-    }),
     findOne: jest.fn((params) => {
       return (
         Promise.resolve({
@@ -220,28 +212,6 @@ describe('UserService', () => {
       });
     
     expect(mockUserInfoRepository.update).toHaveBeenCalled();
-  });
-
-  it('should delete a userInfo', async () => {
-    const user = {
-      id: 3,
-      kakaoId,
-      nickname,
-      profileImage: profile_image_url,
-      agreeToTerms: false,
-      userInfos: [],
-      selfIntroductions: []
-    };
-
-    expect(await service.deleteUserInfo(user))
-      .toEqual({
-        id: expect.any(Number),
-        params: {
-          user
-        }
-      });
-    
-    expect(mockUserInfoRepository.delete).toHaveBeenCalled();
   });
 
   it('should agree to terms', async () => {

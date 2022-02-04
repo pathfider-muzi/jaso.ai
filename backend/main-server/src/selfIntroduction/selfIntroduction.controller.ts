@@ -2,7 +2,6 @@ import { Controller, Get, UseGuards, Request, Body, Post, Patch, Delete, NotFoun
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
 import { CreateSelfIntroductionRequestDto } from './dto/createSelfIntroductionRequestDto';
-import { DeleteSelfIntroductionRequestDto } from './dto/deleteSelfIntroductionRequestDto';
 import { UpdateSelfIntroductionRequestDto } from './dto/updateSelfIntroductionRequestDto';
 import { SelfIntroductionService } from './selfIntroduction.service';
 
