@@ -102,6 +102,18 @@ export const MaxCountChangeButton = styled.button`
   }
 `;
 
+export const ChangeTextCount = styled.button`
+  width: 100px;
+  margin-left: 2rem;
+  background-color: ${PALETTE.ORANGE};
+  height: 30px;
+  border-radius: 1rem;
+
+  &:hover {
+    color: ${PALETTE.WHITE};
+  }
+`;
+
 export const PageMarksWrapper = styled.ul`
   position: absolute;
   left: -0.5rem;

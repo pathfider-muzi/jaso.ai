@@ -5,6 +5,7 @@ import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";

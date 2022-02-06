@@ -3,7 +3,10 @@ import useQnas from "@/hooks/useQnas";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
+import { useRouter } from "next/router";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
+import PageMark from "../PageMark";
+import UnSaveAlert from "../UnSaveAlert";
 import * as S from "./styles";
 
 const INITIAL_PAGE_NUMBER = 1;
@@ -46,6 +49,27 @@ const EditorForm = ({
   });
 
   const [selectedPageNumber, setSelectedPageNumber] = useState(INITIAL_PAGE_NUMBER);
+  const router = useRouter();
+
+  const [isIntroductionSaved, setIntroductionSaved] = useState(true);
+  const [isAlertOpened, setAlertOpened] = useState(false);
+
+  const [nextLink, setNextLink] = useState("");
+
+  useEffect(() => {
+    router.beforePopState(({ as }) => {
+      if (as !== router.asPath && isIntroductionSaved === false) {
+        setNextLink(as);
+        setAlertOpened(true);
+        return false;
+      }
+      return true;
+    });
+
+    return () => {
+      router.beforePopState(() => true);
+    };
+  }, [router, isIntroductionSaved]);
   const [isEditableTextCount, setIsEditableTextCount] = useState(false);
   const textCountRef = useRef<HTMLInputElement>(null);
   const { updateSelfIntroduction } = useSelfIntroductions({ enabled: false });
@@ -120,6 +144,7 @@ const EditorForm = ({
         }
       }
     );
+    setIntroductionSaved(true);
   };
 
   const onClickChangeTextCountButton = () => {
@@ -170,6 +195,31 @@ const EditorForm = ({
 
   return (
     <S.Frame {...props}>
+      <S.PageMarksWrapper>
+        {qnaList.map((qna, index) => {
+          return (
+            <PageMark
+              key={qna.id}
+              qnaId={qna.id}
+              curIndex={index}
+              selectedPageNumber={selectedPageNumber}
+              onClickPageMarkButton={() => onClickPageMarkButton(index + 1)}
+            ></PageMark>
+          );
+        })}
+
+        <S.PageMarkButtonWrapper isOptionButton>
+          <S.PageMarkButton type="button" onClick={onClickAddQnaButton}>
+            {"+"}
+          </S.PageMarkButton>
+        </S.PageMarkButtonWrapper>
+        <S.PageMarkButtonWrapper isOptionButton>
+          <S.PageMarkButton type="button" onClick={onClickRemoveQnaButton} disabled={qnaList?.length === 1}>
+            {"-"}
+          </S.PageMarkButton>
+        </S.PageMarkButtonWrapper>
+      </S.PageMarksWrapper>
+
       <S.SelfIntroductionTitleWrapper>
         <S.SelfIntroductionTitle
           type="text"
@@ -179,7 +229,6 @@ const EditorForm = ({
           required
         />
       </S.SelfIntroductionTitleWrapper>
-
       <S.QuestionWrapper>
         <S.Question
           value={question}
@@ -196,7 +245,10 @@ const EditorForm = ({
       <S.AnswerWrapper>
         <S.SelfIntroductionContent
           text={answer}
-          onChange={onChangeAnswer}
+          onChange={event => {
+            onChangeAnswer(event);
+            setIntroductionSaved(false);
+          }}
           maxLength={qnaList[selectedPageNumber - 1]?.maxCount}
         >
           <>
@@ -247,29 +299,7 @@ const EditorForm = ({
 
         <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
       </S.Footer>
-
-      <S.PageMarksWrapper>
-        {qnaList.map((qna, index) => {
-          return (
-            <S.PageMarkButtonWrapper key={qna.id + index} active={index + 1 === selectedPageNumber}>
-              <S.PageMarkButton type="button" onClick={() => onClickPageMarkButton(index + 1)}>
-                {index + 1}
-              </S.PageMarkButton>
-            </S.PageMarkButtonWrapper>
-          );
-        })}
-
-        <S.PageMarkButtonWrapper isOptionButton>
-          <S.PageMarkButton type="button" onClick={onClickAddQnaButton}>
-            {"+"}
-          </S.PageMarkButton>
-        </S.PageMarkButtonWrapper>
-        <S.PageMarkButtonWrapper isOptionButton>
-          <S.PageMarkButton type="button" onClick={onClickRemoveQnaButton} disabled={qnaList?.length === 1}>
-            {"-"}
-          </S.PageMarkButton>
-        </S.PageMarkButtonWrapper>
-      </S.PageMarksWrapper>
+      <UnSaveAlert nextLink={nextLink} saveIntroduction={onClickSaveButton} isOpened={isAlertOpened}></UnSaveAlert>
     </S.Frame>
   );
 };
