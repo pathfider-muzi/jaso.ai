@@ -3,7 +3,7 @@ import { Body, Controller, Get, HttpException, NotFoundException, Post, Query, R
 import { catchError, lastValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
-import { RecommendFullTextRequestDto } from './dto/RecommendFullTextRequestDto';
+import { RecommendFullTextRequestDto } from './dto/recommendFullTextRequestDto';
 
 @Controller('recommendation')
 export class RecommendationController {
