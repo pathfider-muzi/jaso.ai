@@ -1,11 +1,13 @@
 import LoginModal from "@/components/Auth/LoginModal";
 import BRAND_NAME from "@/constants/brandName";
 import ROUTE from "@/constants/routes";
+import useCustomAlert from "@/hooks/Editor/useAlert";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
+import { RootState } from "@/modules/";
+import { changeAlertState, setNextLink } from "@/modules/confirmSaveIntroduction/actions";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";
@@ -23,6 +25,8 @@ const Header = ({ ...props }: Props) => {
     openLoginModal();
   };
 
+  const tryOpenCustomAlert = useCustomAlert();
+
   return (
     <>
       <S.Frame {...props}>
@@ -34,13 +38,18 @@ const Header = ({ ...props }: Props) => {
         </Link>
 
         <S.Nav>
-          <S.NavButton type="button" onClick={() => alert("준비중입니다.")}>
+          <S.NavButton
+            type="button"
+            onClick={() => {
+              alert("준비중입니다.");
+            }}
+          >
             공지사항
           </S.NavButton>
           <S.NavButton
             type="button"
             onClick={() => {
-              router.push(ROUTE.MY_RESUMES);
+              tryOpenCustomAlert(ROUTE.MY_RESUMES);
             }}
           >
             내 자기소개서

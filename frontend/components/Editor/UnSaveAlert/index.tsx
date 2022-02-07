@@ -1,21 +1,20 @@
 import _CustomAlert from "@/components/_common/CustomAlert";
+import { RootState } from "@/modules";
+import { changeAlertState, changeSavedState } from "@/modules/confirmSaveIntroduction/actions";
 import { useRouter } from "next/router";
-import { ChangeEventHandler, MouseEventHandler, ReactEventHandler, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 
 interface Props {
   saveIntroduction: () => void;
-  isOpened: boolean;
-  nextLink: string;
 }
 
-const UnSaveAlert = ({ saveIntroduction, isOpened, nextLink }: Props) => {
-  const [isOpenedValue, setOpenedValue] = useState(isOpened);
+const UnSaveAlert = ({ saveIntroduction }: Props) => {
+  // const [isOpenedValue, setOpenedValue] = useState(isOpened);
+  const isAlertOpened = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isAlertOpened);
+  const dispatch = useDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    setOpenedValue(isOpened);
-  }, [isOpened]);
+  const nextLink = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.nextLink);
 
   const saveAndClose = () => {
     saveIntroduction();
@@ -23,7 +22,8 @@ const UnSaveAlert = ({ saveIntroduction, isOpened, nextLink }: Props) => {
   };
 
   const closeAndGoToNextPage = () => {
-    setOpenedValue(false);
+    dispatch(changeAlertState(false));
+    dispatch(changeSavedState(true));
     router.push(nextLink);
   };
 
@@ -38,7 +38,7 @@ const UnSaveAlert = ({ saveIntroduction, isOpened, nextLink }: Props) => {
     <_CustomAlert
       title="자소서 저장이 안되있습니다. 저장하시겠습니까?"
       contentNode={saveOrNotUI}
-      isOpened={isOpenedValue}
+      isOpened={isAlertOpened}
     />
   );
 };

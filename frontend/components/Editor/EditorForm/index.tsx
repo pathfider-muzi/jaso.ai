@@ -2,9 +2,17 @@ import useInput from "@/hooks/useInput";
 import useQnas from "@/hooks/useQnas";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
+import { RootState } from "@/modules";
+import {
+  changeAlertState,
+  changePageState,
+  changeSavedState,
+  setNextLink
+} from "@/modules/confirmSaveIntroduction/actions";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
 import { useRouter } from "next/router";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PageMark from "../PageMark";
 import UnSaveAlert from "../UnSaveAlert";
 import * as S from "./styles";
@@ -51,16 +59,20 @@ const EditorForm = ({
   const [selectedPageNumber, setSelectedPageNumber] = useState(INITIAL_PAGE_NUMBER);
   const router = useRouter();
 
-  const [isIntroductionSaved, setIntroductionSaved] = useState(true);
-  const [isAlertOpened, setAlertOpened] = useState(false);
+  const isIntroductionSaved = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isSaved);
 
-  const [nextLink, setNextLink] = useState("");
+  // const [nextLink, setNextLink] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    router.beforePopState(({ as }) => {
-      if (as !== router.asPath && isIntroductionSaved === false) {
-        setNextLink(as);
-        setAlertOpened(true);
+    dispatch(changePageState(true));
+  }, []);
+
+  useEffect(() => {
+    router.beforePopState(({ as: nextLink }) => {
+      if (nextLink !== router.asPath && isIntroductionSaved === false) {
+        dispatch(setNextLink(nextLink));
+        dispatch(changeAlertState(true));
         return false;
       }
       return true;
@@ -69,7 +81,7 @@ const EditorForm = ({
     return () => {
       router.beforePopState(() => true);
     };
-  }, [router, isIntroductionSaved]);
+  }, [router, isIntroductionSaved, dispatch]);
   const [isEditableTextCount, setIsEditableTextCount] = useState(false);
   const textCountRef = useRef<HTMLInputElement>(null);
   const { updateSelfIntroduction } = useSelfIntroductions({ enabled: false });
@@ -144,7 +156,7 @@ const EditorForm = ({
         }
       }
     );
-    setIntroductionSaved(true);
+    dispatch(changeSavedState(true));
   };
 
   const onClickChangeTextCountButton = () => {
@@ -247,7 +259,7 @@ const EditorForm = ({
           text={answer}
           onChange={event => {
             onChangeAnswer(event);
-            setIntroductionSaved(false);
+            dispatch(changeSavedState(false));
           }}
           maxLength={qnaList[selectedPageNumber - 1]?.maxCount}
         >
@@ -299,7 +311,7 @@ const EditorForm = ({
 
         <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
       </S.Footer>
-      <UnSaveAlert nextLink={nextLink} saveIntroduction={onClickSaveButton} isOpened={isAlertOpened}></UnSaveAlert>
+      <UnSaveAlert saveIntroduction={onClickSaveButton}></UnSaveAlert>
     </S.Frame>
   );
 };
