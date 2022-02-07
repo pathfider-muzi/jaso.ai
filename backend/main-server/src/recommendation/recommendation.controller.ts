@@ -1,8 +1,9 @@
 import { HttpService } from '@nestjs/axios';
-import { Body, Controller, Get, HttpException, NotFoundException, Query, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, NotFoundException, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { catchError, lastValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
+import { RecommendFullTextRequestDto } from './dto/RecommendFullTextRequestDto';
 
 @Controller('recommendation')
 export class RecommendationController {
@@ -61,6 +62,34 @@ export class RecommendationController {
             hasFilledInRequiredFields: true,
             data: {
                 spec,
+                recommendationList
+            }
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('full-text')
+    async recommendFullTextBasedOnDto(@Body() recommendFullTextRequestDto: RecommendFullTextRequestDto, @Request() req) {
+        const kakaoId = req.user.kakaoId;
+        const { listNum, specification } = recommendFullTextRequestDto;
+        console.log(`[API] POST /recommendation/full-text : ${kakaoId} ${specification} ${listNum}`);
+        
+        const postData = {
+            "listNum": listNum,
+            "spec": specification
+        }
+    
+        // send numList and spec to ai server
+        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.90.233.102:3000/", postData, {  
+            timeout: 5000
+        }).pipe(
+            catchError(error => {
+                throw new HttpException(error.response.data, error.response.status);
+            })
+        ));
+
+        return {
+            data: {
                 recommendationList
             }
         }
