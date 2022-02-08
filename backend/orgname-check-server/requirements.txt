@@ -1,0 +1,4 @@
+Flask==2.0.2
+Flask_Cors==3.0.10
+pororo==0.4.2
+requests==2.27.1
