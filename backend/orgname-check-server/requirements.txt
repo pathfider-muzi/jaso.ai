@@ -1,4 +1,16 @@
+# Torch
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==1.6.0+cpu
+-f https://download.pytorch.org/whl/torch_stable.html
+torchvision==0.7.0+cpu 
+
+# Server
 Flask==2.0.2
 Flask_Cors==3.0.10
+gunicorn
+
+# Feature
 pororo==0.4.2
+
+# Test
 requests==2.27.1
