@@ -1,5 +1,5 @@
 import RecommendArticle from "@/components/Editor/RecommendArticle";
-import RecommendedIntroduction from "@/components/Editor/RecommendedIntroduction";
+import RecommendedIntroductionContainer from "@/components/Editor/RecommendedIntroductionContainer";
 import SELF_INTRODUCTION_ARTICLE_INFO from "@/constants/selfIntroductionArticleInfo";
 import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
@@ -7,8 +7,6 @@ import shuffle from "@/utils/shuffle";
 import Image from "next/image";
 import { MutableRefObject, RefObject, useState } from "react";
 import * as S from "./styles";
-
-const SELF_INTRODUCTION_AMOUNT_UNIT = 3;
 
 interface Props {
   spellingCorrectorData: ReturnType<typeof useSpellingCorrecter>["data"];
@@ -38,21 +36,7 @@ const EditorSidebar = ({
     "RecommendedIntroductions"
   );
 
-  const [recommendedSelfIntroductionAmount, setRecommendedSelfIntroductionAmount] =
-    useState(SELF_INTRODUCTION_AMOUNT_UNIT);
-
   const { recommendedIntroductions } = useSelfIntroductionRecommend({ enabled: true });
-
-  const canShowMoreRecommendedSelfIntroductions =
-    recommendedSelfIntroductionAmount + SELF_INTRODUCTION_AMOUNT_UNIT <= (recommendedIntroductions?.length || 0);
-
-  const onClickShowMoreRecommendedSelfIntroductionButton = () => {
-    if (!canShowMoreRecommendedSelfIntroductions) return;
-
-    setRecommendedSelfIntroductionAmount(state => {
-      return state + SELF_INTRODUCTION_AMOUNT_UNIT;
-    });
-  };
 
   const onClickSpellingCheckButton = () => {
     getSpellInfo();
@@ -87,22 +71,12 @@ const EditorSidebar = ({
       <S.SideBarContentWrapper>
         {selectedTab === "RecommendedIntroductions" && (
           <S.TabWrapper>
-            {!recommendedIntroductions && (
+            {recommendedIntroductions ? (
+              <RecommendedIntroductionContainer recommendedIntroductions={recommendedIntroductions} />
+            ) : (
               <S.LoadingImageWrapper>
                 <Image src="/loading.svg" alt="loading image" width="100" height="100" />
               </S.LoadingImageWrapper>
-            )}
-            {recommendedIntroductions
-              ?.slice(0, recommendedSelfIntroductionAmount)
-              .map((recommendedIntroduction, index) => {
-                return (
-                  <RecommendedIntroduction key={recommendedIntroduction.title + index} {...recommendedIntroduction} />
-                );
-              })}
-            {canShowMoreRecommendedSelfIntroductions && (
-              <S.ShowMoreButton onClick={onClickShowMoreRecommendedSelfIntroductionButton} type="button">
-                더보기
-              </S.ShowMoreButton>
             )}
           </S.TabWrapper>
         )}

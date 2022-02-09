@@ -35,7 +35,9 @@ export const ContentWrapper = styled.div`
   height: 15rem;
 `;
 
-export const Content = styled.span``;
+export const Content = styled.span`
+  white-space: break-spaces;
+`;
 
 export const Footer = styled.div`
   width: 100%;

@@ -87,16 +87,3 @@ export const SpellingCorrectResult = styled(SpellingCorrectResultComponent)`
   margin-top: 1rem;
   overflow-y: scroll;
 `;
-
-export const ShowMoreButton = styled.button`
-  width: 100%;
-  padding: 0.5rem 0;
-  text-align: center;
-  transition: all 0.1s linear;
-  border-radius: 10px;
-  ${BORDER.GRAY_150};
-
-  &:hover {
-    background-color: ${PALETTE.GRAY_150};
-  }
-`;

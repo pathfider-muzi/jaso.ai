@@ -8,6 +8,20 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
+const getUserInfoString = (user?: User) => {
+  if (!user) return "";
+
+  const userInfo = user.userInfos[0];
+
+  const { university, major, grade, languageScore, career, activity, license } = userInfo;
+
+  const userInfoString = [university, major, grade, languageScore, career, activity, license]
+    .map(field => field || "-")
+    .join(" / ");
+
+  return userInfoString;
+};
+
 interface Props {
   enabled?: boolean;
   onSuccess?: () => void;
@@ -47,7 +61,8 @@ const useUser = ({ enabled = false, onSuccess, onError }: Props) => {
     isFetched,
     error,
     getUser: refetch,
-    deleteUser: deleteUserMutation.mutate
+    deleteUser: deleteUserMutation.mutate,
+    userInfoString: getUserInfoString(data)
   };
 };
 
