@@ -6,7 +6,6 @@ from split_body import split_body
 app = Flask(__name__)
 CORS(app)
 ner = Pororo(task="ner", lang="ko")
-nerText = []
 
 @app.route("/orgname-check", methods=["POST"])
 def orgname_check():
@@ -15,6 +14,7 @@ def orgname_check():
         if requestText is None:
             return jsonify({"error": "no input data"})
         try:
+            nerText = []
             requestTexts = split_body(requestText['text'])
             for text in requestTexts:
                 nerText.extend(ner(text))
