@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { SelfIntroductionModule } from './selfIntroduction/selfIntroduction.module';
 import { QnaModule } from './qna/qna.module';
 import { RecommendationModule } from './recommendation/recommendation.module';
+import { OrgNameCheckerModule } from './orgNameChecker/orgNameChecker.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { RecommendationModule } from './recommendation/recommendation.module';
     UserModule,
     SelfIntroductionModule,
     QnaModule,
-    RecommendationModule
+    RecommendationModule,
+    OrgNameCheckerModule
   ],
   controllers: [],
   providers: [],
