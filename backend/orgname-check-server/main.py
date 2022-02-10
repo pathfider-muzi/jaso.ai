@@ -1,10 +1,12 @@
 from pororo import Pororo
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from split_body import split_body
 
 app = Flask(__name__)
 CORS(app)
 ner = Pororo(task="ner", lang="ko")
+nerText = []
 
 @app.route("/orgname-check", methods=["POST"])
 def orgname_check():
@@ -13,7 +15,9 @@ def orgname_check():
         if requestText is None:
             return jsonify({"error": "no input data"})
         try:
-            nerText = ner(requestText['text'])
+            requestTexts = split_body(requestText['text'])
+            for text in requestTexts:
+                nerText.extend(ner(text))
             return jsonify({'text': nerText})
         except Exception as e:
             return jsonify({"error": str(e)})
@@ -23,3 +27,4 @@ def orgname_check():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
