@@ -12,7 +12,7 @@ const SERVICE_KEYWORD = [
   {
     keyword: "생성하고",
     title: "자기소개서를 완성하고 취업에 성공하세요",
-    content: "이력서에 맞는 자기소개서 문장을 자동으로 생성해드릴 수 있습니다."
+    content: "AI기반으로 자기소개서 내용을 생성해드릴 수 있습니다."
   }
 ] as const;
 

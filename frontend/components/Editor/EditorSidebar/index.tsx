@@ -1,10 +1,8 @@
 import RecommendArticle from "@/components/Editor/RecommendArticle";
 import RecommendedIntroductionContainer from "@/components/Editor/RecommendedIntroductionContainer";
 import SELF_INTRODUCTION_ARTICLE_INFO from "@/constants/selfIntroductionArticleInfo";
-import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
 import shuffle from "@/utils/shuffle";
-import Image from "next/image";
 import { MutableRefObject, RefObject, useState } from "react";
 import * as S from "./styles";
 
@@ -35,8 +33,6 @@ const EditorSidebar = ({
   const [selectedTab, setSelectedTab] = useState<"RecommendedIntroductions" | "RecommendedArticle" | "SpellingCheck">(
     "RecommendedIntroductions"
   );
-
-  const { recommendedIntroductions } = useSelfIntroductionRecommend({ enabled: true });
 
   const onClickSpellingCheckButton = () => {
     getSpellInfo();
@@ -71,13 +67,7 @@ const EditorSidebar = ({
       <S.SideBarContentWrapper>
         {selectedTab === "RecommendedIntroductions" && (
           <S.TabWrapper>
-            {recommendedIntroductions ? (
-              <RecommendedIntroductionContainer recommendedIntroductions={recommendedIntroductions} />
-            ) : (
-              <S.LoadingImageWrapper>
-                <Image src="/loading.svg" alt="loading image" width="100" height="100" />
-              </S.LoadingImageWrapper>
-            )}
+            <RecommendedIntroductionContainer />
           </S.TabWrapper>
         )}
         {selectedTab === "RecommendedArticle" && (

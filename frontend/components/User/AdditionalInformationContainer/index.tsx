@@ -1,7 +1,10 @@
+import updateUserInfo from "@/api/updateUserInfo";
+import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useMutation } from "react-query";
 import AdditionalInformation from "../AdditionalInformation";
 import AdditionalInformationModal from "../AdditionalInformationModal";
 import * as S from "./styles";
@@ -12,10 +15,48 @@ const AdditionalInformationContainer = ({ ...props }) => {
   const { isModalOpen, closeModal, openModal } = useModal({
     defaultValue: !isFilledAdditionalInfo
   });
-  const { user, deleteUser } = useUser({ enabled: false });
+  const { user, deleteUser, getUser } = useUser({ enabled: false });
+
+  const {
+    university,
+    major,
+    grade,
+    languageScore,
+    career,
+    activity,
+    licenses,
+    onChangeUniversity,
+    onChangeMajor,
+    onChangeGrade,
+    onChangeLanguageScore,
+    onChangeCareer,
+    onChangeActivity,
+    onChangeLicenses
+  } = useAdditionalInfoInput();
 
   const onClickDeleteUserButton = () => {
     if (confirm("정말로 회원탈퇴하시겠습니까?")) deleteUser();
+  };
+
+  const updateUserInfoMutation = useMutation(updateUserInfo, {
+    onSettled: () => {
+      closeModal();
+      getUser();
+    }
+  });
+
+  const onClickSaveButton = () => {
+    updateUserInfoMutation.mutate({
+      name: user?.userInfos[0].name || "",
+      email: user?.userInfos[0].email || "",
+      university,
+      major,
+      grade,
+      languageScore,
+      career,
+      activity,
+      license: licenses.join(" / ")
+    });
   };
 
   return (
@@ -40,7 +81,27 @@ const AdditionalInformationContainer = ({ ...props }) => {
         <S.DeleteUserButton onClick={onClickDeleteUserButton}>회원탈퇴</S.DeleteUserButton>
       </S.Footer>
 
-      <AdditionalInformationModal isOpen={isModalOpen} onClose={closeModal} />
+      <AdditionalInformationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onClickSaveButton={onClickSaveButton}
+        additionalInput={{
+          university,
+          major,
+          grade,
+          languageScore,
+          career,
+          activity,
+          licenses,
+          onChangeUniversity,
+          onChangeMajor,
+          onChangeGrade,
+          onChangeLanguageScore,
+          onChangeCareer,
+          onChangeActivity,
+          onChangeLicenses
+        }}
+      />
     </S.Frame>
   );
 };

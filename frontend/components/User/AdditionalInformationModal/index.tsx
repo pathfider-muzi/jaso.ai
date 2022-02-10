@@ -1,26 +1,23 @@
-import updateUserInfo from "@/api/updateUserInfo";
 import Button from "@/components/_common/Button";
 import InputForm from "@/components/_common/InputForm";
-import MultiSelector from "@/components/_common/MutiSelector";
+import MultiSelector from "@/components/_common/MultiSelector";
 import Selector from "@/components/_common/Selector";
 import CAREER_CATEGORY from "@/constants/careerList";
 import COLLEGE_LIST from "@/constants/collegeList";
 import LICENSE_LIST from "@/constants/licenseList";
 import MAJOR_LIST from "@/constants/majorList";
 import NON_SELECT_VALUE from "@/constants/nonSelectValue";
-import useUser from "@/hooks/useUser";
-import { useMutation } from "react-query";
-import useAdditionalInfoInput from "./hooks/useAdditionalInfoInput";
+import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
 import * as S from "./styles";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  additionalInput: ReturnType<typeof useAdditionalInfoInput>;
+  onClickSaveButton: () => void;
 }
 
-const AdditionalInformationModal = ({ isOpen, onClose }: Props) => {
-  const { user, getUser } = useUser({ enabled: true });
-
+const AdditionalInformationModal = ({ isOpen, onClose, additionalInput, onClickSaveButton }: Props) => {
   const {
     university,
     major,
@@ -36,28 +33,7 @@ const AdditionalInformationModal = ({ isOpen, onClose }: Props) => {
     onChangeCareer,
     onChangeActivity,
     onChangeLicenses
-  } = useAdditionalInfoInput();
-
-  const updateUserInfoMutation = useMutation(updateUserInfo, {
-    onSettled: () => {
-      onClose();
-      getUser();
-    }
-  });
-
-  const onClickSaveButton = () => {
-    updateUserInfoMutation.mutate({
-      name: user?.userInfos[0].name || "",
-      email: user?.userInfos[0].email || "",
-      university,
-      major,
-      grade,
-      languageScore,
-      career,
-      activity,
-      license: licenses.join(" / ")
-    });
-  };
+  } = additionalInput;
 
   const isRequiredFieldAllSettled = [
     major.replace(NON_SELECT_VALUE, ""),

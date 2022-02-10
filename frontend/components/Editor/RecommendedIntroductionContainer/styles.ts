@@ -3,8 +3,10 @@ import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const AdditionalInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  height: 4rem;
   ${BORDER.GRAY_150};
   border-radius: 10px;
   padding: 1rem;
@@ -21,4 +23,16 @@ export const ShowMoreButton = styled.button`
   &:hover {
     background-color: ${PALETTE.GRAY_150};
   }
+`;
+
+export const LoadingImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ChangeSpecButton = styled.button`
+  font-weight: 900;
 `;

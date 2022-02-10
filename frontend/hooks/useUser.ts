@@ -2,16 +2,16 @@ import deleteUser from "@/api/deleteUser";
 import getUser from "@/api/getUser";
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import ROUTE from "@/constants/routes";
-import { User } from "@/types/User";
+import { User, UserInfo } from "@/types/User";
 import { removeLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-const getUserInfoString = (user?: User) => {
-  if (!user) return "";
-
-  const userInfo = user.userInfos[0];
+export const getUserInfoString = (
+  userInfo?: Pick<UserInfo, "university" | "activity" | "career" | "grade" | "languageScore" | "license" | "major">
+) => {
+  if (!userInfo) return "";
 
   const { university, major, grade, languageScore, career, activity, license } = userInfo;
 
@@ -62,7 +62,7 @@ const useUser = ({ enabled = false, onSuccess, onError }: Props) => {
     error,
     getUser: refetch,
     deleteUser: deleteUserMutation.mutate,
-    userInfoString: getUserInfoString(data)
+    userInfoString: getUserInfoString(data?.userInfos[0])
   };
 };
 

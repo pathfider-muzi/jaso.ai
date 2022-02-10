@@ -6,12 +6,13 @@ const RECOMMENDED_SELF_INTRODUCTION_AMOUNT = 50;
 
 interface Props {
   enabled?: boolean;
+  specification: string;
 }
 
-const useSelfIntroductionRecommend = ({ enabled = true }: Props) => {
+const useSelfIntroductionRecommend = ({ enabled = true, specification }: Props) => {
   const { data, isLoading, isFetched, error, refetch } = useQuery<RecommendedIntroductionType[]>(
     ["recommendIntroductions"],
-    () => getRecommendIntroductions(RECOMMENDED_SELF_INTRODUCTION_AMOUNT),
+    () => getRecommendIntroductions({ amount: RECOMMENDED_SELF_INTRODUCTION_AMOUNT, specification }),
     { enabled }
   );
 
