@@ -35,6 +35,11 @@ export const SpellErrorWrapper = styled.div`
   > .error-color-${NAVER_SPELL_CHECK_RESULT_INFO.red_text.className} {
     border-bottom: 3px dotted ${NAVER_SPELL_CHECK_RESULT_INFO.red_text.color};
   }
+
+  > .organization-name {
+    border-bottom: 3px dotted ${PALETTE.BLACK_700};
+    font-weight: 900;
+  }
 `;
 
 export const TextArea = styled.textarea`

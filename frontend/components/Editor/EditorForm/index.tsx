@@ -10,11 +10,13 @@ import {
   setNextLink
 } from "@/modules/confirmSaveIntroduction/actions";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PageMark from "../PageMark";
 import UnSaveAlert from "../UnSaveAlert";
+import useOrganizationName from "./hooks/useOrganizationName";
 import * as S from "./styles";
 
 const INITIAL_PAGE_NUMBER = 1;
@@ -56,32 +58,22 @@ const EditorForm = ({
     selfIntroductionId: selfIntroduction.id
   });
 
+  const {
+    isOrganizationHighlightChecked,
+    isLoadingGetOrganizationName,
+    onChangeOrganizationHighlightCheckBox,
+    organizationNames
+  } = useOrganizationName({
+    answer
+  });
+
   const [selectedPageNumber, setSelectedPageNumber] = useState(INITIAL_PAGE_NUMBER);
   const router = useRouter();
 
   const isIntroductionSaved = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isSaved);
 
-  // const [nextLink, setNextLink] = useState("");
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(changePageState(true));
-  }, []);
-
-  useEffect(() => {
-    router.beforePopState(({ as: nextLink }) => {
-      if (nextLink !== router.asPath && isIntroductionSaved === false) {
-        dispatch(setNextLink(nextLink));
-        dispatch(changeAlertState(true));
-        return false;
-      }
-      return true;
-    });
-
-    return () => {
-      router.beforePopState(() => true);
-    };
-  }, [router, isIntroductionSaved, dispatch]);
   const [isEditableTextCount, setIsEditableTextCount] = useState(false);
   const textCountRef = useRef<HTMLInputElement>(null);
   const { updateSelfIntroduction } = useSelfIntroductions({ enabled: false });
@@ -205,6 +197,25 @@ const EditorForm = ({
     } else textCountRef.current?.blur();
   }, [textCountRef, isEditableTextCount]);
 
+  useEffect(() => {
+    dispatch(changePageState(true));
+  }, []);
+
+  useEffect(() => {
+    router.beforePopState(({ as: nextLink }) => {
+      if (nextLink !== router.asPath && isIntroductionSaved === false) {
+        dispatch(setNextLink(nextLink));
+        dispatch(changeAlertState(true));
+        return false;
+      }
+      return true;
+    });
+
+    return () => {
+      router.beforePopState(() => true);
+    };
+  }, [router, isIntroductionSaved, dispatch]);
+
   return (
     <S.Frame {...props}>
       <S.PageMarksWrapper>
@@ -265,18 +276,26 @@ const EditorForm = ({
         >
           <>
             {spellingCorrectorData.map((spellingCorrecterResult, index) => {
+              const word = originalSpellingData[spellingCorrecterResult.positionIndex];
+
+              const detectedOrganizationName = organizationNames?.find(organizationName => {
+                return word.includes(organizationName);
+              });
+
+              const spellingResultClassName = spellingCorrecterResult.isCorrect
+                ? ""
+                : `error-color-${spellingCorrecterResult.errorInfo?.className}`;
+
+              const organizationClassName = detectedOrganizationName ? "organization-name" : "";
+
               const element = (
                 <span
                   key={spellingCorrecterResult.positionIndex + spellingCorrecterResult.fixedText}
                   ref={spellingResultsRefs.current?.[index]}
-                  className={
-                    spellingCorrecterResult.isCorrect
-                      ? ""
-                      : `error-color-${spellingCorrecterResult.errorInfo?.className}`
-                  }
+                  className={[spellingResultClassName, organizationClassName].join(" ")}
                   data-word-index={spellingCorrecterResult.positionIndex}
                 >
-                  {originalSpellingData[spellingCorrecterResult.positionIndex] + " "}
+                  {word + " "}
                 </span>
               );
 
@@ -309,7 +328,21 @@ const EditorForm = ({
           </S.MaxCountChangeButton>
         </S.TextCountWrapper>
 
-        <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
+        <S.Wrapper>
+          {isLoadingGetOrganizationName ? (
+            <S.LoadingImageWrapper>
+              <Image src="/loading.svg" alt="loading image" width="40" height="40" />
+            </S.LoadingImageWrapper>
+          ) : (
+            <S.CheckBoxWithLabel
+              isChecked={isOrganizationHighlightChecked}
+              onChange={onChangeOrganizationHighlightCheckBox}
+              text={"회사명 강조"}
+            />
+          )}
+
+          <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
+        </S.Wrapper>
       </S.Footer>
       <UnSaveAlert saveIntroduction={onClickSaveButton}></UnSaveAlert>
     </S.Frame>

@@ -1,5 +1,6 @@
 import SelfIntroductionContentComponent from "@/components/Editor/SelfIntroductionContent";
 import ButtonComponent from "@/components/_common/Button";
+import CheckBoxWithLabelComponent from "@/components/_common/CheckBoxWithLabel";
 import BORDER from "@/constants/styles/border";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
@@ -171,10 +172,25 @@ export const PageMarkButton = styled.button`
   }
 `;
 
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const SaveButton = styled(ButtonComponent)`
   background-color: ${PALETTE.BLUE};
   color: ${PALETTE.WHITE};
   font-size: 1.1rem;
   border: none;
   font-weight: 900;
+`;
+
+export const CheckBoxWithLabel = styled(CheckBoxWithLabelComponent)`
+  height: 2.5rem;
+  margin-right: 1rem;
+`;
+
+export const LoadingImageWrapper = styled.div`
+  height: 2.5rem;
+  margin-right: 2rem;
 `;

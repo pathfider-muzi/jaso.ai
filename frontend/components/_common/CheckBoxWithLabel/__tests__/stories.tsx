@@ -1,10 +1,10 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import TosCheckBox from "..";
+import CheckBoxWithLabel from "..";
 
 export default {
-  title: "TosCheckBox",
-  component: TosCheckBox,
+  title: "CheckBoxWithLabel",
+  component: CheckBoxWithLabel,
   argTypes: {
     isChecked: {
       defaultValue: false,
@@ -19,9 +19,9 @@ export default {
       }
     }
   }
-} as ComponentMeta<typeof TosCheckBox>;
+} as ComponentMeta<typeof CheckBoxWithLabel>;
 
-const Template: ComponentStory<typeof TosCheckBox> = args => <TosCheckBox {...args} />;
+const Template: ComponentStory<typeof CheckBoxWithLabel> = args => <CheckBoxWithLabel {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

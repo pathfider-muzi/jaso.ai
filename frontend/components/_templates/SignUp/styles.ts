@@ -1,3 +1,4 @@
+import CheckBoxWithLabelComponent from "@/components/_common/CheckBoxWithLabel";
 import ScreenComponent from "@/components/_layouts/Screen";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import styled from "@emotion/styled";
@@ -42,4 +43,8 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const CheckBoxWithLabel = styled(CheckBoxWithLabelComponent)`
+  margin: 1.5rem 0;
 `;

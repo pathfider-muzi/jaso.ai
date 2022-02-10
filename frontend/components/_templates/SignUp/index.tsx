@@ -1,5 +1,5 @@
-import TosCheckBox from "@/components/Auth/TosCheckBox";
 import TosContent from "@/components/Auth/TosContent";
+import CheckBoxWithLabel from "@/components/_common/CheckBoxWithLabel";
 import KakaoLoginButton from "@/components/_common/LoginButton/KakaoLoginButton";
 import TOS_CONTENT from "@/components/_templates/SignUp/constants/TosContent";
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
@@ -29,7 +29,7 @@ const SignUp = () => {
         <S.Body>
           <S.InputsWrapper>
             <TosContent label="약관" textContent={TOS_CONTENT} />
-            <TosCheckBox
+            <CheckBoxWithLabel
               isChecked={isChecked}
               text="이용약관 및 개인정보 처리방침에 동의합니다."
               onChange={onChangeCheckBox}

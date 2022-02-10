@@ -7,13 +7,13 @@ interface Props extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
   text: string;
 }
 
-const TosCheckBox = ({ isChecked, onChange, text }: Props) => {
+const CheckBoxWithLabel = ({ isChecked, onChange, text, ...props }: Props) => {
   return (
-    <S.Frame>
+    <S.Frame {...props}>
       <CheckBox checked={isChecked} name="checkbox" onChange={onChange} />
       <S.Text>{text}</S.Text>
     </S.Frame>
   );
 };
 
-export default TosCheckBox;
+export default CheckBoxWithLabel;
