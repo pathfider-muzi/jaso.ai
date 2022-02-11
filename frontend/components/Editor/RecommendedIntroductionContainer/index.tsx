@@ -81,29 +81,27 @@ const RecommendedIntroductionContainer = () => {
         </S.ChangeSpecButton>
       </S.AdditionalInfo>
 
-      {isModalOpen && (
-        <AdditionalInformationModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          onClickSaveButton={onClickSaveButton}
-          additionalInput={{
-            university,
-            major,
-            grade,
-            languageScore,
-            career,
-            activity,
-            licenses,
-            onChangeUniversity,
-            onChangeMajor,
-            onChangeGrade,
-            onChangeLanguageScore,
-            onChangeCareer,
-            onChangeActivity,
-            onChangeLicenses
-          }}
-        />
-      )}
+      <AdditionalInformationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onClickSaveButton={onClickSaveButton}
+        additionalInput={{
+          university,
+          major,
+          grade,
+          languageScore,
+          career,
+          activity,
+          licenses,
+          onChangeUniversity,
+          onChangeMajor,
+          onChangeGrade,
+          onChangeLanguageScore,
+          onChangeCareer,
+          onChangeActivity,
+          onChangeLicenses
+        }}
+      />
 
       {recommendedIntroductions ? (
         recommendedIntroductions.slice(0, recommendedSelfIntroductionAmount).map((recommendedIntroduction, index) => {
