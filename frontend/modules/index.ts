@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
 import confirmSavingIntroductionReducer from "./confirmSaveIntroduction/reducer";
 import introductionRecommendReducer from "./introductionRecommend/reducer";
+import recommendedAnswerOfQuestionReducer from "./recommendedAnswerOfQuestion/reducer";
 import introductionSpellCheckReducer from "./spellCheck/reducer";
 
 const rootReducer = combineReducers({
   introductionSpellCheckReducer: introductionSpellCheckReducer,
   introductionRecommendReducer: introductionRecommendReducer,
-  confirmSavingIntroductionReducer: confirmSavingIntroductionReducer
+  confirmSavingIntroductionReducer: confirmSavingIntroductionReducer,
+  recommendedAnswerOfQuestionReducer: recommendedAnswerOfQuestionReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

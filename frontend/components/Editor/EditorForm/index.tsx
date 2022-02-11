@@ -9,6 +9,7 @@ import {
   changeSavedState,
   setNextLink
 } from "@/modules/confirmSaveIntroduction/actions";
+import { changeQuestionTitleState } from "@/modules/recommendedAnswerOfQuestion/actions";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -71,9 +72,26 @@ const EditorForm = ({
   const router = useRouter();
 
   const isIntroductionSaved = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isSaved);
-
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(changePageState(true));
+  }, []);
+
+  useEffect(() => {
+    router.beforePopState(({ as: nextLink }) => {
+      if (nextLink !== router.asPath && isIntroductionSaved === false) {
+        dispatch(setNextLink(nextLink));
+        dispatch(changeAlertState(true));
+        return false;
+      }
+      return true;
+    });
+
+    return () => {
+      router.beforePopState(() => true);
+    };
+  }, [router, isIntroductionSaved, dispatch]);
   const [isEditableTextCount, setIsEditableTextCount] = useState(false);
   const textCountRef = useRef<HTMLInputElement>(null);
   const { updateSelfIntroduction } = useSelfIntroductions({ enabled: false });
@@ -81,6 +99,7 @@ const EditorForm = ({
   const { input: textCountInput, setInput: setTextCount, onChangeInput: onChangeTextCountInput } = useInput("0");
 
   const onClickPageMarkButton = (pageNum: number) => {
+    dispatch(changeQuestionTitleState(qnaList[pageNum - 1].question));
     setSelectedPageNumber(pageNum);
   };
 
@@ -111,7 +130,10 @@ const EditorForm = ({
       {
         onSuccess: () => {
           refetchQnaList();
-          setSelectedPageNumber(INITIAL_PAGE_NUMBER);
+          onClickPageMarkButton(INITIAL_PAGE_NUMBER);
+          if (selectedPageNumber === INITIAL_PAGE_NUMBER) {
+            dispatch(changeQuestionTitleState(qnaList[INITIAL_PAGE_NUMBER].question));
+          }
         }
       }
     );
@@ -255,7 +277,10 @@ const EditorForm = ({
       <S.QuestionWrapper>
         <S.Question
           value={question}
-          onChange={onChangeQuestion}
+          onChange={event => {
+            onChangeQuestion(event);
+            dispatch(changeQuestionTitleState(event.target.value));
+          }}
           placeholder="문항 입력"
           autoComplete="off"
           autoCorrect="off"

@@ -13,8 +13,8 @@ export const Frame = styled.div`
   color: ${PALETTE.BLACK_900};
   border-radius: 10px;
   width: 100%;
-  min-width: 22rem;
-  max-width: 32rem;
+  min-width: 25rem;
+  max-width: 35rem;
 
   @media (max-width: 1000px) {
     width: 100%;

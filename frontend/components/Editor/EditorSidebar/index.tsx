@@ -4,6 +4,7 @@ import SELF_INTRODUCTION_ARTICLE_INFO from "@/constants/selfIntroductionArticleI
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
 import shuffle from "@/utils/shuffle";
 import { MutableRefObject, RefObject, useState } from "react";
+import RecommendedAnswersContainer from "../RecommendedAnswersContainer";
 import * as S from "./styles";
 
 interface Props {
@@ -30,9 +31,19 @@ const EditorSidebar = ({
   errorSpellingData,
   ...props
 }: Props) => {
-  const [selectedTab, setSelectedTab] = useState<"RecommendedIntroductions" | "RecommendedArticle" | "SpellingCheck">(
-    "RecommendedIntroductions"
-  );
+  const TAB_TYPES = [
+    "RecommendedIntroductions",
+    "RecommendAnswerFromQuestion",
+    "CreateIntroductionFromResume",
+    "RecommendedArticle",
+    "SpellingCheck"
+  ] as const;
+
+  const TAB_NAMES = ["AI 추천 자소서", "ai 추천 문항", "이력서로 자소서 생성", "자소서 팁", "맞춤법 검사기"];
+
+  type TabType = typeof TAB_TYPES[number];
+
+  const [selectedTab, setSelectedTab] = useState<TabType>(TAB_TYPES[0]);
 
   const onClickSpellingCheckButton = () => {
     getSpellInfo();
@@ -41,27 +52,18 @@ const EditorSidebar = ({
   return (
     <S.Frame {...props}>
       <S.Nav>
-        <S.NavButton
-          type="button"
-          onClick={() => setSelectedTab("RecommendedIntroductions")}
-          isSelected={selectedTab === "RecommendedIntroductions"}
-        >
-          AI 추천 자소서
-        </S.NavButton>
-        <S.NavButton
-          type="button"
-          onClick={() => setSelectedTab("RecommendedArticle")}
-          isSelected={selectedTab === "RecommendedArticle"}
-        >
-          자소서 팁
-        </S.NavButton>
-        <S.NavButton
-          type="button"
-          onClick={() => setSelectedTab("SpellingCheck")}
-          isSelected={selectedTab === "SpellingCheck"}
-        >
-          맞춤법 검사기
-        </S.NavButton>
+        {TAB_TYPES.map((tabName: typeof TAB_TYPES[number], index) => {
+          return (
+            <S.NavButton
+              key={tabName}
+              type="button"
+              onClick={() => setSelectedTab(tabName)}
+              isSelected={selectedTab === tabName}
+            >
+              {TAB_NAMES[index]}
+            </S.NavButton>
+          );
+        })}
       </S.Nav>
 
       <S.SideBarContentWrapper>
@@ -70,12 +72,16 @@ const EditorSidebar = ({
             <RecommendedIntroductionContainer />
           </S.TabWrapper>
         )}
+
         {selectedTab === "RecommendedArticle" && (
           <S.TabWrapper>
             {shuffle(SELF_INTRODUCTION_ARTICLE_INFO).map(({ title, link }, index) => {
               return <RecommendArticle key={index + link} link={link} title={title} />;
             })}
           </S.TabWrapper>
+        )}
+        {selectedTab === "RecommendAnswerFromQuestion" && (
+          <S.TabWrapper>{<RecommendedAnswersContainer></RecommendedAnswersContainer>}</S.TabWrapper>
         )}
         {selectedTab === "SpellingCheck" && (
           <S.TabWrapper>

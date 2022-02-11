@@ -16,6 +16,7 @@ interface Props {}
 
 const Header = ({ ...props }: Props) => {
   const { user } = useUser({ enabled: true });
+
   const router = useRouter();
 
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal({});
