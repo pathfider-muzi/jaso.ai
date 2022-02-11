@@ -19,7 +19,7 @@ export class OrgNameCheckerController {
         console.log(`[API] POST /org-name-checker: ${kakaoId} ${checkOrgNameRequestDto.text}`);
 
         const { data: { text } } = await lastValueFrom(this.httpService.post("http://34.64.218.91:8000/orgname-check", checkOrgNameRequestDto, {  
-            timeout: 5000
+            timeout: 50000
         }).pipe(
             catchError(error => {
                 throw new HttpException(error.response.data, error.response.status);
