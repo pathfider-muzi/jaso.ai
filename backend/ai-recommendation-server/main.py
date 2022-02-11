@@ -14,7 +14,7 @@ from transformers import ElectraModel, ElectraTokenizer
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-device = 'cuda'
+device = 'cpu'
 checkpoint_dir = 'models/experiment/model_batch_16_lr_1e-05_norm_false/checkpoints+'
 feature_path = 'models/experiment/model_batch_16_lr_1e-05_norm_false/data_features.pkl'
 pretrained_model_path = 'models'
@@ -45,7 +45,7 @@ class ELECTRAEncoder(torch.nn.Module):
 	
 	def _init_weight(self, ckpt_dir):
 		print("Load weight from {}".format(ckpt_dir))
-		checkpoint = torch.load(ckpt_dir)
+		checkpoint = torch.load(ckpt_dir, map_location=torch.device('cpu'))
 		self.load_state_dict(checkpoint) 
 
 def build_model(pretrained_model_path, ckpt_dir, device):

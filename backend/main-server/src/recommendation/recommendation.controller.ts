@@ -50,7 +50,7 @@ export class RecommendationController {
         }
 
         // send numList and spec to ai server
-        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.90.233.102:3000/", postData, {  
+        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
             timeout: 5000
         }).pipe(
             catchError(error => {
@@ -80,7 +80,7 @@ export class RecommendationController {
         }
     
         // send numList and spec to ai server
-        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.90.233.102:3000/", postData, {  
+        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
             timeout: 5000
         }).pipe(
             catchError(error => {
