@@ -3,7 +3,9 @@ import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const Frame = styled.section`
-  width: 400px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   text-align: center;
   box-shadow: ${BOX_SHADOW.BOLD};
   border: 1px solid ${PALETTE.GRAY_200};
@@ -19,9 +21,11 @@ export const Answer = styled.div`
   margin-bottom: 6px;
 `;
 
-export const CopyPaste = styled.image`
-  left: 160px;
-  padding-top: 5px;
-  position: relative;
-  bottom: -5px;
+export const CopyPaste = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
 `;

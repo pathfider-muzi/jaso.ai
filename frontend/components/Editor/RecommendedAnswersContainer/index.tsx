@@ -42,7 +42,7 @@ const RecommendedAnswersContainer = () => {
   return (
     <S.Frame>
       {recommendedAnswers.slice(0, recommendedAnswersAmount).map((recommendedAnswer: string, index: number) => {
-        return <RecommendedAnswer key={index} answer={recommendedAnswer}></RecommendedAnswer>;
+        return <RecommendedAnswer key={recommendedAnswer + index} answer={recommendedAnswer} />;
       })}
       {canShowMoreRecommendedAnswers && (
         <S.ShowMoreButton onClick={onClickShowMoreRecommendedAnswersButton} type="button">

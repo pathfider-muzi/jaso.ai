@@ -22,8 +22,8 @@ export const Frame = styled.div`
   ${BORDER.GRAY_150}
   background-color: ${PALETTE.WHITE};
   min-width: 33rem;
+  min-height: 50%;
   max-width: 35rem;
-  min-height: 37.5rem;
   max-height: 60rem;
   border-radius: 10px;
   padding: 1.5rem;

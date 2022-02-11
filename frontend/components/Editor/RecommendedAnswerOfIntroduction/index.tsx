@@ -1,7 +1,5 @@
-import * as S from "./styles";
 import Image from "next/image";
-import { useRef } from "react";
-import { TextArea } from "../SelfIntroductionContent/styles";
+import * as S from "./styles";
 
 interface Props {
   answer: string;
@@ -17,7 +15,7 @@ const RecommendedAnswer = ({ answer }: Props) => {
     <S.Frame>
       <S.Answer>{answer}</S.Answer>
       <S.CopyPaste>
-        <Image src="/copy_paste_icon.png" alt="복붙" width="50" height="50" onClick={() => copyPaste(answer)} />
+        <Image src="/copy_paste_icon.png" alt="복붙" width="35" height="35" onClick={() => copyPaste(answer)} />
       </S.CopyPaste>
     </S.Frame>
   );
