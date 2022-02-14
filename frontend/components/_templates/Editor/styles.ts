@@ -16,8 +16,6 @@ export const Frame = styled.div`
   justify-content: center;
   min-height: 60rem;
   max-height: 90vh;
-  overflow-y: scroll;
-  overflow: hidden;
 
   @media (max-width: 1000px) {
     flex-direction: column;

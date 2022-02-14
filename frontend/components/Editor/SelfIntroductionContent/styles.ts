@@ -8,7 +8,11 @@ export const Frame = styled.div`
   width: 100%;
 `;
 
-export const SpellErrorWrapper = styled.div`
+export const SpellErrorWrapper = styled.div<{
+  styles: {
+    height: number;
+  };
+}>`
   color: ${PALETTE.BLACK_900};
   z-index: 0;
   white-space: pre-wrap;
@@ -17,7 +21,8 @@ export const SpellErrorWrapper = styled.div`
   border: none;
   outline: none;
   overflow-y: scroll;
-  max-height: 46.5rem;
+  min-height: 46rem;
+  max-height: ${({ styles: { height } }) => height}px;
 
   > {
     color: ${PALETTE.BLACK_900};
@@ -42,11 +47,16 @@ export const SpellErrorWrapper = styled.div`
   }
 `;
 
-export const TextArea = styled.textarea`
+export const TextArea = styled.textarea<{
+  styles: {
+    height: number;
+  };
+}>`
   background-color: transparent;
   color: transparent;
   caret-color: ${PALETTE.BLACK_900};
-  height: 100%;
+  min-height: 46rem;
+  max-height: ${({ styles: { height } }) => height}px;
   width: 100%;
   outline: none;
   resize: none;
@@ -56,6 +66,6 @@ export const TextArea = styled.textarea`
   top: 0px;
   left: 0px;
   border: none;
-  max-height: 46.5rem;
+
   overflow-y: scroll;
 `;
