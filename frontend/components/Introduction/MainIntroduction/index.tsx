@@ -14,7 +14,7 @@ const MainIntroduction = ({ ...props }) => {
 
   const onClickGetStartButton = () => {
     if (user) {
-      router.push(ROUTE.MY_RESUMES);
+      router.push(ROUTE.MY_SELFINTRODUCTIONS);
     } else {
       removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
       openModal();

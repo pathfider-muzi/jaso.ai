@@ -4,8 +4,6 @@ import ROUTE from "@/constants/routes";
 import useCustomAlert from "@/hooks/Editor/useAlert";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
-import { RootState } from "@/modules/";
-import { changeAlertState, setNextLink } from "@/modules/confirmSaveIntroduction/actions";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "../Button";
@@ -50,7 +48,7 @@ const Header = ({ ...props }: Props) => {
           <S.NavButton
             type="button"
             onClick={() => {
-              tryOpenCustomAlert(ROUTE.MY_RESUMES);
+              tryOpenCustomAlert(ROUTE.MY_SELFINTRODUCTIONS);
             }}
           >
             내 자기소개서

@@ -37,7 +37,7 @@ const SelfIntroductionPage: NextPage = () => {
   useEffect(() => {
     if (!isSelfIntroductionsFetched) return;
 
-    if (!selfIntroduction) router.push(ROUTE.MY_RESUMES);
+    if (!selfIntroduction) router.push(ROUTE.MY_SELFINTRODUCTIONS);
   }, [selfIntroduction, isSelfIntroductionsFetched, router]);
 
   if (!selfIntroduction) return <></>;

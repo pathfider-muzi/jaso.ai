@@ -9,7 +9,7 @@ import * as S from "./styles";
 
 interface Props {}
 
-const MyResumes = ({ ...props }: Props) => {
+const MySelfIntroductions = ({ ...props }: Props) => {
   const { selfIntroductions, createSelfIntroduction, refetchSelfIntroductions } = useSelfIntroductions({});
   const deleteSelfIntroductionMutation = useMutation(deleteSelfIntroduction);
 
@@ -45,7 +45,7 @@ const MyResumes = ({ ...props }: Props) => {
             .map(selfIntroduction => {
               return (
                 <S.CardWrapper key={selfIntroduction.id}>
-                  <Link href={`${ROUTE.MY_RESUMES}/${selfIntroduction.id}`} passHref={true}>
+                  <Link href={`${ROUTE.MY_SELFINTRODUCTIONS}/${selfIntroduction.id}`} passHref={true}>
                     <a>
                       <S.Card text={selfIntroduction.title} />
                     </a>
@@ -62,4 +62,4 @@ const MyResumes = ({ ...props }: Props) => {
   );
 };
 
-export default MyResumes;
+export default MySelfIntroductions;
