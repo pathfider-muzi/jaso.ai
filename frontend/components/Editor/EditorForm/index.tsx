@@ -311,16 +311,25 @@ const EditorForm = ({
                 ? ""
                 : `error-color-${spellingCorrecterResult.errorInfo?.className}`;
 
-              const organizationClassName = detectedOrganizationName ? "organization-name" : "";
-
               const element = (
                 <span
                   key={spellingCorrecterResult.positionIndex + spellingCorrecterResult.fixedText}
                   ref={spellingResultsRefs.current?.[index]}
-                  className={[spellingResultClassName, organizationClassName].join(" ")}
+                  className={spellingResultClassName}
                   data-word-index={spellingCorrecterResult.positionIndex}
                 >
-                  {word + " "}
+                  {detectedOrganizationName ? (
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: `${(word + " ").replaceAll(
+                          detectedOrganizationName,
+                          `<span class='organization-name'>${detectedOrganizationName}</span>`
+                        )}`
+                      }}
+                    />
+                  ) : (
+                    <span>{word + " "}</span>
+                  )}
                 </span>
               );
 
