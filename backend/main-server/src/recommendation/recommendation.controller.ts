@@ -3,6 +3,7 @@ import { Body, Controller, Get, HttpException, NotFoundException, Post, Query, R
 import { catchError, lastValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
+import { RecommendAnswerRequestDto } from './dto/recommendAnswerRequestDto';
 import { RecommendFullTextRequestDto } from './dto/recommendFullTextRequestDto';
 
 @Controller('recommendation')
@@ -81,6 +82,35 @@ export class RecommendationController {
     
         // send numList and spec to ai server
         const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
+            timeout: 5000
+        }).pipe(
+            catchError(error => {
+                throw new HttpException(error.response.data, error.response.status);
+            })
+        ));
+
+        return {
+            data: {
+                recommendationList
+            }
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('answer')
+    async recommendAnswer(@Body() recommendAnswerRequestDto: RecommendAnswerRequestDto, @Request() req) {
+        const kakaoId = req.user.kakaoId;
+        const { listNum, question, specification } = recommendAnswerRequestDto;
+        console.log(`[API] POST /recommendation/answer: ${kakaoId} ${question} ${specification} ${listNum}`);
+        const spec = `${question} / ${specification}`;
+
+        const postData = {
+            "listNum": listNum,
+            "spec": spec
+        }
+
+        // send numList and spec to ai server
+        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.180.204:3000/", postData, {  
             timeout: 5000
         }).pipe(
             catchError(error => {
