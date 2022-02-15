@@ -423,6 +423,7 @@ valid_data_question_seperated_paragraph.zip
 valid_data_question_seperated.zip
 valid_data_question_seperated_paragraph*.json
 valid_data_question_seperated*.json
+project_resume.json
 
 # vs code
 settings.json
