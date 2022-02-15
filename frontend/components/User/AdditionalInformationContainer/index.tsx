@@ -11,9 +11,8 @@ import * as S from "./styles";
 
 const AdditionalInformationContainer = ({ ...props }) => {
   const router = useRouter();
-  const isFilledAdditionalInfo = Boolean(router.query.isFilledAdditionalInfo !== "false");
   const { isModalOpen, closeModal, openModal } = useModal({
-    defaultValue: !isFilledAdditionalInfo
+    defaultValue: false
   });
   const { user, deleteUser, getUser } = useUser({ enabled: false });
 

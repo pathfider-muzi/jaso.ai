@@ -18,6 +18,7 @@ export const Frame = styled.div`
   max-height: 90vh;
 
   @media (max-width: 1000px) {
+    max-height: fit-content;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
@@ -25,12 +26,18 @@ export const Frame = styled.div`
 `;
 
 export const EditorForm = styled(EditorFormComponent)`
+  margin-right: 1rem;
   @media (max-width: 1000px) {
+    margin-right: 0;
     width: 100%;
     margin-bottom: 1rem;
   }
 `;
 
 export const EditorSidebar = styled(EditorSidebarComponent)`
+  min-height: 30rem;
   color: ${PALETTE.BLACK_900};
+  @media (max-width: 1000px) {
+    max-width: 100%;
+  }
 `;

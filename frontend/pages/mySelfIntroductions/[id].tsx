@@ -14,11 +14,17 @@ const SelfIntroductionPage: NextPage = () => {
   const router = useRouter();
   const { user } = useUser({ enabled: false });
 
-  const { data: isFilledAdditionalInfo, isFetched: isFilledAdditionalInfoFetched } = useQuery(
-    ["isFilledAdditionalInfo"],
-    getIsFilledAdditionalInfo,
-    { enabled: true }
-  );
+  useQuery(["isFilledAdditionalInfo"], getIsFilledAdditionalInfo, {
+    enabled: true,
+    onSettled: isFilledAdditionalInfo => {
+      if (!isFilledAdditionalInfo) {
+        alert("에디터를 사용하기 위해서는 추가정보를 입력해야합니다.\n회원정보 페이지로 이동합니다.");
+
+        router.push(ROUTE.USER_PROFILE);
+      }
+    }
+  });
+
   const selfIntroductionId = Number(router.query.id as string);
   const { selfIntroductions, isFetched: isSelfIntroductionsFetched } = useSelfIntroductions({ enabled: true });
 
@@ -26,13 +32,7 @@ const SelfIntroductionPage: NextPage = () => {
 
   useEffect(() => {
     if (!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)) router.replace(ROUTE.HOME);
-    if (!isFilledAdditionalInfoFetched) return;
-    if (!isFilledAdditionalInfo) {
-      alert("에디터를 사용하기 위해서는 추가정보를 입력해야합니다.\n회원정보 페이지로 이동합니다.");
-
-      router.push({ pathname: ROUTE.USER_PROFILE, query: { isFilledAdditionalInfo: "false" } });
-    }
-  }, [isFilledAdditionalInfo, isFilledAdditionalInfoFetched, router, user]);
+  }, [router, user]);
 
   useEffect(() => {
     if (!isSelfIntroductionsFetched) return;

@@ -12,7 +12,6 @@ export const Frame = styled.div`
   width: 100%;
   min-width: 35rem;
   border-radius: 10px;
-  margin-right: 1rem;
   ${BORDER.GRAY_150};
   ${BOX_SHADOW.DEFAULT}
   color: ${PALETTE.BLACK_900};
@@ -20,10 +19,6 @@ export const Frame = styled.div`
   justify-content: flex-start;
   padding: 0.5rem 1.5rem;
   height: 100%;
-
-  @media (max-width: 1000px) {
-    min-height: 30rem;
-  }
 `;
 
 export const SelfIntroductionTitleWrapper = styled.div`

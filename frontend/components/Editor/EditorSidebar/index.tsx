@@ -1,11 +1,17 @@
-import RecommendArticle from "@/components/Editor/RecommendArticle";
 import RecommendedIntroductionContainer from "@/components/Editor/RecommendedIntroductionContainer";
-import SELF_INTRODUCTION_ARTICLE_INFO from "@/constants/selfIntroductionArticleInfo";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
-import shuffle from "@/utils/shuffle";
 import { MutableRefObject, RefObject, useState } from "react";
 import RecommendedAnswersContainer from "../RecommendedAnswersContainer";
 import * as S from "./styles";
+
+const TAB_TYPES = [
+  "RecommendedIntroductions",
+  "RecommendAnswerFromQuestion",
+  "CreateIntroductionFromResume",
+  "SpellingCheck"
+] as const;
+
+const TAB_NAMES = ["AI 추천 자소서", "ai 추천 문항", "이력서로 자소서 생성", "맞춤법 검사기"];
 
 interface Props {
   spellingCorrectorData: ReturnType<typeof useSpellingCorrecter>["data"];
@@ -31,16 +37,6 @@ const EditorSidebar = ({
   errorSpellingData,
   ...props
 }: Props) => {
-  const TAB_TYPES = [
-    "RecommendedIntroductions",
-    "RecommendAnswerFromQuestion",
-    "CreateIntroductionFromResume",
-    "RecommendedArticle",
-    "SpellingCheck"
-  ] as const;
-
-  const TAB_NAMES = ["AI 추천 자소서", "ai 추천 문항", "이력서로 자소서 생성", "자소서 팁", "맞춤법 검사기"];
-
   type TabType = typeof TAB_TYPES[number];
 
   const [selectedTab, setSelectedTab] = useState<TabType>(TAB_TYPES[0]);
@@ -73,13 +69,6 @@ const EditorSidebar = ({
           </S.TabWrapper>
         )}
 
-        {selectedTab === "RecommendedArticle" && (
-          <S.TabWrapper>
-            {shuffle(SELF_INTRODUCTION_ARTICLE_INFO).map(({ title, link }, index) => {
-              return <RecommendArticle key={index + link} link={link} title={title} />;
-            })}
-          </S.TabWrapper>
-        )}
         {selectedTab === "RecommendAnswerFromQuestion" && (
           <S.TabWrapper>{<RecommendedAnswersContainer></RecommendedAnswersContainer>}</S.TabWrapper>
         )}

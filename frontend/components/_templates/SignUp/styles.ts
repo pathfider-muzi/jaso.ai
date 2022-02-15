@@ -39,6 +39,7 @@ export const InputsWrapper = styled.div`
 `;
 
 export const ButtonsWrapper = styled.div`
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   justify-content: center;
