@@ -1,4 +1,5 @@
 import useInput from "@/hooks/useInput";
+import useModal from "@/hooks/useModal";
 import useQnas from "@/hooks/useQnas";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
@@ -15,6 +16,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ExportDropDown from "../ExportDropDown";
 import PageMark from "../PageMark";
 import UnSaveAlert from "../UnSaveAlert";
 import useOrganizationName from "./hooks/useOrganizationName";
@@ -238,6 +240,7 @@ const EditorForm = ({
     };
   }, [router, isIntroductionSaved, dispatch]);
 
+  const { isModalOpen: isExportButtonDropDownOpen, toggleModal: toggleExportButtonDropdown } = useModal({});
   return (
     <S.Frame {...props}>
       <S.PageMarksWrapper>
@@ -363,6 +366,15 @@ const EditorForm = ({
         </S.TextCountWrapper>
 
         <S.Wrapper>
+          <ExportDropDown
+            currentQuestion={question}
+            currentAnswer={answer}
+            currentIndex={selectedPageNumber - 1}
+            title={title}
+            isOpen={isExportButtonDropDownOpen}
+            onToggle={toggleExportButtonDropdown}
+            qnas={qnaList}
+          ></ExportDropDown>
           {isLoadingGetOrganizationName ? (
             <S.LoadingImageWrapper>
               <Image src="/loading.svg" alt="loading image" width="40" height="40" />

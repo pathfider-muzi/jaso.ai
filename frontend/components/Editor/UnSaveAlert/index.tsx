@@ -2,6 +2,8 @@ import _CustomAlert from "@/components/_common/CustomAlert";
 import { RootState } from "@/modules";
 import { changeAlertState, changeSavedState } from "@/modules/confirmSaveIntroduction/actions";
 import { useRouter } from "next/router";
+import { Dispatch, useEffect } from "react";
+import { sleep } from "react-query/types/core/utils";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 
@@ -16,15 +18,25 @@ const UnSaveAlert = ({ saveIntroduction }: Props) => {
   const router = useRouter();
   const nextLink = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.nextLink);
 
-  const saveAndClose = () => {
+  const saveAndClose = async () => {
     saveIntroduction();
     closeAndGoToNextPage();
   };
 
+  useEffect(() => {}, [dispatch]);
+
   const closeAndGoToNextPage = () => {
-    dispatch(changeAlertState(false));
+    const wrappedPromise = (dispatch: any) =>
+      new Promise<void>(resolve => {
+        dispatch(changeAlertState(false));
+        resolve();
+      });
+
+    wrappedPromise(dispatch).then(() => {
+      router.push(nextLink);
+    });
+
     dispatch(changeSavedState(true));
-    router.push(nextLink);
   };
 
   const saveOrNotUI = (

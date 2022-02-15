@@ -15,7 +15,7 @@ const MySelfIntroductions = ({ ...props }: Props) => {
 
   const onClickPlusCard = () => {
     createSelfIntroduction({
-      title: "(제목없음)",
+      title: "(제목 예시)",
       organisationName: "",
       role: ""
     });

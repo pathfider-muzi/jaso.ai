@@ -35,6 +35,9 @@ export const NavButton = styled.button<{
   isSelected?: boolean;
 }>`
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.1s linear;
   border-bottom: 1px solid ${PALETTE.GRAY_300};
   padding: 1rem;

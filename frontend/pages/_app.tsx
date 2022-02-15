@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect, useState } from "react";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import dynamic from "next/dynamic";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());

@@ -1,7 +1,10 @@
+import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
 export const ButtonsFrame = styled.div`
+  display: flex;
   & > button:not(:last-child) {
+    margin-left: 50px;
     margin-right: 8px;
   }
 `;
@@ -9,5 +12,7 @@ export const ButtonsFrame = styled.div`
 export const Button = styled.button`
   width: 100px;
   height: 20px;
-  border-radius: 5px;
+
+  border: 1px solid ${PALETTE.GRAY_300};
+  border-radius: 10%;
 `;
