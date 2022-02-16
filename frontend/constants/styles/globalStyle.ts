@@ -2,6 +2,11 @@ import { css } from "@emotion/react";
 
 const globalStyles = css`
   html,
+  body {
+    scroll-behavior: smooth;
+  }
+
+  html,
   body,
   h1,
   h2,

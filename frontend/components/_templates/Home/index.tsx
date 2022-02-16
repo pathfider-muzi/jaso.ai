@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <Screen title="홈" description={`AI 자소서 assistant, ${BRAND_NAME} 홈페이지`}>
       <S.MainIntroduction />
-      <S.SubIntroduction />
+      <S.SubIntroduction id="subIntroduction" />
       <S.SubIntroductionDetailWrapper>
         {SERVICE_KEYWORD.map(({ keyword, title, content }, index) => {
           return <S.SubIntroductionDetail keyword={keyword} key={keyword} order={index} title={title} text={content} />;

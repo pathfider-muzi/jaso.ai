@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 
 export const Frame = styled.section`
   ${verticalStyle};
+  position: relative;
 `;
 
 export const Title = styled.h1`
@@ -156,6 +157,38 @@ export const VioletCircle = styled.div`
     }
     100% {
       transform: translateY(-50%) translateX(-50%) translateX(-15%) translateY(10%);
+    }
+  }
+`;
+
+export const DownArrow = styled.div`
+  font-size: 3rem;
+  font-weight: 900;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  animation: move 1.5s linear infinite;
+  cursor: pointer;
+
+  @keyframes move {
+    25% {
+      opacity: 1;
+    }
+    33% {
+      opacity: 1;
+      transform: translateY(30px);
+    }
+    67% {
+      opacity: 1;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
     }
   }
 `;

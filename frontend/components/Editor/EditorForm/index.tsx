@@ -1,8 +1,9 @@
+import ToolTip from "@/components/_common/ToolTip";
 import useInput from "@/hooks/useInput";
-import useModal from "@/hooks/useModal";
 import useQnas from "@/hooks/useQnas";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
+import useUser from "@/hooks/useUser";
 import { RootState } from "@/modules";
 import {
   changeAlertState,
@@ -16,8 +17,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ExportDropDown from "../ExportDropDown";
 import PageMark from "../PageMark";
+import PdfExportButton from "../PdfExportButton";
 import UnSaveAlert from "../UnSaveAlert";
 import useOrganizationName from "./hooks/useOrganizationName";
 import * as S from "./styles";
@@ -50,6 +51,10 @@ const EditorForm = ({
   originalSpellingData,
   ...props
 }: Props) => {
+  const router = useRouter();
+
+  const { user } = useUser({ enabled: false });
+
   const {
     data: qnaList,
     refetch: refetchQnaList,
@@ -71,7 +76,6 @@ const EditorForm = ({
   });
 
   const [selectedPageNumber, setSelectedPageNumber] = useState(INITIAL_PAGE_NUMBER);
-  const router = useRouter();
 
   const isIntroductionSaved = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isSaved);
   const dispatch = useDispatch();
@@ -240,34 +244,8 @@ const EditorForm = ({
     };
   }, [router, isIntroductionSaved, dispatch]);
 
-  const { isModalOpen: isExportButtonDropDownOpen, toggleModal: toggleExportButtonDropdown } = useModal({});
   return (
     <S.Frame {...props}>
-      <S.PageMarksWrapper>
-        {qnaList.map((qna, index) => {
-          return (
-            <PageMark
-              key={qna.id}
-              qnaId={qna.id}
-              curIndex={index}
-              selectedPageNumber={selectedPageNumber}
-              onClickPageMarkButton={() => onClickPageMarkButton(index + 1)}
-            ></PageMark>
-          );
-        })}
-
-        <S.PageMarkButtonWrapper isOptionButton>
-          <S.PageMarkButton type="button" onClick={onClickAddQnaButton}>
-            {"+"}
-          </S.PageMarkButton>
-        </S.PageMarkButtonWrapper>
-        <S.PageMarkButtonWrapper isOptionButton>
-          <S.PageMarkButton type="button" onClick={onClickRemoveQnaButton} disabled={qnaList?.length === 1}>
-            {"-"}
-          </S.PageMarkButton>
-        </S.PageMarkButtonWrapper>
-      </S.PageMarksWrapper>
-
       <S.SelfIntroductionTitleWrapper>
         <S.SelfIntroductionTitle
           type="text"
@@ -277,6 +255,7 @@ const EditorForm = ({
           required
         />
       </S.SelfIntroductionTitleWrapper>
+
       <S.QuestionWrapper>
         <S.Question
           value={question}
@@ -366,31 +345,60 @@ const EditorForm = ({
         </S.TextCountWrapper>
 
         <S.Wrapper>
-          <ExportDropDown
-            currentQuestion={question}
-            currentAnswer={answer}
-            currentIndex={selectedPageNumber - 1}
-            title={title}
-            isOpen={isExportButtonDropDownOpen}
-            onToggle={toggleExportButtonDropdown}
-            qnas={qnaList}
-          ></ExportDropDown>
+          <div>
+            <S.PdfExportButtonToolTip text="PDF로 다운로드" textBubbleStyle={{ top: "-3.5rem", left: "-2.5rem" }}>
+              <PdfExportButton qnas={qnaList} title={`${user?.nickname}_자기소개서`} />
+            </S.PdfExportButtonToolTip>
+          </div>
+
           {isLoadingGetOrganizationName ? (
             <S.LoadingImageWrapper>
               <Image src="/loading.svg" alt="loading image" width="40" height="40" />
             </S.LoadingImageWrapper>
           ) : (
-            <S.CheckBoxWithLabel
-              isChecked={isOrganizationHighlightChecked}
-              onChange={onChangeOrganizationHighlightCheckBox}
-              text={"회사명 강조"}
-            />
+            <S.OrganizationNameCheckWrapper>
+              <S.CheckBoxWithLabel
+                isChecked={isOrganizationHighlightChecked}
+                onChange={onChangeOrganizationHighlightCheckBox}
+                text={"회사명 강조"}
+              />
+              <ToolTip
+                text="회사명으로 예상되는 단어에 하이라이팅 기능을 제공합니다. 지원하고자 하는 회사와 일치하는지 다시한번 확인해보세요."
+                textBubbleStyle={{ top: "-5.5rem", left: "-25rem" }}
+              />
+            </S.OrganizationNameCheckWrapper>
           )}
 
           <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
         </S.Wrapper>
       </S.Footer>
+
       <UnSaveAlert saveIntroduction={onClickSaveButton}></UnSaveAlert>
+
+      <S.PageMarksWrapper>
+        {qnaList.map((qna, index) => {
+          return (
+            <PageMark
+              key={qna.id}
+              qnaId={qna.id}
+              curIndex={index}
+              selectedPageNumber={selectedPageNumber}
+              onClickPageMarkButton={() => onClickPageMarkButton(index + 1)}
+            />
+          );
+        })}
+
+        <S.PageMarkButtonWrapper isOptionButton>
+          <S.PageMarkButton type="button" onClick={onClickAddQnaButton}>
+            {"+"}
+          </S.PageMarkButton>
+        </S.PageMarkButtonWrapper>
+        <S.PageMarkButtonWrapper isOptionButton>
+          <S.PageMarkButton type="button" onClick={onClickRemoveQnaButton} disabled={qnaList?.length === 1}>
+            {"-"}
+          </S.PageMarkButton>
+        </S.PageMarkButtonWrapper>
+      </S.PageMarksWrapper>
     </S.Frame>
   );
 };

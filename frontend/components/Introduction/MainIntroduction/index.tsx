@@ -34,6 +34,10 @@ const MainIntroduction = ({ ...props }) => {
         <S.Description>AI가 맞춤자소서들을 추천해드립니다!</S.Description>
 
         <S.Button onClick={onClickGetStartButton}>Get Start &rarr;</S.Button>
+
+        <a href="#subIntroduction">
+          <S.DownArrow>&darr;</S.DownArrow>
+        </a>
       </S.Frame>
       <LoginModal isOpen={isModalOpen} onClose={closeModal} />
     </>

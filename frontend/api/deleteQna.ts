@@ -14,7 +14,7 @@ const deleteQna = async ({ qnaId, selfIntroductionId }: Props) => {
     affected: number;
   };
 
-  const isSuccess = data.affected;
+  const isSuccess = !!data.affected;
 
   return isSuccess;
 };

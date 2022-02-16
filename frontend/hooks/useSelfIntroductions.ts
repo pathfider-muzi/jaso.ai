@@ -1,9 +1,10 @@
 import createQna from "@/api/createQna";
 import createSelfIntroduction from "@/api/createSelfIntroduction";
+import _deleteSelfIntroduction from "@/api/deleteSelfIntroduction";
 import getSelfIntroductions from "@/api/getSelfIntroductions";
 import updateSelfIntroduction from "@/api/updateSelfIntroduction";
 import { parseISO } from "date-fns";
-import compareAsc from "date-fns/compareAsc";
+import compareDesc from "date-fns/compareDesc";
 import { useMutation, useQuery } from "react-query";
 
 interface Props {
@@ -22,6 +23,7 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
   });
 
   const qnaCreateMutation = useMutation(createQna);
+
   const selfIntroductionCreateMutation = useMutation(createSelfIntroduction, {
     onSuccess: ({ id }) => {
       qnaCreateMutation.mutate({
@@ -36,14 +38,21 @@ const useSelfIntroductions = ({ enabled = true }: Props) => {
 
   const selfIntroductionUpdateMutation = useMutation(updateSelfIntroduction);
 
+  const { mutate: deleteSelfIntroduction } = useMutation(_deleteSelfIntroduction, {
+    onSuccess: () => {
+      refetchSelfIntroductions();
+    }
+  });
+
   const sortedSelfIntroductions =
     _selfIntroductions?.sort((prev, curr) => {
-      return compareAsc(parseISO(prev.updatedDate.toString()), parseISO(curr.updatedDate.toString()));
+      return compareDesc(parseISO(prev.updatedDate.toString()), parseISO(curr.updatedDate.toString()));
     }) || [];
 
   return {
     selfIntroductions: sortedSelfIntroductions,
     refetchSelfIntroductions,
+    deleteSelfIntroduction,
     error,
     isFetched,
     isLoading,

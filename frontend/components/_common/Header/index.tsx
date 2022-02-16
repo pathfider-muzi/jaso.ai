@@ -5,7 +5,6 @@ import useCustomAlert from "@/hooks/Editor/useAlert";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";
@@ -14,8 +13,6 @@ interface Props {}
 
 const Header = ({ ...props }: Props) => {
   const { user } = useUser({ enabled: true });
-
-  const router = useRouter();
 
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal({});
   const { isModalOpen: isAvatarDropDownOpen, toggleModal: toggleAvatarDropdown } = useModal({});
@@ -52,6 +49,14 @@ const Header = ({ ...props }: Props) => {
             }}
           >
             내 자기소개서
+          </S.NavButton>
+          <S.NavButton
+            type="button"
+            onClick={() => {
+              tryOpenCustomAlert(ROUTE.MY_RESUMES);
+            }}
+          >
+            내 이력서
           </S.NavButton>
         </S.Nav>
 

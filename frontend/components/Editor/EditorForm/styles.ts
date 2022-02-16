@@ -1,6 +1,7 @@
 import SelfIntroductionContentComponent from "@/components/Editor/SelfIntroductionContent";
 import ButtonComponent from "@/components/_common/Button";
 import CheckBoxWithLabelComponent from "@/components/_common/CheckBoxWithLabel";
+import ToolTipComponent from "@/components/_common/ToolTip";
 import BORDER from "@/constants/styles/border";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
@@ -19,6 +20,7 @@ export const Frame = styled.div`
   justify-content: flex-start;
   padding: 0.5rem 1.5rem;
   height: 100%;
+  position: relative;
 `;
 
 export const SelfIntroductionTitleWrapper = styled.div`
@@ -63,7 +65,7 @@ export const SelfIntroductionContent = styled(SelfIntroductionContentComponent)`
 
 export const Footer = styled.div`
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.2rem 0 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,7 +114,7 @@ export const ChangeTextCount = styled.button`
 
 export const PageMarksWrapper = styled.ul`
   position: absolute;
-  left: -0.5rem;
+  left: -4.5rem;
   width: 5rem;
   height: 100%;
 
@@ -182,10 +184,21 @@ export const SaveButton = styled(ButtonComponent)`
 
 export const CheckBoxWithLabel = styled(CheckBoxWithLabelComponent)`
   height: 2.5rem;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 `;
 
 export const LoadingImageWrapper = styled.div`
   height: 2.5rem;
   margin-right: 2rem;
+`;
+
+export const OrganizationNameCheckWrapper = styled.div`
+  padding-right: 1rem;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+`;
+
+export const PdfExportButtonToolTip = styled(ToolTipComponent)`
+  border: none;
 `;

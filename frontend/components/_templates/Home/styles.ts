@@ -11,7 +11,7 @@ export const MainIntroduction = styled(MainIntroductionComponent)`
 `;
 
 export const SubIntroduction = styled(SubIntroductionComponent)`
-  margin: 11rem 0;
+  padding: 11rem 0;
 `;
 
 export const SubIntroductionDetailWrapper = styled.div`

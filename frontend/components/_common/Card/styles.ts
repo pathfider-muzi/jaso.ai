@@ -25,7 +25,4 @@ export const Text = styled.span`
   text-align: center;
   vertical-align: middle;
   word-wrap: break-word;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
