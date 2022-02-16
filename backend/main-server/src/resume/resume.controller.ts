@@ -23,11 +23,14 @@ export class ResumeController {
             throw new NotFoundException();
         }
 
-        const resume = await this.resumeService.getResume(id, user);
+        let resume = await this.resumeService.getResume(id, user);
         if (!resume) {
             throw new NotFoundException();
         }
 
+        resume.projectRole = resume.projectRole.split(" / ");
+        resume.projectResult = resume.projectResult.split(" / ");
+        resume.projectFeeling = resume.projectFeeling.split(" / ");
         return resume;
     };
 
@@ -41,7 +44,13 @@ export class ResumeController {
             throw new NotFoundException();
         }
 
-        return await this.resumeService.getResumes(user);
+        let resumes = await this.resumeService.getResumes(user);
+        resumes.map(resume => {
+            resume.projectRole = resume.projectRole.split(" / ");
+            resume.projectResult = resume.projectResult.split(" / ");
+            resume.projectFeeling = resume.projectFeeling.split(" / ");
+        });
+        return resumes;
     };
 
     @UseGuards(JwtAuthGuard)
