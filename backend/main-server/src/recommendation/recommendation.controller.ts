@@ -5,6 +5,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
 import { RecommendAnswerRequestDto } from './dto/recommendAnswerRequestDto';
 import { RecommendFullTextRequestDto } from './dto/recommendFullTextRequestDto';
+import { SearchSelfIntroductionByKeywordRequestDto } from './dto/searchSelfIntroductionByKeywordRequestDto';
 
 @Controller('recommendation')
 export class RecommendationController {
@@ -92,6 +93,66 @@ export class RecommendationController {
         return {
             data: {
                 recommendationList
+            }
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('org-name-search')
+    async searchSelfIntroductionByOrgName(@Body() searchSelfIntroductionByKeywordRequestDto: SearchSelfIntroductionByKeywordRequestDto, @Request() req, @Query('orgName') orgName) {
+        const kakaoId = req.user.kakaoId;
+        const { specification } = searchSelfIntroductionByKeywordRequestDto;
+        console.log(`[API] POST /recommendation/org-name-search : ${kakaoId} ${specification}`);
+        
+        const postData = {
+            "listNum": 10000,
+            "spec": specification
+        }
+    
+        // send numList and spec to ai server
+        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
+            timeout: 50000
+        }).pipe(
+            catchError(error => {
+                throw new HttpException(error.response.data, error.response.status);
+            })
+        ));
+
+        const res = recommendationList.filter(selfIntroduction => selfIntroduction.title.split(' / ')[0] === orgName);
+
+        return {
+            data: {
+                res
+            }
+        }
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('keyword-search')
+    async searchSelfIntroductionByKeyword(@Body() searchSelfIntroductionByKeywordRequestDto: SearchSelfIntroductionByKeywordRequestDto, @Request() req, @Query('keyword') keyword) {
+        const kakaoId = req.user.kakaoId;
+        const { specification } = searchSelfIntroductionByKeywordRequestDto;
+        console.log(`[API] POST /recommendation/keyword-search : ${kakaoId} ${specification}`);
+        
+        const postData = {
+            "listNum": 10000,
+            "spec": specification
+        }
+    
+        // send numList and spec to ai server
+        const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
+            timeout: 50000
+        }).pipe(
+            catchError(error => {
+                throw new HttpException(error.response.data, error.response.status);
+            })
+        ));
+
+        const res = recommendationList.filter(selfIntroduction => selfIntroduction.body.includes(keyword));
+
+        return {
+            data: {
+                res
             }
         }
     }
