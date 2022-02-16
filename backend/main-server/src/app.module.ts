@@ -9,6 +9,7 @@ import { QnaModule } from './qna/qna.module';
 import { RecommendationModule } from './recommendation/recommendation.module';
 import { OrgNameCheckerModule } from './orgNameChecker/orgNameChecker.module';
 import { ResumeModule } from './resume/resume.module';
+import { GenerationModule } from './generation/generation.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ResumeModule } from './resume/resume.module';
     QnaModule,
     RecommendationModule,
     OrgNameCheckerModule,
-    ResumeModule
+    ResumeModule,
+    GenerationModule
   ],
   controllers: [],
   providers: [],
