@@ -14,6 +14,9 @@ from transformers import GPTJForCausalLM
 # prompt processing
 from projectParser import parseLocalJsonToPromptString, parseRequestJsonToPromptString, mergePrompts
 
+# Response validation check
+from responseValidChecker import stringValidation
+
 # Declare local json path
 promtpt_json_path = 'data/project_resume.json'
 
@@ -73,7 +76,7 @@ def generate_self_introduction():
             requestPrompt = parseRequestJsonToPromptString(d=requestText)
             prompt, promptLen = mergePrompts(local=prompt_list, req=requestPrompt)
             recommendText = model.generate(prompt=prompt, temperature=temperature, max_length=maxLength)
-            recommendText = str(recommendText)[promptLen:]
+            recommendText = stringValidation(str(recommendText)[promptLen:])
             introductionByResume = {"introduction": recommendText}
             return jsonify(introductionByResume)
         except Exception as e:
