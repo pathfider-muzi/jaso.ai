@@ -53,7 +53,7 @@ export class RecommendationController {
 
         // send numList and spec to ai server
         const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
-            timeout: 5000
+            timeout: 50000
         }).pipe(
             catchError(error => {
                 throw new HttpException(error.response.data, error.response.status);
@@ -83,7 +83,7 @@ export class RecommendationController {
     
         // send numList and spec to ai server
         const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.92.197:3000/", postData, {  
-            timeout: 5000
+            timeout: 50000
         }).pipe(
             catchError(error => {
                 throw new HttpException(error.response.data, error.response.status);
@@ -172,7 +172,7 @@ export class RecommendationController {
 
         // send numList and spec to ai server
         const { data: { recommendationList } } = await lastValueFrom(this.httpService.post("http://34.64.180.204:3000/", postData, {  
-            timeout: 5000
+            timeout: 50000
         }).pipe(
             catchError(error => {
                 throw new HttpException(error.response.data, error.response.status);
