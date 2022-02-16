@@ -3,7 +3,7 @@
 import re
 
 def searchEndLine(text: str) -> int:
-    endLine = re.search('\n', text)
+    endLine = re.search('\n\n', text)
     if endLine == None:
         return -1
     return endLine.start()

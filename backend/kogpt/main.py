@@ -17,6 +17,17 @@ from projectParser import parseLocalJsonToPromptString, parseRequestJsonToPrompt
 # Response validation check
 from responseValidChecker import stringValidation
 
+# Log
+import logging
+
+# Logging setting
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler = logging.FileHandler('responseMessage.log')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+
 # Declare local json path
 promtpt_json_path = 'data/project_resume.json'
 
@@ -77,6 +88,7 @@ def generate_self_introduction():
             prompt, promptLen = mergePrompts(local=prompt_list, req=requestPrompt)
             recommendText = model.generate(prompt=prompt, temperature=temperature, max_length=maxLength)
             recommendText = stringValidation(str(recommendText)[promptLen:])
+            logger.info(f'introduction: {recommendText}')
             introductionByResume = {"introduction": recommendText}
             return jsonify(introductionByResume)
         except Exception as e:
