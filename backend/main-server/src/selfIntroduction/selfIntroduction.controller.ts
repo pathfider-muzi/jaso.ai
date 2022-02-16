@@ -34,7 +34,7 @@ export class SelfIntroductionController {
     @Get('self-introductions')
     async getSelfIntroductions(@Request() req) {
         const kakaoId = req.user.kakaoId;
-        console.log(`[API] GET /self-introduction : ${kakaoId}`);
+        console.log(`[API] GET /self-introductions : ${kakaoId}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
             throw new NotFoundException();

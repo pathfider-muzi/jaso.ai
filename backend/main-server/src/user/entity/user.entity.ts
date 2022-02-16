@@ -1,6 +1,7 @@
 import { SelfIntroduction } from "../../selfIntroduction/entity/selfIntroduction.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserInfo } from "./userInfo.entity";
+import { Resume } from "../../resume/entity/resume.entity";
 
 @Entity()
 export class User {
@@ -24,4 +25,7 @@ export class User {
 
     @OneToMany(() => SelfIntroduction, selfIntroduction => selfIntroduction.user)
     selfIntroductions: SelfIntroduction[];
+
+    @OneToMany(() => Resume, resume => resume.user)
+    resumes: Resume[];
 }
