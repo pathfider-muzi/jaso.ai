@@ -12,7 +12,8 @@ from transformers import PreTrainedTokenizerFast
 from transformers import GPTJForCausalLM
 
 # prompt processing
-from projectParser import parseLocalJsonToPromptString, parseRequestJsonToPromptString, mergePrompts
+import projectParser
+import motiveParser
 
 # Response validation check
 from responseValidChecker import stringValidation
@@ -29,7 +30,8 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 # Declare local json path
-promtpt_json_path = 'data/project_resume.json'
+prompt_project_json_path = 'data/project_resume.json'
+prompt_motive_json_path = 'data/motive_resume.json'
 
 # Declare KoGPT variables
 pretrained_model_name = 'kakaobrain/kogpt'
@@ -75,21 +77,41 @@ print(f'elapsed time for building model --> {datetime.now() - start}')
 # Finish building KoGPT model
 
 # get local json as prmompt string
-prompt_list = parseLocalJsonToPromptString(filepath=promtpt_json_path)
+prompt_project_list = projectParser.parseLocalJsonToPromptString(filepath=prompt_project_json_path)
+prompt_motive_list = motiveParser.parseLocalJsonToPromptString(filepath=prompt_motive_json_path)
 
-@app.route("/", methods=["POST"])
-def generate_self_introduction():
+@app.route("/project", methods=["POST"])
+def generate_project_self_introduction():
     if request.method == "POST":
         requestText = request.get_json(silent=True)
         if requestText is None:
             return jsonify({"error": "no input data"})
         try:
-            requestPrompt = parseRequestJsonToPromptString(d=requestText)
-            prompt, promptLen = mergePrompts(local=prompt_list, req=requestPrompt)
+            requestPrompt = projectParser.parseRequestJsonToPromptString(d=requestText)
+            prompt, promptLen = projectParser.mergePrompts(local=prompt_project_list, req=requestPrompt)
             recommendText = model.generate(prompt=prompt, temperature=temperature, max_length=maxLength)
             recommendText = stringValidation(str(recommendText)[promptLen:])
-            logger.info(f'introduction: {recommendText}')
-            introductionByResume = {"introduction": recommendText}
+            logger.info(f'projectIntroduction: {recommendText}')
+            introductionByResume = {"projectIntroduction": recommendText}
+            return jsonify(introductionByResume)
+        except Exception as e:
+            return jsonify({"error": str(e)})
+
+    return "OK"
+
+@app.route("/motive", methods=["POST"])
+def generate_motive_self_introduction():
+    if request.method == "POST":
+        requestText = request.get_json(silent=True)
+        if requestText is None:
+            return jsonify({"error": "no input data"})
+        try:
+            requestPrompt = motiveParser.parseRequestJsonToPromptString(d=requestText)
+            prompt, promptLen = motiveParser.mergePrompts(local=prompt_motive_list, req=requestPrompt)
+            recommendText = model.generate(prompt=prompt, temperature=temperature, max_length=maxLength)
+            recommendText = stringValidation(str(recommendText)[promptLen:])
+            logger.info(f'motiveIntroduction: {recommendText}')
+            introductionByResume = {"motiveIntroduction": recommendText}
             return jsonify(introductionByResume)
         except Exception as e:
             return jsonify({"error": str(e)})
