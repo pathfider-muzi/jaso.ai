@@ -17,6 +17,7 @@ export class ResumeService {
         console.log(`[DB] Get Resume : ${user.kakaoId} ${id}`);
 
         return this.resumeRepository.findOne({
+            relations: ["resumeProjects"],
             where: {
                 id: id,
                 user: user
@@ -28,6 +29,7 @@ export class ResumeService {
         console.log(`[DB] Get Resumes : ${user.kakaoId}`);
 
         return this.resumeRepository.find({
+            relations: ["resumeProjects"],
             where: {
                 user: user
             }
@@ -35,40 +37,32 @@ export class ResumeService {
     };
 
     async createResume(createResumeRequestDto: CreateResumeRequestDto, user: User): Promise<any> {
-        const { projectName, projectDetail, projectTerm, projectRole, projectResult, projectFeeling } = createResumeRequestDto;
-        console.log(`[DB] Create Resume : ${user.kakaoId} ${projectName} ${projectDetail} ${projectTerm} ${projectRole} ${projectResult} ${projectFeeling}`);
-        const pjRole = projectRole.join(' / ');
-        const pjResult = projectResult.join(' / ');
-        const pjFeeling = projectFeeling.join(' / ');
+        const { title, name, role, email, contacts } = createResumeRequestDto;
+        console.log(`[DB] Create Resume : ${user.kakaoId} ${title} ${name} ${role} ${email} ${contacts}`);
 
         return await this.resumeRepository.insert({
-            projectName,
-            projectDetail,
-            projectTerm,
-            projectRole: pjRole,
-            projectResult: pjResult,
-            projectFeeling: pjFeeling,
+            title,
+            name,
+            role,
+            email,
+            contacts,
             user
         });
     };
 
     async updateResume(updateResumeRequestDto: UpdateResumeRequestDto, user: User): Promise<any> {
-        const { id, projectName, projectDetail, projectTerm, projectRole, projectResult, projectFeeling } = updateResumeRequestDto;
-        console.log(`[DB] Update Resume : ${user.kakaoId} ${projectName} ${projectDetail} ${projectTerm} ${projectRole} ${projectResult} ${projectFeeling}`);
-        const pjRole = projectRole.join(' / ');
-        const pjResult = projectResult.join(' / ');
-        const pjFeeling = projectFeeling.join(' / ');
+        const { id, title, name, role, email, contacts } = updateResumeRequestDto;
+        console.log(`[DB] Update Resume : ${user.kakaoId} ${title} ${name} ${role} ${email} ${contacts}`);
 
         return await this.resumeRepository.update({
             id,
             user
         }, {
-            projectName,
-            projectDetail,
-            projectTerm,
-            projectRole: pjRole,
-            projectResult: pjResult,
-            projectFeeling: pjFeeling,
+            title,
+            name,
+            role,
+            email,
+            contacts,
         });
     };
 

@@ -10,6 +10,7 @@ import { RecommendationModule } from './recommendation/recommendation.module';
 import { OrgNameCheckerModule } from './orgNameChecker/orgNameChecker.module';
 import { ResumeModule } from './resume/resume.module';
 import { GenerationModule } from './generation/generation.module';
+import { ResumeProjectModule } from './resumeProject/resumeProject.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { GenerationModule } from './generation/generation.module';
     RecommendationModule,
     OrgNameCheckerModule,
     ResumeModule,
-    GenerationModule
+    GenerationModule,
+    ResumeProjectModule
   ],
   controllers: [],
   providers: [],

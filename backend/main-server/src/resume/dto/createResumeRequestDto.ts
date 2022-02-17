@@ -1,8 +1,7 @@
 export class CreateResumeRequestDto {
-    projectName: string;
-    projectDetail: string;
-    projectTerm: string;
-    projectRole: string[];
-    projectResult: string[];
-    projectFeeling: string[];
+    title: string;
+    name: string;
+    role: string;
+    email: string;
+    contacts: string[];
 };

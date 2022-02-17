@@ -28,9 +28,6 @@ export class ResumeController {
             throw new NotFoundException();
         }
 
-        resume.projectRole = resume.projectRole.split(" / ");
-        resume.projectResult = resume.projectResult.split(" / ");
-        resume.projectFeeling = resume.projectFeeling.split(" / ");
         return resume;
     };
 
@@ -44,21 +41,15 @@ export class ResumeController {
             throw new NotFoundException();
         }
 
-        let resumes = await this.resumeService.getResumes(user);
-        resumes.map(resume => {
-            resume.projectRole = resume.projectRole.split(" / ");
-            resume.projectResult = resume.projectResult.split(" / ");
-            resume.projectFeeling = resume.projectFeeling.split(" / ");
-        });
-        return resumes;
+        return await this.resumeService.getResumes(user);
     };
 
     @UseGuards(JwtAuthGuard)
     @Post('resume')
     async createResume(@Body() createResumeRequestDto: CreateResumeRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { projectName, projectDetail, projectTerm, projectRole, projectResult, projectFeeling } = createResumeRequestDto;
-        console.log(`[API] POST /resume : ${kakaoId} ${projectName} ${projectDetail} ${projectTerm} ${projectRole} ${projectResult} ${projectFeeling}`);
+        const { title, name, role, email, contacts } = createResumeRequestDto;
+        console.log(`[API] POST /resume : ${kakaoId} ${title} ${name} ${role} ${email} ${contacts}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
             throw new NotFoundException();
@@ -71,8 +62,8 @@ export class ResumeController {
     @Patch('resume')
     async updateResume(@Body() updateResumeRequestDto: UpdateResumeRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { id, projectName, projectDetail, projectTerm, projectRole, projectResult, projectFeeling } = updateResumeRequestDto;
-        console.log(`[API] PATCH /resume : ${kakaoId} ${id} ${projectName} ${projectDetail} ${projectTerm} ${projectRole} ${projectResult} ${projectFeeling}`);
+        const { id, title, name, role, email, contacts } = updateResumeRequestDto;
+        console.log(`[API] PATCH /resume : ${kakaoId} ${id} ${title} ${name} ${role} ${email} ${contacts}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
             throw new NotFoundException();

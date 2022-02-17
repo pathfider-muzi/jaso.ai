@@ -1,5 +1,6 @@
 import { User } from "../../user/entity/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ResumeProject } from "../../resumeProject/entity/resumeProject.entity";
 
 @Entity()
 export class Resume {
@@ -12,26 +13,26 @@ export class Resume {
     @UpdateDateColumn()
     updatedDate: Date;
 
-    @Column()
-    projectName: string;
-
     @Column("longtext")
-    projectDetail: string;
+    title: string;
 
     @Column()
-    projectTerm: string;
+    name: string;
 
-    @Column("longtext")
-    projectRole: string;
+    @Column()
+    role: string;
 
-    @Column("longtext")
-    projectResult: string;
+    @Column()
+    email: string;
 
-    @Column("longtext")
-    projectFeeling: string;
+    @Column('simple-array')
+    contacts: string[];
 
     @ManyToOne(() => User, user => user.resumes, {
         onDelete: "CASCADE"
     })
     user: User;
+
+    @OneToMany(() => ResumeProject, resumeProject => resumeProject.resume)
+    resumeProjects: ResumeProject[];
 }
