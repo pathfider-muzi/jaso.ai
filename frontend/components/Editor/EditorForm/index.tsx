@@ -1,5 +1,7 @@
+import _CustomAlert from "@/components/_common/CustomAlert";
 import ToolTip from "@/components/_common/ToolTip";
 import useInput from "@/hooks/useInput";
+import useModal from "@/hooks/useModal";
 import useQnas from "@/hooks/useQnas";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
@@ -145,10 +147,11 @@ const EditorForm = ({
     );
   };
 
+  const [isSaveSuecceedAlertOpeneed, setSucceedOpened] = useState(false);
+
   const onClickSaveButton = () => {
     if (!qnaList) return;
     const selectedQna = qnaList[selectedPageNumber - 1];
-
     updateSelfIntroduction(
       {
         id: selfIntroduction.id,
@@ -169,7 +172,10 @@ const EditorForm = ({
             {
               onSuccess: () => {
                 refetchQnaList();
-                alert("저장에 성공했습니다.");
+                setSucceedOpened(true);
+                setTimeout(() => {
+                  setSucceedOpened(false);
+                }, 1000);
               }
             }
           );
@@ -179,6 +185,9 @@ const EditorForm = ({
     dispatch(changeSavedState(true));
   };
 
+  const [letterRangeAlert, setRangeAlert] = useState(false);
+  const [maxRangeSucceed, setMaxRangeSucceed] = useState(false);
+
   const onClickChangeTextCountButton = () => {
     if (!isEditableTextCount) {
       setIsEditableTextCount(true);
@@ -187,8 +196,10 @@ const EditorForm = ({
     }
 
     if (answer.length > Number(textCountInput)) {
-      alert(`현재글자수 ${answer.length} 보다 높게 설정해야합니다.`);
-
+      setRangeAlert(true);
+      setTimeout(() => {
+        setRangeAlert(false);
+      }, 1000);
       return;
     }
 
@@ -204,7 +215,11 @@ const EditorForm = ({
         onSuccess: () => {
           refetchQnaList();
           setIsEditableTextCount(false);
-          alert("최대 글자수가 변경되었습니다.");
+
+          setMaxRangeSucceed(true);
+          setTimeout(() => {
+            setMaxRangeSucceed(false);
+          }, 1000);
         }
       }
     );
@@ -244,6 +259,7 @@ const EditorForm = ({
     };
   }, [router, isIntroductionSaved, dispatch]);
 
+  const { isModalOpen: isExportButtonDropDownOpen, toggleModal: toggleExportButtonDropdown } = useModal({});
   return (
     <S.Frame {...props}>
       <S.SelfIntroductionTitleWrapper>
@@ -374,6 +390,13 @@ const EditorForm = ({
       </S.Footer>
 
       <UnSaveAlert saveIntroduction={onClickSaveButton}></UnSaveAlert>
+      <_CustomAlert
+        title={`현재글자수 ${answer.length} 보다 높게 설정해야합니다.`}
+        isOpened={letterRangeAlert}
+        contentNode={<></>}
+      />
+      <_CustomAlert title={`최대 글자수가 변경되었습니다.`} isOpened={maxRangeSucceed} contentNode={<></>} />
+      <_CustomAlert title="자소서 저장에 성공하셨습니다" isOpened={isSaveSuecceedAlertOpeneed} contentNode={<></>} />
 
       <S.PageMarksWrapper>
         {qnaList.map((qna, index) => {

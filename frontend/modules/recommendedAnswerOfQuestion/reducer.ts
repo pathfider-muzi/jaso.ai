@@ -26,7 +26,7 @@ export default function recommendedAnswerOfQuestionReducer(
     case HYDRATE:
       return { ...state, ...action.payload };
     case ACTIONS_TYPE.CHANGE_TITLE:
-      return { ...state, currentQuestionTitle: action.payload };
+      return { ...state, currentQuestionTitle: action.payload.title };
     default:
       return state;
   }

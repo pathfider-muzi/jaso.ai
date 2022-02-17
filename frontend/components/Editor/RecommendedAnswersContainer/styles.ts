@@ -12,6 +12,13 @@ export const Frame = styled.div`
   }
 `;
 
+export const ReloadAnswersButton = styled.button`
+  border: 1px solid ${PALETTE.GRAY_200};
+  width: 200px;
+  height: 20px;
+  align-self: center;
+`;
+
 export const ShowMoreButton = styled.button`
   width: 100%;
   padding: 0.5rem 0;
@@ -23,4 +30,12 @@ export const ShowMoreButton = styled.button`
   &:hover {
     background-color: ${PALETTE.GRAY_150};
   }
+`;
+
+export const LoadingImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

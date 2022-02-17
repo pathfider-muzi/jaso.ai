@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const ButtonsFrame = styled.div`
   display: flex;
   & > button:not(:last-child) {
-    margin-left: 50px;
+    margin-left: 100px;
     margin-right: 8px;
   }
 `;

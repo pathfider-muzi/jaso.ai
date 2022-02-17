@@ -2,8 +2,7 @@ import _CustomAlert from "@/components/_common/CustomAlert";
 import { RootState } from "@/modules";
 import { changeAlertState, changeSavedState } from "@/modules/confirmSaveIntroduction/actions";
 import { useRouter } from "next/router";
-import { Dispatch, useEffect } from "react";
-import { sleep } from "react-query/types/core/utils";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as S from "./styles";
 
@@ -27,16 +26,19 @@ const UnSaveAlert = ({ saveIntroduction }: Props) => {
 
   const closeAndGoToNextPage = () => {
     const wrappedPromise = (dispatch: any) =>
-      new Promise<void>(resolve => {
+      new Promise<void>(async resolve => {
         dispatch(changeAlertState(false));
+        dispatch(changeSavedState(true));
         resolve();
       });
 
+    // setTimeOUt 을 쓰지 않고 react query 실행 될때까지 기다리는 방법 못찾음
+    // promise 써도 안됨..
     wrappedPromise(dispatch).then(() => {
-      router.push(nextLink);
+      setTimeout(() => {
+        router.push(nextLink);
+      }, 1000);
     });
-
-    dispatch(changeSavedState(true));
   };
 
   const saveOrNotUI = (
@@ -48,7 +50,7 @@ const UnSaveAlert = ({ saveIntroduction }: Props) => {
 
   return (
     <_CustomAlert
-      title="자소서 저장이 안되있습니다. 저장하시겠습니까?"
+      title="자소서 저장이 안되있습니다. 저장하고 이동하시겠습니까? 아니면 저장안하고 이동하시겠습니까?"
       contentNode={saveOrNotUI}
       isOpened={isAlertOpened}
     />

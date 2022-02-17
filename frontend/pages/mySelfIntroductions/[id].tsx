@@ -7,7 +7,7 @@ import useUser from "@/hooks/useUser";
 import { getLocalStorage } from "@/utils/localStorage";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const SelfIntroductionPage: NextPage = () => {
@@ -29,6 +29,8 @@ const SelfIntroductionPage: NextPage = () => {
   const { selfIntroductions, isFetched: isSelfIntroductionsFetched } = useSelfIntroductions({ enabled: true });
 
   const selfIntroduction = selfIntroductions.find(_selfIntroduction => _selfIntroduction.id === selfIntroductionId);
+
+  const [isAlertOpened, setOpened] = useState(false);
 
   useEffect(() => {
     if (!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)) router.replace(ROUTE.HOME);

@@ -1,7 +1,12 @@
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
+import useRecommendAnswers from "@/hooks/Editor/useRecommendAnswer";
 import useUser from "@/hooks/useUser";
 import { RootState } from "@/modules";
+import { getLocalStorage } from "@/utils/localStorage";
+import makeUserInfoJsonToString from "@/utils/makeJsonToString";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 import RecommendedAnswer from "../RecommendedAnswerOfIntroduction";
 import * as S from "./styles";
 
@@ -14,18 +19,17 @@ const RecommendedAnswersContainer = () => {
   );
 
   const SELF_ANSWER_AMOUNT_UNIT = 3;
+  const LIMIT_ANSWER_NUM = 100;
 
-  const [recommendedAnswers, setRecommendedAnswers] = useState([
-    "저는 의사결정 시 준비단계를 중요하게 생각합니다. 준비가 미흡하여 만들어진 추상적이고 애매한 의사결정은 이후 해결해야 하는 모든 과제에 악영향을 끼치기 마련입니다. 따라서 첫 시작부터 세밀한 분석으로 실현 가능한 의사결정을 해야만 합니다. 준비단계를 소홀히 하여 일이 진행될 경우 그 영향은 일이 끝날 때까지 미치기 때문입니다.  평소에 전공시험을 준비하거나 자격증을 준비할 때에도 준비단계를 철저히 하고 시작하는 편입니다. 나에게 가장 맞는 서적을 마련하고 적정한 기간과 공부시간대를 계획하여 정해진 틀에서 공부하는 편입니다. 경험상 준비단계를 소홀히 하면 일의 진행에 항상 차질이 있었습니다.",
-    "도움이 필요한 다양한 사람을 도울 좋은 기회라 생각해 지원하게 되었습니다. 지원 직무는 동아대학교 병원을 찾는 고객들이 의료 서비스를 원활하게 이용할 수 있도록 지원하는 역할을 수행합니다. 그렇기에 다양한 역량이 요구되며, 그중 가장 중요한 역량은 원활한 의사소통과 실행력입니다.지원한 직무를 통해 더 많은 성취감을 느낄 수 있다고 생각합니다. 또한, 동아대학교 병원을 이용하는 모든 사람이 불편함을 느끼지 않도록 노력하는 인재가 되겠습니다. 본원은 지역에서 최고의 의료 서비스를 제공하기에 많은 사람이 찾습니다. 최대한 많은 고객이 만족하도록 항상 경청하는 자세를 가지겠습니다. 신속하게 문제를 파악해 동료와 함께 처리하겠습니다. 또한, 함께 일하는 동료와 적극적으로 소통해 업무를 수행하며 함께 성장하겠습니다. 다양한 사람이 모인 조직을 하나로 뭉쳐 본원의 궁극적인 목표를 달성하기 위해 함께 나아가고 싶습니다",
-    "상대방 입장을 먼저 생각해 다양한 사람이 모인 단체에 성공적으로 적응했습니다. 고등학교 졸업을 위해 졸업논문을 작성해야 했습니다. 어떻게 해야 다양한 국적을 가진 학우들과 함께 잘 마무리할 수 있을지 고민했습니다. 그래서 전 상대방 의견에 경청했습니다. 이런 제 모습을 본 팀원은 절 신뢰했고, 전 팀을 이끌게 되었습니다. 과업이 주어지면 다 함께 해결하는 분위기를 만들어 다른 조보다 앞서나갔습니다. 최고의 논문으로 뽑히면서 마무리했습니다.  위 성장 과정을 통해 이타심을 최우선으로 두었고 이를 활용하는 것이 필수가 되었습니다. 사회생활에서도 성공적으로 적응해 동료와 원활하게 협업했고, 성과도 만들어냈습니다. 또한, 업무 수행을 통해 얻은 성취감은 다음 업무의 원동력이 되었습니다. 이번 기회는 더 많은 성취감을 가질 기회라 생각합니다. 본원을 찾는 고객의 어려움을 해결해주고 싶으며, 주변 동료와 좋은 관계를 유지해 본원이 차별화된 가치를 가지도록 노력하고 싶습니다.",
-    "저는 의사결정 시 준비단계를 중요하게 생각합니다. 준비가 미흡하여 만들어진 추상적이고 애매한 의사결정은 이후 해결해야 하는 모든 과제에 악영향을 끼치기 마련입니다. 따라서 첫 시작부터 세밀한 분석으로 실현 가능한 의사결정을 해야만 합니다. 준비단계를 소홀히 하여 일이 진행될 경우 그 영향은 일이 끝날 때까지 미치기 때문입니다.  평소에 전공시험을 준비하거나 자격증을 준비할 때에도 준비단계를 철저히 하고 시작하는 편입니다. 나에게 가장 맞는 서적을 마련하고 적정한 기간과 공부시간대를 계획하여 정해진 틀에서 공부하는 편입니다. 경험상 준비단계를 소홀히 하면 일의 진행에 항상 차질이 있었습니다.",
-    "저는 의사결정 시 준비단계를 중요하게 생각합니다. 준비가 미흡하여 만들어진 추상적이고 애매한 의사결정은 이후 해결해야 하는 모든 과제에 악영향을 끼치기 마련입니다. 따라서 첫 시작부터 세밀한 분석으로 실현 가능한 의사결정을 해야만 합니다. 준비단계를 소홀히 하여 일이 진행될 경우 그 영향은 일이 끝날 때까지 미치기 때문입니다.  평소에 전공시험을 준비하거나 자격증을 준비할 때에도 준비단계를 철저히 하고 시작하는 편입니다. 나에게 가장 맞는 서적을 마련하고 적정한 기간과 공부시간대를 계획하여 정해진 틀에서 공부하는 편입니다. 경험상 준비단계를 소홀히 하면 일의 진행에 항상 차질이 있었습니다.",
-    "저는 의사결정 시 준비단계를 중요하게 생각합니다. 준비가 미흡하여 만들어진 추상적이고 애매한 의사결정은 이후 해결해야 하는 모든 과제에 악영향을 끼치기 마련입니다. 따라서 첫 시작부터 세밀한 분석으로 실현 가능한 의사결정을 해야만 합니다. 준비단계를 소홀히 하여 일이 진행될 경우 그 영향은 일이 끝날 때까지 미치기 때문입니다.  평소에 전공시험을 준비하거나 자격증을 준비할 때에도 준비단계를 철저히 하고 시작하는 편입니다. 나에게 가장 맞는 서적을 마련하고 적정한 기간과 공부시간대를 계획하여 정해진 틀에서 공부하는 편입니다. 경험상 준비단계를 소홀히 하면 일의 진행에 항상 차질이 있었습니다.",
-    "도움이 필요한 다양한 사람을 도울 좋은 기회라 생각해 지원하게 되었습니다. 지원 직무는 동아대학교 병원을 찾는 고객들이 의료 서비스를 원활하게 이용할 수 있도록 지원하는 역할을 수행합니다. 그렇기에 다양한 역량이 요구되며, 그중 가장 중요한 역량은 원활한 의사소통과 실행력입니다.지원한 직무를 통해 더 많은 성취감을 느낄 수 있다고 생각합니다. 또한, 동아대학교 병원을 이용하는 모든 사람이 불편함을 느끼지 않도록 노력하는 인재가 되겠습니다. 본원은 지역에서 최고의 의료 서비스를 제공하기에 많은 사람이 찾습니다. 최대한 많은 고객이 만족하도록 항상 경청하는 자세를 가지겠습니다. 신속하게 문제를 파악해 동료와 함께 처리하겠습니다. 또한, 함께 일하는 동료와 적극적으로 소통해 업무를 수행하며 함께 성장하겠습니다. 다양한 사람이 모인 조직을 하나로 뭉쳐 본원의 궁극적인 목표를 달성하기 위해 함께 나아가고 싶습니다",
-    "상대방 입장을 먼저 생각해 다양한 사람이 모인 단체에 성공적으로 적응했습니다. 고등학교 졸업을 위해 졸업논문을 작성해야 했습니다. 어떻게 해야 다양한 국적을 가진 학우들과 함께 잘 마무리할 수 있을지 고민했습니다. 그래서 전 상대방 의견에 경청했습니다. 이런 제 모습을 본 팀원은 절 신뢰했고, 전 팀을 이끌게 되었습니다. 과업이 주어지면 다 함께 해결하는 분위기를 만들어 다른 조보다 앞서나갔습니다. 최고의 논문으로 뽑히면서 마무리했습니다.  위 성장 과정을 통해 이타심을 최우선으로 두었고 이를 활용하는 것이 필수가 되었습니다. 사회생활에서도 성공적으로 적응해 동료와 원활하게 협업했고, 성과도 만들어냈습니다. 또한, 업무 수행을 통해 얻은 성취감은 다음 업무의 원동력이 되었습니다. 이번 기회는 더 많은 성취감을 가질 기회라 생각합니다. 본원을 찾는 고객의 어려움을 해결해주고 싶으며, 주변 동료와 좋은 관계를 유지해 본원이 차별화된 가치를 가지도록 노력하고 싶습니다.",
-    "저는 의사결정 시 준비단계를 중요하게 생각합니다. 준비가 미흡하여 만들어진 추상적이고 애매한 의사결정은 이후 해결해야 하는 모든 과제에 악영향을 끼치기 마련입니다. 따라서 첫 시작부터 세밀한 분석으로 실현 가능한 의사결정을 해야만 합니다. 준비단계를 소홀히 하여 일이 진행될 경우 그 영향은 일이 끝날 때까지 미치기 때문입니다.  평소에 전공시험을 준비하거나 자격증을 준비할 때에도 준비단계를 철저히 하고 시작하는 편입니다. 나에게 가장 맞는 서적을 마련하고 적정한 기간과 공부시간대를 계획하여 정해진 틀에서 공부하는 편입니다. 경험상 준비단계를 소홀히 하면 일의 진행에 항상 차질이 있었습니다."
-  ]);
+  const { data: recommendedAnswers, refetch } = useRecommendAnswers({
+    enabled: true,
+    metaInfo: {
+      listNum: LIMIT_ANSWER_NUM,
+      question: currentQuestionTitle,
+      specification: makeUserInfoJsonToString(userInfo)
+    }
+  });
+
   const [recommendedAnswersAmount, setRecommendedAnswersAmount] = useState(SELF_ANSWER_AMOUNT_UNIT);
 
   const canShowMoreRecommendedAnswers =
@@ -41,9 +45,26 @@ const RecommendedAnswersContainer = () => {
 
   return (
     <S.Frame>
-      {recommendedAnswers.slice(0, recommendedAnswersAmount).map((recommendedAnswer: string, index: number) => {
-        return <RecommendedAnswer key={recommendedAnswer + index} answer={recommendedAnswer} />;
-      })}
+      {recommendedAnswers ? (
+        <S.ReloadAnswersButton
+          onClick={() => {
+            refetch();
+          }}
+        >
+          추천된 자기소개서 문항 불러오기
+        </S.ReloadAnswersButton>
+      ) : (
+        <></>
+      )}
+      {recommendedAnswers ? (
+        recommendedAnswers.slice(0, recommendedAnswersAmount).map(({ body: recommendedAnswer }, index: number) => {
+          return <RecommendedAnswer key={index} answer={recommendedAnswer} />;
+        })
+      ) : (
+        <S.LoadingImageWrapper>
+          <Image src="/loading.svg" alt="loading image" width="100" height="100" />
+        </S.LoadingImageWrapper>
+      )}
       {canShowMoreRecommendedAnswers && (
         <S.ShowMoreButton onClick={onClickShowMoreRecommendedAnswersButton} type="button">
           더보기

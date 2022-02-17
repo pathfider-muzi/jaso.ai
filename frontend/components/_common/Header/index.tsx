@@ -50,6 +50,7 @@ const Header = ({ ...props }: Props) => {
           >
             내 자기소개서
           </S.NavButton>
+          <S.NavButton onClick={() => {}}>자기소개서 추천</S.NavButton>
           <S.NavButton
             type="button"
             onClick={() => {
