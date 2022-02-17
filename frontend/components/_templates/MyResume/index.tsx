@@ -1,7 +1,11 @@
-import Project from "@/components/Resume/Project";
+import ProjectInfoForm from "@/components/Resume/ProjectInfoForm";
 import BRAND_NAME from "@/constants/brandName";
 import useInput from "@/hooks/useInput";
+import useResumeProjects from "@/hooks/useResumeProjects";
+import useResumes from "@/hooks/useResumes";
+import { Project as ProjectType } from "@/types/Project";
 import { Resume } from "@/types/Resume";
+import useProjectInput from "./hooks/useProjectInput";
 import * as S from "./styles";
 
 interface Props {
@@ -9,18 +13,70 @@ interface Props {
 }
 
 const MyResume = ({ resume }: Props) => {
-  const { input: resumeTitleInput, onChangeInput: onChangeResumeTitleInput } = useInput("이력서 제목");
+  const { input: resumeTitleInput, onChangeInput: onChangeResumeTitleInput } = useInput(resume.title);
 
-  const project = [
-    {
-      projectName: "부동산 이상 탐지 모델링",
-      projectDetail: "파이썬 모듈을 이용한 부동산 이상 탐지 모델링",
-      projectTerm: "2020.7-2020.8",
-      projectRole: ["모델링", "API 개발", "DB 설계"],
-      projectResult: ["대회 2등 수상"],
-      projectFeeling: ["모델링에 있어서 편향되지 않은 데이터의 중요성", "다른 개발자와의 협업의 중요성"]
-    }
-  ];
+  const { updateResume } = useResumes({ enabled: false });
+
+  const { projects, createResumeProject, updateResumeProject, deleteResumeProject } = useResumeProjects({
+    enabled: true,
+    resumeId: resume.id
+  });
+
+  const projectInputs = useProjectInput({
+    projects
+  });
+
+  const onClickSaveButton = () => {
+    updateResume(
+      {
+        ...resume,
+        title: resumeTitleInput
+      },
+      {
+        onSettled: () => {
+          Promise.allSettled(
+            projects.map(({ id }) => {
+              return updateResumeProject({
+                id,
+                resumeId: resume.id,
+                projectName: projectInputs.projectNames[id],
+                projectRole: projectInputs.projectRoles[id],
+                projectDetail: projectInputs.projectDetails[id],
+                projectFeeling: projectInputs.projectFeelings[id],
+                projectResult: projectInputs.projectResults[id],
+                projectTerm: projectInputs.projectTerms[id]
+              });
+            })
+          ).then(() => {
+            alert("저장이 완료되었습니다.");
+          });
+        }
+      }
+    );
+  };
+
+  const onClickProjectAddButton = () => {
+    createResumeProject({
+      resumeId: resume.id,
+      project: {
+        projectName: "",
+        projectDetail: "",
+        projectFeeling: [""],
+        projectResult: [""],
+        projectRole: [""],
+        projectTerm: `${new Date().getFullYear()}.${new Date().getMonth()}-${new Date().getFullYear()}.${new Date().getMonth()}`
+      }
+    });
+  };
+
+  const onClickResumeProjectDeleteButton = (projectId: ProjectType["id"]) => {
+    if (!confirm("정말 제거하시겠습니까?")) return;
+
+    deleteResumeProject({
+      resumeId: resume.id,
+      projectId
+    });
+  };
 
   return (
     <S.Screen title="내 이력서" description={`내가 작성한 이력서, ${BRAND_NAME}`}>
@@ -36,7 +92,7 @@ const MyResume = ({ resume }: Props) => {
               }}
               onClickPdfExportButton={() => {}}
             />
-            <S.SaveButton>저장</S.SaveButton>
+            <S.SaveButton onClick={onClickSaveButton}>저장</S.SaveButton>
           </S.ButtonsWrapper>
         </S.Header>
 
@@ -45,9 +101,21 @@ const MyResume = ({ resume }: Props) => {
             <S.FieldName>프로젝트</S.FieldName>
             <S.FieldGuide>{"• 본인이 경험한 프로젝트들을 입력해주세요."}</S.FieldGuide>
 
-            <S.ProjectAddButton type="button">{"+ 추가"}</S.ProjectAddButton>
+            <S.ProjectAddButton type="button" onClick={onClickProjectAddButton}>
+              {"+ 추가"}
+            </S.ProjectAddButton>
 
-            <Project project={project[0]} />
+            {projects.map(({ id }) => {
+              return (
+                <S.ProjectFormWrapper key={id}>
+                  <S.DeleteButton type="button" onClick={() => onClickResumeProjectDeleteButton(id)}>
+                    {"×"}
+                  </S.DeleteButton>
+
+                  <ProjectInfoForm id={id} {...projectInputs} />
+                </S.ProjectFormWrapper>
+              );
+            })}
           </S.ResumeInfo>
         </S.ResumeForm>
 

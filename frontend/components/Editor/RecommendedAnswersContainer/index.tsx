@@ -4,14 +4,14 @@ import useUser from "@/hooks/useUser";
 import { RootState } from "@/modules";
 import { getLocalStorage } from "@/utils/localStorage";
 import makeUserInfoJsonToString from "@/utils/makeJsonToString";
+import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import Image from "next/image";
 import RecommendedAnswer from "../RecommendedAnswerOfIntroduction";
 import * as S from "./styles";
 
 const RecommendedAnswersContainer = () => {
-  const { user } = useUser({ enabled: true });
+  const { user } = useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
   const userInfo = user!.userInfos[0];
 
   const currentQuestionTitle = useSelector(

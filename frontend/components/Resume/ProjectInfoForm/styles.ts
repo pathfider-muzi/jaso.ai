@@ -2,15 +2,6 @@ import ButtonComponent from "@/components/_common/Button";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
-export const Frame = styled.div`
-  position: relative;
-  padding: 1rem 0;
-  border-top: 1px solid ${PALETTE.GRAY_200};
-  &:last-child {
-    border-bottom: 1px solid ${PALETTE.GRAY_200};
-  }
-`;
-
 export const TextInput = styled.input`
   line-height: 1.3rem;
   font-size: 1rem;
@@ -23,6 +14,7 @@ export const TextInput = styled.input`
 
 export const TextContent = styled(TextInput)`
   word-break: break-all;
+  white-space: break-spaces;
 `.withComponent("span");
 
 export const TextArea = styled.textarea`
@@ -37,8 +29,15 @@ export const TextArea = styled.textarea`
 `;
 
 export const LoadingImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
   height: 2.5rem;
   margin-right: 2rem;
+  margin-bottom: 1rem;
+
+  & > span {
+    margin-left: 1rem;
+  }
 `;
 
 export const ProjectTerm = styled.div`
@@ -59,16 +58,6 @@ export const MonthInput = styled(YearInput)`
 
 export const HyphenBetweenDate = styled.span`
   margin-right: 1rem;
-`;
-
-export const DeleteButton = styled.button`
-  position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1.7rem;
-  top: 2px;
-  right: 6px;
-  color: ${PALETTE.RED};
 `;
 
 export const IntroductionContentWrapper = styled.div`

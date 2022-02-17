@@ -1,9 +1,11 @@
 import LoginModal from "@/components/Auth/LoginModal";
 import BRAND_NAME from "@/constants/brandName";
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import ROUTE from "@/constants/routes";
 import useCustomAlert from "@/hooks/Editor/useAlert";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
+import { getLocalStorage } from "@/utils/localStorage";
 import Link from "next/link";
 import Button from "../Button";
 import Logo from "../Logo";
@@ -12,7 +14,7 @@ import * as S from "./styles";
 interface Props {}
 
 const Header = ({ ...props }: Props) => {
-  const { user } = useUser({ enabled: true });
+  const { user } = useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
 
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal({});
   const { isModalOpen: isAvatarDropDownOpen, toggleModal: toggleAvatarDropdown } = useModal({});
@@ -34,14 +36,8 @@ const Header = ({ ...props }: Props) => {
         </Link>
 
         <S.Nav>
-          <S.NavButton
-            type="button"
-            onClick={() => {
-              alert("준비중입니다.");
-            }}
-          >
-            공지사항
-          </S.NavButton>
+          <S.NavButton onClick={() => {}}>자기소개서 추천</S.NavButton>
+
           <S.NavButton
             type="button"
             onClick={() => {
@@ -50,7 +46,7 @@ const Header = ({ ...props }: Props) => {
           >
             내 자기소개서
           </S.NavButton>
-          <S.NavButton onClick={() => {}}>자기소개서 추천</S.NavButton>
+
           <S.NavButton
             type="button"
             onClick={() => {
@@ -58,6 +54,15 @@ const Header = ({ ...props }: Props) => {
             }}
           >
             내 이력서
+          </S.NavButton>
+
+          <S.NavButton
+            type="button"
+            onClick={() => {
+              alert("준비중입니다.");
+            }}
+          >
+            공지사항
           </S.NavButton>
         </S.Nav>
 

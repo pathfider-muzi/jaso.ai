@@ -14,7 +14,6 @@ export const Frame = styled.div`
   width: 100%;
   display: flex;
   min-height: 60rem;
-  max-height: 90vh;
   flex-direction: column;
 `;
 
@@ -75,7 +74,7 @@ export const FieldGuide = styled.p`
   white-space: pre-wrap;
   padding: 0.8rem;
   background-color: ${PALETTE.GRAY_120};
-  font-size: 0.25rem;
+  font-size: 0.7rem;
   line-height: 1.42;
   letter-spacing: normal;
   color: ${PALETTE.BLACK_700};
@@ -89,6 +88,25 @@ export const ProjectAddButton = styled.button`
   border: none;
   text-align: left;
   color: ${PALETTE.BLUE};
+`;
+
+export const ProjectFormWrapper = styled.div`
+  position: relative;
+  padding: 1rem 0;
+  border-top: 1px solid ${PALETTE.GRAY_200};
+  &:last-child {
+    border-bottom: 1px solid ${PALETTE.GRAY_200};
+  }
+`;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.7rem;
+  top: 2px;
+  right: 6px;
+  color: ${PALETTE.RED};
 `;
 
 export const ResumeLiveDemo = styled.div``;

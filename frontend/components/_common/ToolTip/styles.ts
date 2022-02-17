@@ -34,7 +34,8 @@ export const SpeechBubble = styled.div<{
   padding: 1rem;
   border-radius: 10px;
   width: max-content;
-  max-width: 30rem;
-  white-space: pre-wrap;
+  max-width: 50rem;
   z-index: 1;
+  word-break: break-all;
+  white-space: break-spaces;
 `;
