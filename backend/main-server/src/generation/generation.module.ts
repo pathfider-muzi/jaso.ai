@@ -8,7 +8,7 @@ import { GenerationController } from './generation.controller';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 50000
+      timeout: 500000
     }),
     PassportModule,
     UserModule

@@ -33,7 +33,7 @@ export class GenerationController {
         };
 
         const { data: { introduction } } = await lastValueFrom(this.httpService.post("http://34.124.206.11:3000/", postData, {
-            timeout: 50000
+            timeout: 500000
         }).pipe(
             catchError(error => {
                 throw new HttpException(error.response.data, error.response.status);
