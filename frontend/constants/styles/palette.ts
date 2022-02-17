@@ -4,6 +4,7 @@ const PALETTE = {
   GRAY_300: "#b2c0cc",
   GRAY_200: "#d8d8d8;",
   GRAY_150: "#eaeaea",
+  GRAY_120: "#f3f9fe",
   GRAY_100: "#fbfbfd",
   BLACK_900: "#000000",
   BLACK_700: "#333",

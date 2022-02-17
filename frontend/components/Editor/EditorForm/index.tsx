@@ -1,7 +1,7 @@
 import _CustomAlert from "@/components/_common/CustomAlert";
 import ToolTip from "@/components/_common/ToolTip";
+import { MALGUN_FONT_BASE_64 } from "@/constants/fontBase64";
 import useInput from "@/hooks/useInput";
-import useModal from "@/hooks/useModal";
 import useQnas from "@/hooks/useQnas";
 import useSelfIntroductions from "@/hooks/useSelfIntroductions";
 import { SpellingCorrecterData } from "@/hooks/useSpellingCorrecter";
@@ -15,6 +15,7 @@ import {
 } from "@/modules/confirmSaveIntroduction/actions";
 import { changeQuestionTitleState } from "@/modules/recommendedAnswerOfQuestion/actions";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
+import jsPDF from "jspdf";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEventHandler, MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
@@ -82,24 +83,6 @@ const EditorForm = ({
   const isIntroductionSaved = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isSaved);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(changePageState(true));
-  }, []);
-
-  useEffect(() => {
-    router.beforePopState(({ as: nextLink }) => {
-      if (nextLink !== router.asPath && isIntroductionSaved === false) {
-        dispatch(setNextLink(nextLink));
-        dispatch(changeAlertState(true));
-        return false;
-      }
-      return true;
-    });
-
-    return () => {
-      router.beforePopState(() => true);
-    };
-  }, [router, isIntroductionSaved, dispatch]);
   const [isEditableTextCount, setIsEditableTextCount] = useState(false);
   const textCountRef = useRef<HTMLInputElement>(null);
   const { updateSelfIntroduction } = useSelfIntroductions({ enabled: false });
@@ -225,6 +208,25 @@ const EditorForm = ({
     );
   };
 
+  const onClickPdfExportButton = () => {
+    const newIntroduction = new jsPDF("p", "pt");
+    newIntroduction.addFileToVFS("malgun.ttf", MALGUN_FONT_BASE_64);
+    newIntroduction.addFont("malgun.ttf", "malgun", "normal");
+    newIntroduction.setFont("malgun");
+    newIntroduction.setFontSize(11);
+
+    const qnasContent = qnaList.reduce((acc, curr, index) => {
+      acc += `${index + 1}. ${curr.question}\n\n`;
+      acc += `${curr.answer}\n\n`;
+
+      return acc;
+    }, "");
+
+    const linebreakedContents = newIntroduction.splitTextToSize(qnasContent, 500);
+    newIntroduction.text(linebreakedContents, 10, 10);
+    newIntroduction.save(`${user?.nickname}_${title}_자기소개서.pdf`);
+  };
+
   useEffect(() => {
     if (qnaList.length === 0) return;
 
@@ -241,6 +243,7 @@ const EditorForm = ({
   }, [textCountRef, isEditableTextCount]);
 
   useEffect(() => {
+    dispatch(changePageState(true));
     dispatch(changePageState(true));
   }, []);
 
@@ -259,7 +262,21 @@ const EditorForm = ({
     };
   }, [router, isIntroductionSaved, dispatch]);
 
-  const { isModalOpen: isExportButtonDropDownOpen, toggleModal: toggleExportButtonDropdown } = useModal({});
+  useEffect(() => {
+    router.beforePopState(({ as: nextLink }) => {
+      if (nextLink !== router.asPath && isIntroductionSaved === false) {
+        dispatch(setNextLink(nextLink));
+        dispatch(changeAlertState(true));
+        return false;
+      }
+      return true;
+    });
+
+    return () => {
+      router.beforePopState(() => true);
+    };
+  }, [router, isIntroductionSaved, dispatch]);
+
   return (
     <S.Frame {...props}>
       <S.SelfIntroductionTitleWrapper>
@@ -363,7 +380,13 @@ const EditorForm = ({
         <S.Wrapper>
           <div>
             <S.PdfExportButtonToolTip text="PDF로 다운로드" textBubbleStyle={{ top: "-3.5rem", left: "-2.5rem" }}>
-              <PdfExportButton qnas={qnaList} title={`${user?.nickname}_자기소개서`} />
+              <PdfExportButton
+                styles={{
+                  width: 22,
+                  height: 22
+                }}
+                onClickPdfExportButton={onClickPdfExportButton}
+              />
             </S.PdfExportButtonToolTip>
           </div>
 

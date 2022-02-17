@@ -18,7 +18,7 @@ const ToolTip = ({ text, textBubbleStyle, children, ...props }: Props) => {
 
   return (
     <S.Frame {...props}>
-      <S.Button type="button" onMouseOver={openModal} onMouseOut={closeModal}>
+      <S.Button role="button" onMouseOver={openModal} onMouseOut={closeModal}>
         {children ? children : <>{"?"}</>}
       </S.Button>
       {isModalOpen && <S.SpeechBubble textBubbleStyle={textBubbleStyle}>{text}</S.SpeechBubble>}

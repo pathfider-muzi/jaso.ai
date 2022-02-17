@@ -8,10 +8,13 @@ export const Frame = styled.div`
   color: ${PALETTE.GRAY_500};
   border-radius: 50%;
   border: 1px solid ${PALETTE.GRAY_500};
+  width: fit-content;
+  height: fit-content;
 `;
 
-export const Button = styled.button`
-  padding: 0.3rem 0.5rem;
+export const Button = styled.div`
+  padding: 0.1rem 0.4rem;
+  cursor: pointer;
 `;
 
 export const SpeechBubble = styled.div<{

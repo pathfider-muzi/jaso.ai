@@ -5,6 +5,8 @@ interface Props {
   onClickPlusCard: () => void;
   onClickDeleteButton: (id: number) => void;
   onClickCard: (id: number) => void;
+  onMouseOverCard?: (id: number) => void;
+
   data: {
     id: number;
     cardText: string;
@@ -16,6 +18,7 @@ const CardList = ({
   onClickPlusCard,
   onClickDeleteButton,
   onClickCard,
+  onMouseOverCard,
   data,
   addButtonToolTipInfo,
   ...props
@@ -29,7 +32,7 @@ const CardList = ({
       {data.map(({ id, cardText }) => {
         return (
           <S.CardWrapper key={id}>
-            <S.Card text={cardText} onClick={() => onClickCard(id)} />
+            <S.Card text={cardText} onClick={() => onClickCard(id)} onMouseOver={() => onMouseOverCard?.(id)} />
             <S.DeleteButton type="button" onClick={() => onClickDeleteButton(id)}>
               {"×"}
             </S.DeleteButton>

@@ -14,6 +14,9 @@ const MySelfIntroductions = ({ ...props }) => {
   const onClickCard = (id: SelfIntroduction["id"]) => {
     router.push(`${ROUTE.MY_SELFINTRODUCTIONS}/${id}`);
   };
+  const onMouseOverCard = (id: SelfIntroduction["id"]) => {
+    router.prefetch(`${ROUTE.MY_SELFINTRODUCTIONS}/${id}`);
+  };
 
   const onClickPlusCard = () => {
     createSelfIntroduction({
@@ -46,6 +49,7 @@ const MySelfIntroductions = ({ ...props }) => {
           onClickPlusCard={onClickPlusCard}
           onClickCard={onClickCard}
           onClickDeleteButton={onClickDeleteButton}
+          onMouseOverCard={onMouseOverCard}
           data={data}
           addButtonToolTipInfo={{
             text: "자기소개서를 추가하세요",

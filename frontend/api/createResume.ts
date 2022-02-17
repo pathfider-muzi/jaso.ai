@@ -1,12 +1,7 @@
 import { Resume } from "@/types/Resume";
 import request from "@/utils/request";
 
-const createResume = async (
-  resumeInfo: Pick<
-    Resume,
-    "projectDetail" | "projectFeeling" | "projectName" | "projectResult" | "projectRole" | "projectTerm"
-  >
-) => {
+const createResume = async (resumeInfo: Pick<Resume, "title" | "name" | "role" | "email" | "contacts">) => {
   const response = await request.post(`/resume`, {
     ...resumeInfo
   });

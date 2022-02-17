@@ -2,6 +2,7 @@ import CardList from "@/components/_common/CardList";
 import BRAND_NAME from "@/constants/brandName";
 import ROUTE from "@/constants/routes";
 import useResumes from "@/hooks/useResumes";
+import useUser from "@/hooks/useUser";
 import { Resume } from "@/types/Resume";
 import { useRouter } from "next/router";
 import * as S from "./styles";
@@ -10,14 +11,15 @@ const MyResumes = ({ ...props }) => {
   const router = useRouter();
   const { resumes, createResume, deleteResume } = useResumes({ enabled: true });
 
+  const { user } = useUser({ enabled: false });
+
   const onClickPlusCard = () => {
     createResume({
-      projectName: "제목없는 이력서",
-      projectDetail: "",
-      projectTerm: "",
-      projectRole: [],
-      projectResult: [],
-      projectFeeling: []
+      title: "제목없는 이력서",
+      name: "",
+      role: "",
+      email: user?.userInfos[0].email || "",
+      contacts: []
     });
   };
 
@@ -31,15 +33,19 @@ const MyResumes = ({ ...props }) => {
     router.push(`${ROUTE.MY_RESUMES}/${id}`);
   };
 
-  const data = resumes.map(({ id, projectName }) => {
+  const onMouseOverCard = (id: Resume["id"]) => {
+    router.prefetch(`${ROUTE.MY_RESUMES}/${id}`);
+  };
+
+  const data = resumes.map(({ id, title }) => {
     return {
       id,
-      cardText: projectName
+      cardText: title
     };
   });
 
   return (
-    <S.Screen title="내 이력서" description={`내가 작성한 자기소개서 목록, ${BRAND_NAME}`}>
+    <S.Screen title="내 이력서 목록" description={`내가 작성한 이력서 목록, ${BRAND_NAME}`}>
       <S.Frame {...props}>
         <S.Header>
           <S.Title>내 이력서 목록</S.Title>
@@ -49,6 +55,7 @@ const MyResumes = ({ ...props }) => {
           onClickCard={onClickCard}
           onClickDeleteButton={onClickDeleteButton}
           data={data}
+          onMouseOverCard={onMouseOverCard}
           addButtonToolTipInfo={{
             text: "이력서를 추가하세요",
             textBubbleStyle: {

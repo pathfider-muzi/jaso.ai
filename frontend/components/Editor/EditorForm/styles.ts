@@ -201,4 +201,5 @@ export const OrganizationNameCheckWrapper = styled.div`
 
 export const PdfExportButtonToolTip = styled(ToolTipComponent)`
   border: none;
+  margin-top: 0.3rem;
 `;
