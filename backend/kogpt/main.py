@@ -78,7 +78,7 @@ print(f'elapsed time for building model --> {datetime.now() - start}')
 
 # get local json as prmompt string
 prompt_project_list = projectParser.parseLocalJsonToPromptString(filepath=prompt_project_json_path)
-prompt_motive_list = motiveParser.parseLocalJsonToPromptString(filepath=prompt_motive_json_path)
+motiveIdx, prompt_motive_list = motiveParser.parseLocalJsonToPromptString(cnt=0, filepath=prompt_motive_json_path)
 
 @app.route("/project", methods=["POST"])
 def generate_project_self_introduction():
@@ -106,7 +106,7 @@ def generate_motive_self_introduction():
         if requestText is None:
             return jsonify({"error": "no input data"})
         try:
-            requestPrompt = motiveParser.parseRequestJsonToPromptString(d=requestText)
+            requestPrompt = motiveParser.parseRequestJsonToPromptString(cnt=motiveIdx, d=requestText)
             prompt, promptLen = motiveParser.mergePrompts(local=prompt_motive_list, req=requestPrompt)
             recommendText = model.generate(prompt=prompt, temperature=temperature, max_length=maxLength)
             recommendText = stringValidation(str(recommendText)[promptLen:])
