@@ -46,7 +46,6 @@ const Editor = ({ selfIntroduction }: Props) => {
 
         <S.EditorSidebar
           setEmphasizedQuestion={setEmphasizedQuestion}
-          isEmphasizedQuestion={isEmphasizedQuestion}
           spellingCorrectorData={spellingCorrectorData}
           originalSpellingData={originalSpellingData}
           isFetchedAll={isFetchedAll}
