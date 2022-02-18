@@ -6,7 +6,7 @@ import BORDER from "@/constants/styles/border";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
 import verticalStyle from "@/constants/styles/verticalStyle";
-import { css } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
@@ -43,14 +43,26 @@ export const QuestionWrapper = styled.div`
   border-bottom: 1px solid ${PALETTE.GRAY_200};
 `;
 
-export const Question = styled.textarea`
+export const Question = styled.textarea<{ isEmphasized: boolean }>`
+  ${({ isEmphasized: isEmpahsized }) => {
+    if (isEmpahsized) {
+      return css`
+        display: inline-block;
+        background-color: ${PALETTE.GREEN};
+      `;
+    }
+    return;
+  }}
+
+  border: none;
   width: 100%;
   outline: 0;
-  border: none;
   resize: none;
   font-size: 1rem;
   height: 3.5rem;
 `;
+
+export const InnerQuestion = styled.div``;
 
 export const AnswerWrapper = styled.div`
   width: 100%;

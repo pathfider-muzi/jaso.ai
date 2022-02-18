@@ -1,6 +1,7 @@
 import BRAND_NAME from "@/constants/brandName";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
 import useTextArea from "@/hooks/useTextArea";
+import { useState } from "react";
 import { SelfIntroduction } from "@/types/SelfIntroduction";
 import * as S from "./styles";
 
@@ -24,6 +25,8 @@ const Editor = ({ selfIntroduction }: Props) => {
     text: answer
   });
 
+  const [isEmphasizedQuestion, setEmphasizedQuestion] = useState(false);
+
   return (
     <S.Screen title="에디터" description={`AI 자소서 assistant, ${BRAND_NAME} 에디터`}>
       <S.Frame>
@@ -38,9 +41,12 @@ const Editor = ({ selfIntroduction }: Props) => {
           spellingCorrectorData={spellingCorrectorData}
           spellingResultsRefs={spellingResultsRefs}
           originalSpellingData={originalSpellingData}
+          isEmphasizedQuestion={isEmphasizedQuestion}
         />
 
         <S.EditorSidebar
+          setEmphasizedQuestion={setEmphasizedQuestion}
+          isEmphasizedQuestion={isEmphasizedQuestion}
           spellingCorrectorData={spellingCorrectorData}
           originalSpellingData={originalSpellingData}
           isFetchedAll={isFetchedAll}

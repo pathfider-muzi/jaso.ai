@@ -3,7 +3,7 @@ import * as S from "./styles";
 
 interface Props extends RecommendedIntroductionType {}
 
-const RecommendedIntroduction = ({ title, body, tags, spec }: Props) => {
+const RecommendedIntroduction = ({ title, body, tags }: Props) => {
   return (
     <S.Frame>
       <S.Header>

@@ -7,6 +7,7 @@ import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import { getLocalStorage } from "@/utils/localStorage";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";
@@ -18,6 +19,8 @@ const Header = ({ ...props }: Props) => {
 
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal({});
   const { isModalOpen: isAvatarDropDownOpen, toggleModal: toggleAvatarDropdown } = useModal({});
+
+  const router = useRouter();
 
   const onClickLoginButton = () => {
     openLoginModal();
@@ -34,7 +37,6 @@ const Header = ({ ...props }: Props) => {
             <S.BrandName>{BRAND_NAME}</S.BrandName>
           </S.BrandInfoWrapper>
         </Link>
-
         <S.Nav>
           <S.NavButton onClick={() => {}}>자기소개서 추천</S.NavButton>
           <S.NavButton
@@ -54,6 +56,7 @@ const Header = ({ ...props }: Props) => {
           >
             내 이력서
           </S.NavButton>
+          <S.NavButton onClick={() => router.push(ROUTE.INTRODUCTION_RECOMMENDATION)}>자기소개서 추천</S.NavButton>
           <S.NavButton
             type="button"
             onClick={() => {

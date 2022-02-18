@@ -39,6 +39,7 @@ interface Props {
   spellingCorrectorData: SpellingCorrecterData[];
   spellingResultsRefs: MutableRefObject<RefObject<HTMLSpanElement>[] | undefined>;
   originalSpellingData: string[];
+  isEmphasizedQuestion: boolean;
 }
 
 const EditorForm = ({
@@ -52,6 +53,7 @@ const EditorForm = ({
   spellingCorrectorData,
   spellingResultsRefs,
   originalSpellingData,
+  isEmphasizedQuestion,
   ...props
 }: Props) => {
   const router = useRouter();
@@ -291,12 +293,13 @@ const EditorForm = ({
 
       <S.QuestionWrapper>
         <S.Question
+          isEmphasized={isEmphasizedQuestion}
           value={question}
           onChange={event => {
             onChangeQuestion(event);
             dispatch(changeQuestionTitleState(event.target.value));
           }}
-          placeholder="문항 입력"
+          placeholder="질문 입력"
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"

@@ -1,18 +1,46 @@
-import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import useRecommendAnswers from "@/hooks/Editor/useRecommendAnswer";
-import useUser from "@/hooks/useUser";
+import { getUserInfoString } from "@/hooks/useUser";
 import { RootState } from "@/modules";
-import { getLocalStorage } from "@/utils/localStorage";
-import makeUserInfoJsonToString from "@/utils/makeJsonToString";
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import RecommendedAnswer from "../RecommendedAnswerOfIntroduction";
+import Image from "next/image";
+import RecommendedAnswer from "../RecommendedAnswer";
 import * as S from "./styles";
+import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
+import useModal from "@/hooks/useModal";
+import AdditionalInformationModal from "@/components/User/AdditionalInformationModal";
 
-const RecommendedAnswersContainer = () => {
-  const { user } = useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
-  const userInfo = user!.userInfos[0];
+interface Props {
+  setEmphasizedQuestion: (isEmphasized: boolean) => void;
+}
+
+const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle }: Props) => {
+  const {
+    university,
+    major,
+    grade,
+    languageScore,
+    career,
+    activity,
+    licenses,
+    onChangeUniversity,
+    onChangeMajor,
+    onChangeGrade,
+    onChangeLanguageScore,
+    onChangeCareer,
+    onChangeActivity,
+    onChangeLicenses
+  } = useAdditionalInfoInput();
+
+  const specification = getUserInfoString({
+    university,
+    major,
+    grade,
+    languageScore,
+    career,
+    activity,
+    license: licenses.join(" / ")
+  });
 
   const currentQuestionTitle = useSelector(
     (state: RootState) => state.recommendedAnswerOfQuestionReducer.currentQuestionTitle
@@ -26,8 +54,11 @@ const RecommendedAnswersContainer = () => {
     metaInfo: {
       listNum: LIMIT_ANSWER_NUM,
       question: currentQuestionTitle,
-      specification: makeUserInfoJsonToString(userInfo)
+      specification: specification
     }
+  });
+  const { isModalOpen, closeModal, openModal } = useModal({
+    defaultValue: false
   });
 
   const [recommendedAnswersAmount, setRecommendedAnswersAmount] = useState(SELF_ANSWER_AMOUNT_UNIT);
@@ -43,23 +74,69 @@ const RecommendedAnswersContainer = () => {
     });
   };
 
+  const onClickSaveButton = () => {
+    closeModal();
+  };
+
+  useEffect(() => {
+    if (specification === "- / - / - / - / - / - / -") return;
+    console.log(specification);
+    refetch();
+  }, [specification]);
+
   return (
     <S.Frame>
+      <S.MetaInfo>질문 내용과 스펙을 바탕으로 자기소개서 문단을 추천해줍니다.</S.MetaInfo>
+      <S.AdditionalInfo>
+        {specification}
+        <S.ChangeSpecButton type="button" onClick={openModal}>
+          변경
+        </S.ChangeSpecButton>
+      </S.AdditionalInfo>
+      <AdditionalInformationModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onClickSaveButton={onClickSaveButton}
+        additionalInput={{
+          university,
+          major,
+          grade,
+          languageScore,
+          career,
+          activity,
+          licenses,
+          onChangeUniversity,
+          onChangeMajor,
+          onChangeGrade,
+          onChangeLanguageScore,
+          onChangeCareer,
+          onChangeActivity,
+          onChangeLicenses
+        }}
+      />
       {recommendedAnswers ? (
         <S.ReloadAnswersButton
+          onMouseLeave={() => setEmphasizedTitle(false)}
+          onMouseOver={() => setEmphasizedTitle(true)}
           onClick={() => {
             refetch();
           }}
         >
-          추천된 자기소개서 문항 불러오기
+          추천된 자기소개서 답변 불러오기
         </S.ReloadAnswersButton>
       ) : (
         <></>
       )}
       {recommendedAnswers ? (
-        recommendedAnswers.slice(0, recommendedAnswersAmount).map(({ body: recommendedAnswer }, index: number) => {
-          return <RecommendedAnswer key={index} answer={recommendedAnswer} />;
-        })
+        recommendedAnswers
+          .slice(0, recommendedAnswersAmount)
+          .map(({ body: recommendedAnswer, spec }, index: number) => {
+            const specArray = spec.split("/");
+            const question = specArray[0];
+            return (
+              <RecommendedAnswer key={index} answer={recommendedAnswer} question={question} tags={specArray.slice(1)} />
+            );
+          })
       ) : (
         <S.LoadingImageWrapper>
           <Image src="/loading.svg" alt="loading image" width="100" height="100" />

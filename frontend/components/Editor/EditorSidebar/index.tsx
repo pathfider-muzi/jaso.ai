@@ -4,14 +4,9 @@ import { MutableRefObject, RefObject, useState } from "react";
 import RecommendedAnswersContainer from "../RecommendedAnswersContainer";
 import * as S from "./styles";
 
-const TAB_TYPES = [
-  "RecommendedIntroductions",
-  "RecommendAnswerFromQuestion",
-  "CreateIntroductionFromResume",
-  "SpellingCheck"
-] as const;
+const TAB_TYPES = ["RecommendedIntroductions", "RecommendAnswerFromQuestion", "SpellingCheck"] as const;
 
-const TAB_NAMES = ["AI 추천 자소서", "ai 추천 문항", "이력서로 자소서 생성", "맞춤법 검사기"];
+const TAB_NAMES = ["AI 추천 자소서", "ai 추천 답변", "맞춤법 검사기"];
 
 interface Props {
   spellingCorrectorData: ReturnType<typeof useSpellingCorrecter>["data"];
@@ -23,6 +18,7 @@ interface Props {
   getSpellInfo: () => void;
   answer: string;
   setAnswer: (value: string) => void;
+  setEmphasizedQuestion: (isEmphasized: boolean) => void;
 }
 
 const EditorSidebar = ({
@@ -35,6 +31,7 @@ const EditorSidebar = ({
   setAnswer,
   answer,
   errorSpellingData,
+  setEmphasizedQuestion,
   ...props
 }: Props) => {
   type TabType = typeof TAB_TYPES[number];
@@ -70,7 +67,9 @@ const EditorSidebar = ({
         )}
 
         {selectedTab === "RecommendAnswerFromQuestion" && (
-          <S.TabWrapper>{<RecommendedAnswersContainer></RecommendedAnswersContainer>}</S.TabWrapper>
+          <S.TabWrapper>
+            {<RecommendedAnswersContainer setEmphasizedQuestion={setEmphasizedQuestion}></RecommendedAnswersContainer>}
+          </S.TabWrapper>
         )}
         {selectedTab === "SpellingCheck" && (
           <S.TabWrapper>

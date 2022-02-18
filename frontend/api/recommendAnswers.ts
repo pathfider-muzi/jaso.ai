@@ -2,6 +2,7 @@ import { InfoForRecommendAnswer } from "@/types/recommendAnswer";
 import request from "@/utils/request";
 
 const getRecommendAnswers = async ({ listNum, question, specification }: InfoForRecommendAnswer) => {
+  console.log(specification);
   const response = await request.post(`/recommendation/answer`, {
     listNum,
     question,
