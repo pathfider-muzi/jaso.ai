@@ -122,6 +122,7 @@ def recommendation(data, num):
 		push_dict['spec'] = near_spec
 		push_dict['body'] = near_body
 		push_dict['tags'] = tags
+		push_dict['id'] = doc['doc_idx']
 		ret_recommendation_list.append(push_dict)
 
 	return ret_recommendation_list

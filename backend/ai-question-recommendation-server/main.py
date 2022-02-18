@@ -105,6 +105,16 @@ def recommendation(data, num):
 		push_dict['rank'] = rank
 		push_dict['spec'] = near_spec
 		push_dict['body'] = near_body
+		push_dict['id'] = doc['doc_idx']
+		push_dict['activity'] = doc['activity']
+		push_dict['university'] = doc['university']
+		push_dict['grades'] = doc['grades']
+		push_dict['languageScore'] = doc['languageScore']
+		push_dict['license'] = doc['license']
+		push_dict['major'] = doc['major']
+		push_dict['organizationName'] = doc['organizaitonName']
+		push_dict['role'] = doc['role']
+		push_dict['career'] = doc['career']
 		ret_recommendation_list.append(push_dict)
 
 	return ret_recommendation_list
