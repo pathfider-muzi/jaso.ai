@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
-const whitelist = ["/jaso-ai\.com/$", "http://localhost:3000", "http://localhost:4000"];
+const whitelist = ["http://jaso-ai.com/", "https://jaso-ai.com", "http://localhost:3000", "http://localhost:4000"];
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
