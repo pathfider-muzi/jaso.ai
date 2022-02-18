@@ -11,9 +11,9 @@ const generateIntroductionFromProject = async (
     ...project
   });
 
-  const data = response.data as { data: { introduction: string } };
+  const data = response.data as { data: { projectIntroduction: string } };
 
-  return data.data.introduction;
+  return data.data.projectIntroduction;
 };
 
 export default generateIntroductionFromProject;

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 const SignUpPage: NextPage = () => {
   const router = useRouter();
-  const { user } = useUser({ enabled: false });
+  const { user } = useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
 
   useEffect(() => {
     if (getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)) router.replace(ROUTE.HOME);

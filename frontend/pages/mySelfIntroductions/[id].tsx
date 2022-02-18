@@ -12,7 +12,7 @@ import { useQuery } from "react-query";
 
 const SelfIntroductionPage: NextPage = () => {
   const router = useRouter();
-  const { user } = useUser({ enabled: false });
+  const { user } = useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
 
   useQuery(["isFilledAdditionalInfo"], getIsFilledAdditionalInfo, {
     enabled: true,

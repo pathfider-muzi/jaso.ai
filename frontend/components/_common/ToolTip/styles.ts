@@ -38,4 +38,5 @@ export const SpeechBubble = styled.div<{
   z-index: 1;
   word-break: break-all;
   white-space: break-spaces;
+  text-align: left;
 `;

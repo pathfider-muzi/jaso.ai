@@ -11,8 +11,8 @@ interface Props {
 }
 
 const useGenerateIntroductionFromProject = ({ project, enabled = false }: Props) => {
-  const { data, isLoading, error, refetch } = useQuery<string>(
-    Object.values(project),
+  const { data, isLoading, error, refetch, isFetched, isFetching, isRefetchError } = useQuery<string>(
+    [project.projectName],
     () => generateIntroductionFromProject(project),
     {
       enabled
@@ -21,6 +21,9 @@ const useGenerateIntroductionFromProject = ({ project, enabled = false }: Props)
 
   return {
     isLoading,
+    isFetching,
+    isFetched,
+    isRefetchError,
     error,
     introduction: data,
     refetch

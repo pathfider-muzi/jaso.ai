@@ -379,7 +379,7 @@ const EditorForm = ({
 
         <S.Wrapper>
           <div>
-            <S.PdfExportButtonToolTip text="PDF로 다운로드" textBubbleStyle={{ top: "-3.5rem", left: "-2.5rem" }}>
+            <S.PdfExportButtonToolTip text="PDF로 다운로드" textBubbleStyle={{ top: "-3.5rem", left: "0" }}>
               <PdfExportButton
                 styles={{
                   width: 22,
@@ -402,8 +402,10 @@ const EditorForm = ({
                 text={"회사명 강조"}
               />
               <ToolTip
-                text="회사명으로 예상되는 단어에 하이라이팅 기능을 제공합니다. 지원하고자 하는 회사와 일치하는지 다시한번 확인해보세요."
-                textBubbleStyle={{ top: "-5.5rem", left: "-25rem" }}
+                text={
+                  "회사명으로 예상되는 단어에 하이라이팅 기능을 제공합니다.\n지원하고자 하는 회사와 일치하는지 다시한번 확인해보세요."
+                }
+                textBubbleStyle={{ top: "-5.5rem", right: "0" }}
               />
             </S.OrganizationNameCheckWrapper>
           )}

@@ -1,3 +1,4 @@
+import MotivationForm from "@/components/Resume/MotivationForm";
 import ProjectInfoForm from "@/components/Resume/ProjectInfoForm";
 import BRAND_NAME from "@/constants/brandName";
 import useInput from "@/hooks/useInput";
@@ -97,9 +98,24 @@ const MyResume = ({ resume }: Props) => {
         </S.Header>
 
         <S.ResumeForm>
+          <S.FieldName>지원동기</S.FieldName>
+          <S.FieldGuide>
+            {"• 지원하고자 하는 회사정보를 입력하고 지원동기를 생성해보세요."}
+            <br />
+            {"• 이 정보는 이력서 저장에 포함되지 않습니다."}
+          </S.FieldGuide>
+
+          <S.ResumeInfo>
+            <MotivationForm />
+          </S.ResumeInfo>
+
           <S.ResumeInfo>
             <S.FieldName>프로젝트</S.FieldName>
-            <S.FieldGuide>{"• 본인이 경험한 프로젝트들을 입력해주세요."}</S.FieldGuide>
+            <S.FieldGuide>
+              {"• 본인이 경험한 프로젝트들을 입력해주세요."}
+              <br />
+              {"• 자기소개서 생성 정보는 이력서 저장에 포함되지 않습니다."}
+            </S.FieldGuide>
 
             <S.ProjectAddButton type="button" onClick={onClickProjectAddButton}>
               {"+ 추가"}

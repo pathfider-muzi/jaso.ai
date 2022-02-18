@@ -12,7 +12,7 @@ const MyResumePage: NextPage = () => {
   const router = useRouter();
   const resumeId = Number(router.query.id as string);
 
-  const { user } = useUser({ enabled: false });
+  const { user } = useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
 
   const { resumes } = useResumes({
     enabled: true
@@ -25,7 +25,7 @@ const MyResumePage: NextPage = () => {
   }, [router, user]);
 
   if (!resume) return <></>;
-  return <MyResume resume={resume}></MyResume>;
+  return <MyResume resume={resume} />;
 };
 
 export default MyResumePage;

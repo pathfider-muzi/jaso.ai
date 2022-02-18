@@ -35,7 +35,9 @@ const ProjectInfoForm = ({
   const {
     introduction,
     error,
-    isLoading,
+    isFetching,
+    isFetched,
+    isRefetchError,
     refetch: refetchGenerateIntroduction
   } = useGenerateIntroductionFromProject({
     project: {
@@ -132,7 +134,7 @@ const ProjectInfoForm = ({
         <S.TextArea
           value={projectResults[id] || [""]}
           onChange={onChangeProjectResults}
-          placeholder="ex) 대회에서 2등, 최우수상 수상, 성능 15%개선"
+          placeholder="ex) 대회에서 2등, 최우수상 수상, 성능 15%개선, MAU 1만"
           data-projectid={id}
         />
       </Field>
@@ -147,19 +149,19 @@ const ProjectInfoForm = ({
       </Field>
 
       <Field
-        label="자기소개서 생성"
+        label="AI 자기소개서"
         toolTipContent={
           "위 프로젝트 경험을 바탕으로 자기소개서 내용을 생성할 수 있습니다.\n• 위 기능은 30초 ~ 1분의 시간이 소요되며, 개발자 직군에 최적화되어있습니다.\n• 생성 시 마다 다른 결과값이 나오므로 마음에 드는 자기소개서 문구를 찾을 때까지 시도할 수 있습니다."
         }
       >
         <S.IntroductionContentWrapper>
-          <S.IntroductionGenerateButton onClick={() => refetchGenerateIntroduction()} disabled={isLoading}>
-            생성
+          <S.IntroductionGenerateButton onClick={() => refetchGenerateIntroduction()} disabled={isFetching}>
+            {isFetched ? "재시도" : "생성"}
           </S.IntroductionGenerateButton>
 
-          {error ? (
+          {error || isRefetchError ? (
             <S.TextContent>{"서버가 불안정합니다. 잠시후에 다시 시도해주세요"}</S.TextContent>
-          ) : isLoading ? (
+          ) : isFetching ? (
             <S.LoadingImageWrapper>
               <Image src="/loading.svg" alt="loading image" width="30" height="30" />
               <S.TextContent>

@@ -31,7 +31,7 @@ const MainIntroduction = ({ ...props }) => {
         </S.HeroGradient>
         <S.Title>AI 자소서 Assistant</S.Title>
 
-        <S.Description>AI가 맞춤자소서들을 추천해드립니다!</S.Description>
+        <S.Description>AI가 자기소개서 작성을 도와드립니다.</S.Description>
 
         <S.Button onClick={onClickGetStartButton}>Get Start &rarr;</S.Button>
 
