@@ -11,6 +11,7 @@ import { OrgNameCheckerModule } from './orgNameChecker/orgNameChecker.module';
 import { ResumeModule } from './resume/resume.module';
 import { GenerationModule } from './generation/generation.module';
 import { ResumeProjectModule } from './resumeProject/resumeProject.module';
+import { FeedbackModule } from './feedback/feedback.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { ResumeProjectModule } from './resumeProject/resumeProject.module';
     OrgNameCheckerModule,
     ResumeModule,
     GenerationModule,
-    ResumeProjectModule
+    ResumeProjectModule,
+    FeedbackModule
   ],
   controllers: [],
   providers: [],

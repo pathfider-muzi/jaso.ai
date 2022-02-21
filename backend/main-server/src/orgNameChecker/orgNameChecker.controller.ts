@@ -2,14 +2,12 @@ import { HttpService } from '@nestjs/axios';
 import { Body, Controller, HttpException, Post, Request, UseGuards } from '@nestjs/common';
 import { catchError, lastValueFrom } from 'rxjs';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserService } from '../user/user.service';
 import { CheckOrgNameRequestDto } from './dto/checkOrgNameRequestDto';
 
 @Controller('org-name-checker')
 export class OrgNameCheckerController {
     constructor(
         private httpService: HttpService,
-        private userService: UserService
     ) {};
 
     @UseGuards(JwtAuthGuard)
