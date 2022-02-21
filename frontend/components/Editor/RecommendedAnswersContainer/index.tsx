@@ -2,7 +2,7 @@ import useRecommendAnswers from "@/hooks/Editor/useRecommendAnswer";
 import { getUserInfoString } from "@/hooks/useUser";
 import { RootState } from "@/modules";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import RecommendedAnswer from "../RecommendedAnswer";
 import * as S from "./styles";
@@ -48,6 +48,8 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
 
   const SELF_ANSWER_AMOUNT_UNIT = 3;
   const LIMIT_ANSWER_NUM = 100;
+
+  console.log(currentQuestionTitle);
 
   const { data: recommendedAnswers, refetch } = useRecommendAnswers({
     enabled: true,

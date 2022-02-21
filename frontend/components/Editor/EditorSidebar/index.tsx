@@ -4,9 +4,9 @@ import { MutableRefObject, RefObject, useState } from "react";
 import RecommendedAnswersContainer from "../RecommendedAnswersContainer";
 import * as S from "./styles";
 
-const TAB_TYPES = ["RecommendedIntroductions", "RecommendAnswerFromQuestion", "SpellingCheck"] as const;
+const TAB_TYPES = ["RecommendAnswerFromQuestion", "SpellingCheck"] as const;
 
-const TAB_NAMES = ["AI 추천 자소서", "ai 추천 답변", "맞춤법 검사기"];
+const TAB_NAMES = ["ai 추천 답변", "맞춤법 검사기"];
 
 interface Props {
   spellingCorrectorData: ReturnType<typeof useSpellingCorrecter>["data"];
@@ -60,12 +60,6 @@ const EditorSidebar = ({
       </S.Nav>
 
       <S.SideBarContentWrapper>
-        {selectedTab === "RecommendedIntroductions" && (
-          <S.TabWrapper>
-            <RecommendedIntroductionContainer />
-          </S.TabWrapper>
-        )}
-
         {selectedTab === "RecommendAnswerFromQuestion" && (
           <S.TabWrapper>
             {<RecommendedAnswersContainer setEmphasizedQuestion={setEmphasizedQuestion}></RecommendedAnswersContainer>}

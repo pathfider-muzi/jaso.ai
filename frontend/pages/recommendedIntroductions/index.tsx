@@ -1,4 +1,4 @@
-import IntroductionsRecommend from "@/components/_templates/SelfIntroductionRecommend";
+import RecommendSearchIntroductions from "@/components/Editor/RecommendSearchIntroductions";
 import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import ROUTE from "@/constants/routes";
 import useUser from "@/hooks/useUser";
@@ -15,7 +15,7 @@ const RecommendedSelfIntroductionPage: NextPage = () => {
     if (!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN)) router.replace(ROUTE.HOME);
   }, [router, user]);
 
-  return <IntroductionsRecommend />;
+  return <RecommendSearchIntroductions />;
 };
 
 export default RecommendedSelfIntroductionPage;
