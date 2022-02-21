@@ -56,6 +56,12 @@ const Header = ({ ...props }: Props) => {
           >
             내 이력서
           </S.NavButton>
+          <Link href={"https://predev.dev"} passHref>
+            <S.NavLink type="button" target="_blank">
+              면접준비
+            </S.NavLink>
+          </Link>
+
           <S.NavButton
             type="button"
             onClick={() => {

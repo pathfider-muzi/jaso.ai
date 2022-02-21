@@ -50,6 +50,8 @@ export const NavButton = styled.button`
   line-height: 1rem;
 `;
 
+export const NavLink = styled(NavButton)``.withComponent("a");
+
 export const AuthInfoWrapper = styled.div``;
 
 export const AvatarDropDown = styled(AvatarDropDownComponent)`
