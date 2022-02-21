@@ -108,7 +108,6 @@ def recommendation(data, num, size):
 			continue
 		
 		rank = cnt
-		cnt += 1
 		push_dict['rank'] = rank
 		push_dict['spec'] = near_spec
 		push_dict['body'] = near_body
@@ -125,6 +124,7 @@ def recommendation(data, num, size):
 		ret_recommendation_list.append(push_dict)
 		if cnt == num:
 			break
+		cnt += 1
 
 	return ret_recommendation_list
 
