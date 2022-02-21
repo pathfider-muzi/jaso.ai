@@ -211,7 +211,11 @@ export class RecommendationController {
             })
         ));
 
-        const res = recommendationList.filter(selfIntroduction => { selfIntroduction.body.includes(keyword) && selfIntroduction.title.split(' / ')[0]?.includes(orgName) && selfIntroduction.title.split(' / ')[1]?.includes(role); });
+        const res = recommendationList.filter(selfIntroduction => { 
+            return (
+                selfIntroduction.body.includes(keyword) && selfIntroduction.title.split(' / ')[0]?.includes(orgName) && selfIntroduction.title.split(' / ')[1]?.includes(role)
+            ) 
+        });
 
         return {
             data: {
