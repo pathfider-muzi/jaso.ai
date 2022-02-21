@@ -1,12 +1,12 @@
 import Field from "@/components/Resume/Field";
-import useProjectInput from "@/components/_templates/MyResume/hooks/useProjectInput";
+import useProject from "@/components/_templates/MyResume/hooks/useProject";
 import { TERM_INPUT_VALIDATION } from "@/constants/validation";
 import useGenerateIntroductionFromProject from "@/hooks/useGenerateIntroductionFromProject";
 import { Project } from "@/types/Project";
 import Image from "next/image";
 import * as S from "./styles";
 
-interface Props extends ReturnType<typeof useProjectInput> {
+interface Props extends Omit<ReturnType<typeof useProject>, "projects" | "mutation"> {
   id: Project["id"];
 }
 
@@ -41,6 +41,7 @@ const ProjectInfoForm = ({
     refetch: refetchGenerateIntroduction
   } = useGenerateIntroductionFromProject({
     project: {
+      id,
       projectName: projectNames[id],
       projectTerm: projectTerms[id],
       projectDetail: projectDetails[id],
@@ -86,7 +87,9 @@ const ProjectInfoForm = ({
             onChange={onChangeProjectTermStartMonths}
             data-projectid={id}
           />
+
           <S.HyphenBetweenDate>{"-"}</S.HyphenBetweenDate>
+
           <S.YearInput
             type="number"
             placeholder="YYYY"
@@ -98,7 +101,6 @@ const ProjectInfoForm = ({
             data-projectid={id}
           />
           {"."}
-
           <S.MonthInput
             type="number"
             placeholder="MM"

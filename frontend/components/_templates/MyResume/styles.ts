@@ -1,13 +1,16 @@
-import PdfExportButtonComponent from "@/components/Editor/PdfExportButton";
 import ButtonComponent from "@/components/_common/Button";
 import ScreenComponent from "@/components/_layouts/Screen";
 import PALETTE from "@/constants/styles/palette";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Screen = styled(ScreenComponent)`
   width: 100%;
   display: flex;
   justify-content: center;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 export const Frame = styled.div`
@@ -35,10 +38,9 @@ export const TitleInput = styled.input`
 
 export const ButtonsWrapper = styled.div`
   display: flex;
-`;
-
-export const PdfExportButton = styled(PdfExportButtonComponent)`
   width: fit-content;
+  gap: 0.5rem;
+  margin-left: 1rem;
 `;
 
 export const SaveButton = styled(ButtonComponent)`
@@ -47,7 +49,15 @@ export const SaveButton = styled(ButtonComponent)`
   font-size: 1.1rem;
   border: none;
   font-weight: 900;
-  margin-left: 1rem;
+`;
+
+export const ResumePdfPreviewToggleButton = styled(ButtonComponent)`
+  background-color: ${PALETTE.WHITE};
+  color: ${PALETTE.BLACK_700};
+  font-size: 1.1rem;
+  border: none;
+  font-weight: 900;
+  width: max-content;
 `;
 
 export const ResumeForm = styled.div`
@@ -109,4 +119,30 @@ export const DeleteButton = styled.button`
   color: ${PALETTE.RED};
 `;
 
-export const ResumeLiveDemo = styled.div``;
+export const ResumePdfPreviewWrapper = styled.div`
+  margin-left: 1rem;
+  width: 100%;
+  max-height: 150vh;
+  position: relative;
+`;
+
+export const ResumePdfPreview = styled.iframe<{
+  style: {
+    top: number;
+  };
+}>`
+  transition: all 0.5s linear;
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  max-height: 50%;
+  ${({ style: { top } }) =>
+    css`
+      top: ${top}px;
+    `};
+`;
+
+export const LoadingImageWrapper = styled.div`
+  height: 2.5rem;
+  margin-right: 2rem;
+`;

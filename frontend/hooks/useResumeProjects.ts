@@ -16,6 +16,8 @@ const useResumeProjects = ({ enabled, resumeId }: Props) => {
     data: projects,
     isLoading,
     error,
+    isFetched,
+    isSuccess,
     refetch: refetchResumeProjects
   } = useQuery<Project[]>(["resumeId"], () => getResumeProjects(resumeId), {
     enabled
@@ -44,6 +46,8 @@ const useResumeProjects = ({ enabled, resumeId }: Props) => {
     refetchResumeProjects,
     isLoading,
     error,
+    isFetched,
+    isSuccess,
     createResumeProject,
     deleteResumeProject,
     updateResumeProject

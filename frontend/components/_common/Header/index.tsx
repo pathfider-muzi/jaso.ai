@@ -38,7 +38,7 @@ const Header = ({ ...props }: Props) => {
           </S.BrandInfoWrapper>
         </Link>
         <S.Nav>
-          <S.NavButton onClick={() => {}}>자기소개서 추천</S.NavButton>
+          <S.NavButton onClick={() => router.push(ROUTE.INTRODUCTION_RECOMMENDATION)}>자기소개서 추천</S.NavButton>
           <S.NavButton
             type="button"
             onClick={() => {
@@ -56,7 +56,6 @@ const Header = ({ ...props }: Props) => {
           >
             내 이력서
           </S.NavButton>
-          <S.NavButton onClick={() => router.push(ROUTE.INTRODUCTION_RECOMMENDATION)}>자기소개서 추천</S.NavButton>
           <S.NavButton
             type="button"
             onClick={() => {

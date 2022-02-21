@@ -5,14 +5,14 @@ import { useQuery } from "react-query";
 interface Props {
   project: Pick<
     Project,
-    "projectDetail" | "projectFeeling" | "projectName" | "projectResult" | "projectRole" | "projectTerm"
+    "id" | "projectDetail" | "projectFeeling" | "projectName" | "projectResult" | "projectRole" | "projectTerm"
   >;
   enabled?: boolean;
 }
 
 const useGenerateIntroductionFromProject = ({ project, enabled = false }: Props) => {
   const { data, isLoading, error, refetch, isFetched, isFetching, isRefetchError } = useQuery<string>(
-    [project.projectName],
+    [project.id],
     () => generateIntroductionFromProject(project),
     {
       enabled

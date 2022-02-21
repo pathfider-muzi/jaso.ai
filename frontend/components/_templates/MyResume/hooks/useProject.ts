@@ -1,29 +1,43 @@
+import useResumeProjects from "@/hooks/useResumeProjects";
 import { Project } from "@/types/Project";
+import { Resume } from "@/types/Resume";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { useProjectTerm } from "./useProjectTermInput";
 
 interface Props {
-  projects: Project[];
+  resumeId: Resume["id"];
 }
 
-const useProjectInput = ({ projects }: Props) => {
+const useProject = ({ resumeId }: Props) => {
+  const {
+    isFetched,
+    isSuccess,
+    projects: fetchedProject,
+    createResumeProject,
+    updateResumeProject,
+    deleteResumeProject
+  } = useResumeProjects({
+    enabled: true,
+    resumeId
+  });
+
   const [projectNames, setProjectNames] = useState<{
     [key: Project["id"]]: Project["projectName"];
   }>({});
 
   useEffect(() => {
-    if (projects.length === 0) return;
+    if (fetchedProject.length === 0) return;
 
     setProjectNames(() => {
       const initState = {} as { [key: Project["id"]]: Project["projectName"] };
 
-      projects.forEach(project => {
+      fetchedProject.forEach(project => {
         initState[project.id] = project.projectName;
       });
 
       return initState;
     });
-  }, [projects]);
+  }, [fetchedProject]);
 
   const onChangeProjectNames: ChangeEventHandler<HTMLInputElement> = event => {
     setProjectNames(state => {
@@ -36,18 +50,18 @@ const useProjectInput = ({ projects }: Props) => {
   }>({});
 
   useEffect(() => {
-    if (projects.length === 0) return;
+    if (fetchedProject.length === 0) return;
 
     setProjectDetails(() => {
       const initState = {} as { [key: Project["id"]]: Project["projectDetail"] };
 
-      projects.forEach(project => {
+      fetchedProject.forEach(project => {
         initState[project.id] = project.projectDetail;
       });
 
       return initState;
     });
-  }, [projects]);
+  }, [fetchedProject]);
 
   const onChangeProjectDetails: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectDetails(state => {
@@ -60,18 +74,18 @@ const useProjectInput = ({ projects }: Props) => {
   }>({});
 
   useEffect(() => {
-    if (projects.length === 0) return;
+    if (fetchedProject.length === 0) return;
 
     setProjectRoles(() => {
       const initState = {} as { [key: Project["id"]]: Project["projectRole"] };
 
-      projects.forEach(project => {
+      fetchedProject.forEach(project => {
         initState[project.id] = project.projectRole;
       });
 
       return initState;
     });
-  }, [projects]);
+  }, [fetchedProject]);
 
   const onChangeProjectRoles: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectRoles(state => {
@@ -84,18 +98,18 @@ const useProjectInput = ({ projects }: Props) => {
   }>({});
 
   useEffect(() => {
-    if (projects.length === 0) return;
+    if (fetchedProject.length === 0) return;
 
     setProjectResults(() => {
       const initState = {} as { [key: Project["id"]]: Project["projectResult"] };
 
-      projects.forEach(project => {
+      fetchedProject.forEach(project => {
         initState[project.id] = project.projectResult;
       });
 
       return initState;
     });
-  }, [projects]);
+  }, [fetchedProject]);
 
   const onChangeProjectResults: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectResults(state => {
@@ -108,18 +122,18 @@ const useProjectInput = ({ projects }: Props) => {
   }>({});
 
   useEffect(() => {
-    if (projects.length === 0) return;
+    if (fetchedProject.length === 0) return;
 
     setProjectFeelings(() => {
       const initState = {} as { [key: Project["id"]]: Project["projectFeeling"] };
 
-      projects.forEach(project => {
+      fetchedProject.forEach(project => {
         initState[project.id] = project.projectFeeling;
       });
 
       return initState;
     });
-  }, [projects]);
+  }, [fetchedProject]);
 
   const onChangeProjectFeelings: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectFeelings(state => {
@@ -137,14 +151,14 @@ const useProjectInput = ({ projects }: Props) => {
     onChangeProjectTermEndYears,
     onChangeProjectTermEndMonths,
     stringifyProjectTerm
-  } = useProjectTerm(projects);
+  } = useProjectTerm(fetchedProject);
 
   const [projectTerms, setProjectTerms] = useState<{
     [key: string]: Project["projectTerm"];
   }>(() => {
     const initState = {} as { [key: string]: string };
 
-    projects.forEach(project => {
+    fetchedProject.forEach(project => {
       initState[project.id] = project.projectTerm;
     });
 
@@ -152,18 +166,37 @@ const useProjectInput = ({ projects }: Props) => {
   });
 
   useEffect(() => {
-    if (projects.length === 0) return;
+    if (fetchedProject.length === 0) return;
 
     setProjectTerms(() => {
       const initState = {} as { [key: string]: string };
 
-      projects.forEach(project => {
+      fetchedProject.forEach(project => {
         initState[project.id] = project.projectTerm;
       });
 
       return initState;
     });
-  }, [projects]);
+  }, [fetchedProject]);
+
+  const projects = fetchedProject.reduce((acc, curr) => {
+    const projectId = curr.id;
+
+    const newProject: Project = {
+      ...curr,
+      id: projectId,
+      projectName: projectNames[projectId],
+      projectDetail: projectDetails[projectId],
+      projectTerm: projectTerms[projectId],
+      projectRole: projectRoles[projectId],
+      projectResult: projectResults[projectId],
+      projectFeeling: projectFeelings[projectId]
+    };
+
+    acc.push(newProject);
+
+    return acc;
+  }, [] as Project[]);
 
   return {
     projectNames,
@@ -184,8 +217,18 @@ const useProjectInput = ({ projects }: Props) => {
     onChangeProjectTermStartMonths,
     onChangeProjectTermEndYears,
     onChangeProjectTermEndMonths,
-    projectTerms
+    projectTerms,
+    fetchState: {
+      isFetched,
+      isSuccess
+    },
+    mutation: {
+      createResumeProject,
+      updateResumeProject,
+      deleteResumeProject
+    },
+    projects
   };
 };
 
-export default useProjectInput;
+export default useProject;
