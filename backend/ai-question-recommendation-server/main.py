@@ -9,10 +9,15 @@ from glob import glob
 import torch
 import torch.nn.functional as F
 
+from blacklist import Blacklist
+
 from transformers import ElectraModel, ElectraTokenizer
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+
+blacklist_path = 'data/blacklist.json'
+blacklist = Blacklist(filepath=blacklist_path)
 
 device = 'cpu'
 checkpoint_dir = 'models/experiment/model_batch_16_lr_1e-05_norm_false/checkpoints+'
@@ -81,27 +86,29 @@ def build_faiss_index(feature_path, norm=True):
 
 faiss_index, data_features = build_faiss_index(feature_path)
 
-def recommendation(data, num):
+def recommendation(data, num, size):
+	cnt = 1
 	ret_recommendation_list = list()
 
 	spec_text = f' {tokenizer.sep_token} '.join(data.split(' / '))
 	spec_embed = extract_feat(spec_text, max_length, model, tokenizer, device)       
-	distance, indicies = faiss_index.search(spec_embed.reshape(1, -1), num)
+	distance, indicies = faiss_index.search(spec_embed.reshape(1, -1), size)
 	
 	distance = distance.tolist()[0]
 	indicies = indicies.tolist()[0]
 	
 	nearest_docs = [data_features[idx] for idx in indicies]
 
-	for idx, doc in enumerate(nearest_docs):
+	for doc in nearest_docs:
 		push_dict = dict()
-		rank = idx + 1
 		near_spec = doc['spec']
 		near_body = doc['body']
 
-		if len(near_spec)==0 or len(near_body)==0:
+		if len(near_spec)==0 or len(near_body)==0 or blacklist.isBlocked(doc['doc_idx']):
 			continue
 		
+		rank = cnt
+		cnt += 1
 		push_dict['rank'] = rank
 		push_dict['spec'] = near_spec
 		push_dict['body'] = near_body
@@ -116,6 +123,8 @@ def recommendation(data, num):
 		push_dict['role'] = doc['role']
 		push_dict['career'] = doc['career']
 		ret_recommendation_list.append(push_dict)
+		if cnt == num:
+			break
 
 	return ret_recommendation_list
 
@@ -131,7 +140,7 @@ def question_recommend():
 		try:
 			req_spec = req['spec']
 			req_num = req['listNum']
-			res = recommendation(req_spec, req_num)
+			res = recommendation(req_spec, req_num, min(req_num * 5, 31268))
 			data = {"recommendationList": res}
 			return jsonify(data)
 		except Exception as e:
@@ -139,6 +148,20 @@ def question_recommend():
 
 	return "OK"
 
+@app.route("/block", methods=["POST"])
+def add_blacklist():
+	if request.method == "POST":
+		req = request.get_json(silent=True)
+		if req is None:
+			return jsonify({"error": "no input data"})
+		try:
+			reqId = req['id']
+			ret = blacklist.register(requestId=reqId)
+			if ret < 0:
+				raise Exception(f'requested id:{reqId} is already registered!')
+			return jsonify({"blockedId": ret})
+		except Exception as e:
+			return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
 	app.run(debug=True)

@@ -425,6 +425,7 @@ valid_data_question_seperated_paragraph*.json
 valid_data_question_seperated*.json
 project_resume.json
 motive_resume.json
+blacklist.json
 
 # vs code
 settings.json
