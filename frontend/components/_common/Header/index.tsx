@@ -61,12 +61,10 @@ const Header = ({ ...props }: Props) => {
               tryOpenCustomAlert(ROUTE.INTRODUCTION_RECOMMENDATION);
             }}
           >
-            자기소개서 추천
+            자기소개서 검색
           </S.NavButton>
           <Link href={"https://predev.dev"} passHref>
-            <S.NavLink type="button" target="_blank">
-              면접준비
-            </S.NavLink>
+            <S.NavLink target="_blank">면접준비</S.NavLink>
           </Link>
 
           <S.NavButton

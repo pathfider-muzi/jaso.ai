@@ -50,7 +50,26 @@ export const NavButton = styled.button`
   line-height: 1rem;
 `;
 
-export const NavLink = styled(NavButton)``.withComponent("a");
+export const NavLink = styled(NavButton)`
+  position: relative;
+
+  &::after {
+    font-size: 0.6rem;
+    color: ${PALETTE.WHITE};
+    position: absolute;
+    content: "AD";
+    background-color: ${PALETTE.ORANGE};
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    transform: rotate(25deg);
+  }
+`.withComponent("a");
 
 export const AuthInfoWrapper = styled.div``;
 

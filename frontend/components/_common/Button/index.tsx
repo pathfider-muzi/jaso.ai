@@ -3,21 +3,12 @@ import * as S from "./styles";
 
 export type Size = "sm" | "md" | "lg";
 
-interface Props
-  extends DetailedHTMLProps<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+export interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   size?: Size;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
-const Button = ({
-  size = "sm",
-  children,
-  type = "button",
-  ...props
-}: Props) => {
+const Button = ({ size = "sm", children, type = "button", ...props }: Props) => {
   return (
     <S.Frame size={size} type={type} {...props}>
       {children}
