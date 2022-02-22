@@ -123,7 +123,6 @@ export const ResumePdfPreviewWrapper = styled.div`
   margin-left: 1rem;
   width: 100%;
   max-height: 150vh;
-  position: relative;
 `;
 
 export const ResumePdfPreview = styled.iframe<{
@@ -132,10 +131,9 @@ export const ResumePdfPreview = styled.iframe<{
   };
 }>`
   transition: all 0.5s linear;
-  position: absolute;
   width: 100%;
-  height: 50%;
-  max-height: 50%;
+  height: 100%;
+
   ${({ style: { top } }) =>
     css`
       top: ${top}px;

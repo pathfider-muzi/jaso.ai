@@ -1,4 +1,5 @@
 import ButtonComponent from "@/components/_common/Button";
+import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
@@ -60,4 +61,11 @@ export const LoadingImageWrapper = styled.div`
   & > span {
     margin-left: 1rem;
   }
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  ${BORDER.GRAY_300};
+  height: 0;
+  margin-bottom: 1rem;
 `;

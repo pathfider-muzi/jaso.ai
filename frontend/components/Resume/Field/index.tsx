@@ -7,9 +7,9 @@ interface Props {
   toolTipContent?: string;
 }
 
-const Field = ({ label, children, toolTipContent }: Props) => {
+const Field = ({ label, children, toolTipContent, ...props }: Props) => {
   return (
-    <S.Frame>
+    <S.Frame {...props}>
       <S.Label>
         {label}
         {toolTipContent && (

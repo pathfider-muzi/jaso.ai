@@ -1,4 +1,5 @@
 import ButtonComponent from "@/components/_common/Button";
+import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
 
@@ -75,4 +76,11 @@ export const IntroductionGenerateButton = styled(ButtonComponent)`
   padding: 0.4rem 0.6rem;
   border: none;
   font-weight: 900;
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  ${BORDER.GRAY_300};
+  height: 0;
+  margin-bottom: 1rem;
 `;

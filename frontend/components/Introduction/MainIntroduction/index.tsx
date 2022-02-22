@@ -4,6 +4,7 @@ import ROUTE from "@/constants/routes";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import { removeLocalStorage } from "@/utils/localStorage";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import * as S from "./styles";
 
@@ -36,7 +37,9 @@ const MainIntroduction = ({ ...props }) => {
         <S.Button onClick={onClickGetStartButton}>Get Start &rarr;</S.Button>
 
         <a href="#subIntroduction">
-          <S.DownArrow>&darr;</S.DownArrow>
+          <S.DownArrow>
+            <Image src="/down_arrow.png" alt="down arrow" width="70" height="50" />
+          </S.DownArrow>
         </a>
       </S.Frame>
       <LoginModal isOpen={isModalOpen} onClose={closeModal} />

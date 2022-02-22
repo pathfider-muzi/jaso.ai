@@ -173,6 +173,7 @@ export const DownArrow = styled.div`
   text-align: center;
   animation: move 1.5s linear infinite;
   cursor: pointer;
+  filter: invert(100%);
 
   @keyframes move {
     25% {

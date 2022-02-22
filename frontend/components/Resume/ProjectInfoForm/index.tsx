@@ -150,6 +150,8 @@ const ProjectInfoForm = ({
         />
       </Field>
 
+      <S.Line />
+
       <Field
         label="AI 자기소개서"
         toolTipContent={

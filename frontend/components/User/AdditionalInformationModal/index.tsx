@@ -53,7 +53,14 @@ const AdditionalInformationModal = ({ isOpen, onClose, additionalInput, onClickS
           onChange={onChangeUniversity}
         />
         <Selector label="전공" data={MAJOR_LIST} defaultValue={major} isRequired={true} onChange={onChangeMajor} />
-        <InputForm type="number" label="성적" value={grade} isRequired={true} onChange={onChangeGrade} />
+        <InputForm
+          type="number"
+          label="성적"
+          value={grade}
+          isRequired={true}
+          onChange={onChangeGrade}
+          placeholder="평점만 넣어주세요. ex) 3.8"
+        />
         <Selector
           label="직무"
           data={CAREER_CATEGORY}
@@ -69,8 +76,21 @@ const AdditionalInformationModal = ({ isOpen, onClose, additionalInput, onClickS
           onChange={onChangeLicenses}
         />
 
-        <InputForm label="활동" value={activity} isRequired={true} onChange={onChangeActivity} />
-        <InputForm label="어학점수" value={languageScore} isRequired={false} onChange={onChangeLanguageScore} />
+        <InputForm
+          label="활동"
+          value={activity}
+          isRequired={true}
+          onChange={onChangeActivity}
+          placeholder="자유양식 ex) 공기업 인턴 1회"
+        />
+
+        <InputForm
+          label="어학점수"
+          value={languageScore}
+          isRequired={false}
+          onChange={onChangeLanguageScore}
+          placeholder="자유양식 ex) 토익 900점"
+        />
       </S.InfoList>
       <S.Footer>
         <Button size="md" onClick={onClose}>

@@ -51,6 +51,8 @@ const MotivationForm = () => {
         />
       </Field>
 
+      <S.Line />
+
       <Field
         label="AI 지원동기"
         toolTipContent={
