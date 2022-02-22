@@ -5,14 +5,14 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
 import { GenerateMotivationRequestDto } from './dto/generateMotivationRequestDto';
 import { GenerateProjectRequestDto } from './dto/generateProjectRequestDto';
-// import { GenerationService } from './generation.service';
+import { GenerationService } from './generation.service';
 
 @Controller('generation')
 export class GenerationController {
     constructor(
         private httpService: HttpService,
         private userService: UserService,
-        // private generationService: GenerationService
+        private generationService: GenerationService
     ) {};
 
     @UseGuards(JwtAuthGuard)
@@ -83,9 +83,9 @@ export class GenerationController {
         };
     }
 
-    // @Get('project/result')
-    // async getProjectGenerationResult(@Request() req, @Query('msg') msg: string) {
-    //     this.generationService.sendMessage(msg);
-    //     return msg;
-    // };
+    @Get('project/result')
+    async getProjectGenerationResult(@Request() req, @Query('message') message: string) {
+        this.generationService.sendMessage(message);
+        return message;
+    };
 }

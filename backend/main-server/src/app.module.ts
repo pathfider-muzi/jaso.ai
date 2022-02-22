@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
+import { BullModule } from '@nestjs/bull';
 import { UserModule } from './user/user.module';
 import { SelfIntroductionModule } from './selfIntroduction/selfIntroduction.module';
 import { QnaModule } from './qna/qna.module';
@@ -17,6 +18,12 @@ import { FeedbackModule } from './feedback/feedback.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
     AuthModule,
     UserModule,
     SelfIntroductionModule,
