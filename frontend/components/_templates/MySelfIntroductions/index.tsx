@@ -20,7 +20,7 @@ const MySelfIntroductions = ({ ...props }) => {
 
   const onClickPlusCard = () => {
     createSelfIntroduction({
-      title: "제목없는 자기소개서",
+      title: "",
       organisationName: "",
       role: ""
     });

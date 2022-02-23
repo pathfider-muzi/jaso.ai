@@ -286,7 +286,7 @@ const EditorForm = ({
           type="text"
           value={title}
           onChange={onChangeTitle}
-          placeholder="자기소개서 제목 입력"
+          placeholder="자기소개서 제목을 입력해주세요."
           required
         />
       </S.SelfIntroductionTitleWrapper>

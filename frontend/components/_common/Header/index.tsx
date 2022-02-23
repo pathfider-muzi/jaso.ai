@@ -44,16 +44,16 @@ const Header = ({ ...props }: Props) => {
               tryOpenCustomAlert(ROUTE.MY_SELFINTRODUCTIONS);
             }}
           >
-            내 자기소개서
+            자기소개서 에디터
           </S.NavButton>
 
           <S.NavButton
             type="button"
             onClick={() => {
-              tryOpenCustomAlert(ROUTE.MY_RESUMES);
+              tryOpenCustomAlert(!!user ? ROUTE.RESUME : ROUTE.GUEST_RESUME);
             }}
           >
-            내 이력서
+            자기소개서 생성
           </S.NavButton>
           <S.NavButton
             type="button"
@@ -61,7 +61,7 @@ const Header = ({ ...props }: Props) => {
               tryOpenCustomAlert(ROUTE.INTRODUCTION_RECOMMENDATION);
             }}
           >
-            자기소개서 추천
+            자기소개서 검색
           </S.NavButton>
           <Link href={"https://predev.dev"} passHref>
             <S.NavLink target="_blank">면접준비</S.NavLink>

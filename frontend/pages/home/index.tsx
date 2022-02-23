@@ -12,9 +12,11 @@ const HomePage: NextPage = () => {
   useUser({ enabled: !!getLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN) });
 
   useEffect(() => {
-    router.prefetch(ROUTE.EDITOR);
     router.prefetch(ROUTE.SIGN_UP);
     router.prefetch(ROUTE.USER_PROFILE);
+    router.prefetch(ROUTE.RESUME);
+    router.prefetch(ROUTE.GUEST_RESUME);
+    router.prefetch(ROUTE.MY_SELFINTRODUCTIONS);
     router.prefetch(ROUTE.INTRODUCTION_RECOMMENDATION);
   }, [router]);
 

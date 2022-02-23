@@ -2,7 +2,7 @@ import AdditionalInformationModal from "@/components/User/AdditionalInformationM
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
 import useModal from "@/hooks/useModal";
 import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
-import { getUserInfoString } from "@/hooks/useUser";
+import useUser, { getUserInfoString } from "@/hooks/useUser";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import RecommendedIntroduction from "../RecommendedIntroduction";
@@ -13,6 +13,8 @@ const SELF_INTRODUCTION_AMOUNT_UNIT = 3;
 const RecommendedIntroductionContainer = () => {
   const [recommendedSelfIntroductionAmount, setRecommendedSelfIntroductionAmount] =
     useState(SELF_INTRODUCTION_AMOUNT_UNIT);
+
+  const { user } = useUser({ enabled: false });
 
   const { isModalOpen, closeModal, openModal } = useModal({
     defaultValue: false

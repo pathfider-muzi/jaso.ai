@@ -541,6 +541,6 @@ const LICENSE_LIST = [
   "신재생에너지발전설비(태양광)기사",
   "신재생에너지발전설비(태양광)산업기사",
   "신재생에너지발전설비(태양광)기능사"
-];
+].sort();
 
 export default LICENSE_LIST;

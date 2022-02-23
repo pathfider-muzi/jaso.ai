@@ -197,6 +197,7 @@ export const SaveButton = styled(ButtonComponent)`
 export const CheckBoxWithLabel = styled(CheckBoxWithLabelComponent)`
   height: 2.5rem;
   margin-right: 0.5rem;
+  font-weight: 900;
 `;
 
 export const LoadingImageWrapper = styled.div`
@@ -214,6 +215,6 @@ export const OrganizationNameCheckWrapper = styled.div`
 export const PdfExportButtonToolTip = styled(ToolTipComponent)`
   border: none;
   margin-top: 0.3rem;
-  width: 1.5rem;
+  width: 3.5rem;
   height: 1.5rem;
 `;

@@ -1,7 +1,7 @@
+import ToolTipComponent from "@/components/_common/ToolTip";
 import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
-import ToolTipComponent from "@/components/_common/ToolTip";
 
 export const Frame = styled.div`
   display: flex;
@@ -22,14 +22,20 @@ export const MetaInfo = styled.div`
   border: 1px solid ${PALETTE.GRAY_300};
 `;
 
-export const AdditionalInfo = styled.div`
+export const AdditionalInfoWrapper = styled.div`
   display: flex;
+  text-align: center;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   ${BORDER.GRAY_150};
   border-radius: 10px;
   padding: 1rem;
+`;
+
+export const AdditionalInfo = styled.span`
+  text-align: center;
+  width: 100%;
 `;
 
 export const ToolTip = styled(ToolTipComponent)`

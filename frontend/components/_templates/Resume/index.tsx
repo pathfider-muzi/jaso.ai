@@ -8,15 +8,15 @@ import useResumePdfPreview from "@/hooks/useResumePdfPreview";
 import useResumePdfPreviewModal from "@/hooks/useResumePdfPreviewModal";
 import useResumes from "@/hooks/useResumes";
 import { Project as ProjectType } from "@/types/Project";
-import { Resume } from "@/types/Resume";
+import { Resume as ResumeType } from "@/types/Resume";
 import { useEffect } from "react";
 import * as S from "./styles";
 
 interface Props {
-  resume: Resume;
+  resume: ResumeType;
 }
 
-const MyResume = ({ resume }: Props) => {
+const Resume = ({ resume }: Props) => {
   const { isResumePdfPreviewOpen, toggleResumePdfPreview } = useResumePdfPreviewModal();
 
   const { input: resumeTitleInput, onChangeInput: onChangeResumeTitleInput } = useInput(resume.title);
@@ -111,7 +111,7 @@ const MyResume = ({ resume }: Props) => {
             type="text"
             value={resumeTitleInput}
             onChange={onChangeResumeTitleInput}
-            placeholder="이력서 제목"
+            placeholder="이력서 제목을 입력해주세요."
           />
 
           <S.ButtonsWrapper>
@@ -120,7 +120,7 @@ const MyResume = ({ resume }: Props) => {
                 toggleResumePdfPreview();
               }}
             >
-              {isResumePdfPreviewOpen ? "미리보기 닫기" : "미리보기"}
+              {isResumePdfPreviewOpen ? "PDF 미리보기 닫기" : "PDF 미리보기"}
             </S.ResumePdfPreviewToggleButton>
 
             <S.SaveButton onClick={onClickResumeSaveButton}>저장</S.SaveButton>
@@ -174,4 +174,4 @@ const MyResume = ({ resume }: Props) => {
   );
 };
 
-export default MyResume;
+export default Resume;

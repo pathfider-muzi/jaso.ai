@@ -1,38 +1,27 @@
+import searchIntroductions from "@/api/searchIntroduction";
+import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
+import AdditionalInfoAlertModal from "@/components/_common/AdditionalInfoAlertModal";
 import BRAND_NAME from "@/constants/brandName";
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
-import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
-import { getUserInfoString } from "@/hooks/useUser";
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import * as S from "./styles";
-import { useQuery } from "react-query";
-import getIsFilledAdditionalInfo from "@/api/getIsFilledAddtionalInfo";
-import { useRouter } from "next/router";
-import ROUTE from "@/constants/routes";
-import SearchMetaInfo from "@/types/searchIntroductions";
-import searchIntroductions from "@/api/searchIntroduction";
-import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
-import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
 import useModal from "@/hooks/useModal";
+import usePleaseFillAdditionalModal from "@/hooks/usePleaseFillAdditionalInfoModal";
+import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
+import useUser, { getUserInfoString } from "@/hooks/useUser";
+import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
+import SearchMetaInfo from "@/types/searchIntroductions";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import * as S from "./styles";
 
 const SELF_INTRODUCTION_AMOUNT_UNIT = 6;
 const INTRODICTON_MAX_LENGTH = 50;
 
 const RecommendSearchIntroductions = () => {
+  const { user } = useUser({ enabled: false });
   const [recommendedSelfIntroductionAmount, setRecommendedSelfIntroductionAmount] =
     useState(SELF_INTRODUCTION_AMOUNT_UNIT);
-  const router = useRouter();
 
-  useQuery(["isFilledAdditionalInfo"], getIsFilledAdditionalInfo, {
-    enabled: true,
-    onSettled: isFilledAdditionalInfo => {
-      if (!isFilledAdditionalInfo) {
-        alert("자기소개서 추천 페이지를 사용하기 위해서는 추가정보를 입력해야합니다.\n회원정보 페이지로 이동합니다.");
-
-        router.push(ROUTE.USER_PROFILE);
-      }
-    }
-  });
+  const { isPleaseFillAdditionalModalOpen, closePleaseFillAdditionalModal } = usePleaseFillAdditionalModal();
 
   const { university, major, grade, languageScore, career, activity, licenses } = useAdditionalInfoInput();
 
@@ -66,12 +55,6 @@ const RecommendSearchIntroductions = () => {
   const canShowMoreRecommendedSelfIntroductions =
     recommendedSelfIntroductionAmount + SELF_INTRODUCTION_AMOUNT_UNIT <=
     (isSearched ? searchedIntroductions?.length : recommendedIntroductions?.length || 0);
-
-  useEffect(() => {
-    if (specification === "- / - / - / - / - / - / -") return;
-
-    getRecommendIntroductions();
-  }, [specification, getRecommendIntroductions]);
 
   const orgNameRef = useRef<HTMLInputElement>(null);
   const jobRef = useRef<HTMLInputElement>(null);
@@ -114,11 +97,17 @@ const RecommendSearchIntroductions = () => {
   const [introductionContent, setIntroductionContent] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (!!user && specification === "- / - / - / - / - / - / -") return;
+
+    getRecommendIntroductions();
+  }, [specification]);
+
   return (
     <S.Screen title="자기소개서 추천 " description={`자기소개서 추천, ${BRAND_NAME}`}>
       <S.Frame>
         <S.TopForm>
-          <S.Title>여러분의 스펙에 맞는 합격 자기소개서 들 중에 원하는 자기소개서를 검색하실 수 있습니다.</S.Title>
+          <S.Title>여러분의 스펙에 맞는 합격 자기소개서들 중에 원하는 자기소개서를 검색하실 수 있습니다.</S.Title>
           <S.DetailExplanation>* 여러분의 스펙과 관련도가 높은 순으로 자기소개서가 추천됩니다.</S.DetailExplanation>
           <S.SearchBarFrame>
             <S.SearchInput placeholder="기업명" ref={orgNameRef} />
@@ -202,12 +191,15 @@ const RecommendSearchIntroductions = () => {
           </S.ShowMoreButton>
         )}
       </S.Frame>
+
       <IntroductionDetailModal
         isOpen={isModalOpen}
         onClose={closeModal}
         introductionContent={introductionContent}
         tags={tags}
-      ></IntroductionDetailModal>
+      />
+
+      <AdditionalInfoAlertModal isOpen={isPleaseFillAdditionalModalOpen} onClose={closePleaseFillAdditionalModal} />
     </S.Screen>
   );
 };

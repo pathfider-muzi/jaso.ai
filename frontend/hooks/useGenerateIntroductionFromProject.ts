@@ -15,7 +15,8 @@ const useGenerateIntroductionFromProject = ({ project, enabled = false }: Props)
     [project.id],
     () => generateIntroductionFromProject(project),
     {
-      enabled
+      enabled,
+      retry: 0
     }
   );
 

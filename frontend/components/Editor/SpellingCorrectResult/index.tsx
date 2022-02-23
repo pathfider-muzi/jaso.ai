@@ -1,4 +1,3 @@
-import NAVER_SPELL_CHECK_RESULT_INFO from "@/constants/naverSpellCheckResultInfo";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
 import Image from "next/image";
 import { MouseEventHandler, MutableRefObject, RefObject } from "react";
@@ -102,19 +101,6 @@ const SpellingCorrectResult = ({
           )}
         </>
       )}
-
-      <S.ColorInfo>
-        {Object.keys(NAVER_SPELL_CHECK_RESULT_INFO).map(key => {
-          const colorInfo = key as keyof typeof NAVER_SPELL_CHECK_RESULT_INFO;
-          const category = NAVER_SPELL_CHECK_RESULT_INFO[colorInfo].category;
-
-          return (
-            <S.LabeledText colorInfo={colorInfo} key={colorInfo}>
-              {category}
-            </S.LabeledText>
-          );
-        })}
-      </S.ColorInfo>
     </S.Frame>
   );
 };

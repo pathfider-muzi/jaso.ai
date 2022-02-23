@@ -1,23 +1,24 @@
+import AdditionalInformationModal from "@/components/User/AdditionalInformationModal";
 import useRecommendAnswers from "@/hooks/Editor/useRecommendAnswer";
-import { getUserInfoString } from "@/hooks/useUser";
-import { RootState } from "@/modules";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Image from "next/image";
-import RecommendedAnswer from "../RecommendedAnswer";
-import * as S from "./styles";
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
 import useModal from "@/hooks/useModal";
-import AdditionalInformationModal from "@/components/User/AdditionalInformationModal";
+import { getUserInfoString } from "@/hooks/useUser";
+import { RootState } from "@/modules";
+import Image from "next/image";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import RecommendedAnswer from "../RecommendedAnswer";
+import * as S from "./styles";
 
 interface Props {
   setEmphasizedQuestion: (isEmphasized: boolean) => void;
+  additionalInfoInput: ReturnType<typeof useAdditionalInfoInput>;
 }
 
 const SELF_ANSWER_AMOUNT_UNIT = 3;
 const LIMIT_ANSWER_NUM = 100;
 
-const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle }: Props) => {
+const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle, additionalInfoInput }: Props) => {
   const {
     university,
     major,
@@ -33,7 +34,7 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
     onChangeCareer,
     onChangeActivity,
     onChangeLicenses
-  } = useAdditionalInfoInput();
+  } = additionalInfoInput;
 
   const specification = getUserInfoString({
     university,
@@ -50,7 +51,7 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
   );
 
   const { data: recommendedAnswers, refetch } = useRecommendAnswers({
-    enabled: false,
+    enabled: true,
     metaInfo: {
       listNum: LIMIT_ANSWER_NUM,
       question: currentQuestionTitle,
@@ -76,24 +77,19 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
 
   const onClickSaveButton = () => {
     closeModal();
-  };
-
-  useEffect(() => {
-    if (specification === "- / - / - / - / - / - / -") {
-      return;
-    }
     refetch();
-  }, [specification, refetch]);
+  };
 
   return (
     <S.Frame>
       <S.MetaInfo>질문 내용과 스펙을 바탕으로 자기소개서 문단을 추천해줍니다.</S.MetaInfo>
-      <S.AdditionalInfo>
-        {specification}
+      <S.AdditionalInfoWrapper>
+        <S.AdditionalInfo>{specification}</S.AdditionalInfo>
+
         <S.ChangeSpecButton type="button" onClick={openModal}>
           변경
         </S.ChangeSpecButton>
-      </S.AdditionalInfo>
+      </S.AdditionalInfoWrapper>
       <AdditionalInformationModal
         isOpen={isModalOpen}
         onClose={closeModal}

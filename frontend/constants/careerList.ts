@@ -78,6 +78,6 @@ const CAREER_CATEGORY = [
   "토목/조경/도시",
   "건축/인테리어/설계",
   "환경/플랜트"
-];
+].sort();
 
 export default CAREER_CATEGORY;

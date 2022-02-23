@@ -1,4 +1,4 @@
-import RecommendedIntroductionContainer from "@/components/Editor/RecommendedIntroductionContainer";
+import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
 import useSpellingCorrecter from "@/hooks/useSpellingCorrecter";
 import { MutableRefObject, RefObject, useState } from "react";
 import RecommendedAnswersContainer from "../RecommendedAnswersContainer";
@@ -42,6 +42,8 @@ const EditorSidebar = ({
     getSpellInfo();
   };
 
+  const additionalInfoInput = useAdditionalInfoInput();
+
   return (
     <S.Frame {...props}>
       <S.Nav>
@@ -62,7 +64,10 @@ const EditorSidebar = ({
       <S.SideBarContentWrapper>
         {selectedTab === "RecommendAnswerFromQuestion" && (
           <S.TabWrapper>
-            {<RecommendedAnswersContainer setEmphasizedQuestion={setEmphasizedQuestion}></RecommendedAnswersContainer>}
+            <RecommendedAnswersContainer
+              setEmphasizedQuestion={setEmphasizedQuestion}
+              additionalInfoInput={additionalInfoInput}
+            />
           </S.TabWrapper>
         )}
         {selectedTab === "SpellingCheck" && (

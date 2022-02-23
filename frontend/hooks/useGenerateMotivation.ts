@@ -15,7 +15,8 @@ const useGenerateMotivation = ({ motivationInfo, enabled = false }: Props) => {
     [motivationInfo.orgName],
     () => generateMotivation(motivationInfo, !!user),
     {
-      enabled
+      enabled,
+      retry: 0
     }
   );
 

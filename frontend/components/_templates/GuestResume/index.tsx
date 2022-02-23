@@ -11,7 +11,7 @@ import * as S from "./styles";
 
 interface Props {}
 
-const AnyOneResume = ({ ...props }: Props) => {
+const GuestResume = ({ ...props }: Props) => {
   const { input: resumeTitleInput, onChangeInput: onChangeResumeTitleInput } =
     useInput("AI를 통해 지원동기를 생성해보세요!");
 
@@ -55,7 +55,7 @@ const AnyOneResume = ({ ...props }: Props) => {
             type="text"
             value={resumeTitleInput}
             onChange={onChangeResumeTitleInput}
-            placeholder="이력서 제목"
+            placeholder="이력서 제목을 입력해주세요."
           />
 
           <S.ButtonsWrapper>
@@ -112,4 +112,4 @@ const AnyOneResume = ({ ...props }: Props) => {
   );
 };
 
-export default AnyOneResume;
+export default GuestResume;

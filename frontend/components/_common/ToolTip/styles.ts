@@ -7,13 +7,15 @@ export const Frame = styled.div`
   position: relative;
   color: ${PALETTE.GRAY_500};
   border-radius: 50%;
-  border: 1px solid ${PALETTE.GRAY_500};
-  width: fit-content;
-  height: fit-content;
+  border: 3px solid ${PALETTE.GRAY_500};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Button = styled.div`
   padding: 0.1rem 0.4rem;
+  font-weight: 900;
   cursor: pointer;
 `;
 

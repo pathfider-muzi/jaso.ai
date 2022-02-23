@@ -8,7 +8,7 @@ interface Props extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement
 const Card = ({ text, ...props }: Props) => {
   return (
     <S.Frame type="button" {...props}>
-      <S.Text>{text}</S.Text>
+      <S.Text>{text ? text : "제목을 입력해주세요"}</S.Text>
     </S.Frame>
   );
 };

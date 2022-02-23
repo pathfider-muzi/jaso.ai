@@ -3,7 +3,7 @@ import { SingleValue } from "react-select";
 import DebouncedSelector from "../DebouncedSelector";
 import * as S from "./styles";
 
-const MAX_COLLEGE_ITEM_COUNT = 100;
+const MAX_COLLEGE_ITEM_COUNT = 1000;
 
 interface Props {
   defaultValue: string;

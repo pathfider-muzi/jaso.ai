@@ -13,9 +13,9 @@ const MainIntroduction = ({ ...props }) => {
 
   const onClickGetStartButton = () => {
     if (user) {
-      router.push(ROUTE.MY_RESUMES);
+      router.push(ROUTE.RESUME);
     } else {
-      router.push(ROUTE.ANYONE_RESUME);
+      router.push(ROUTE.GUEST_RESUME);
     }
   };
 
