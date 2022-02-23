@@ -60,11 +60,11 @@ const RecommendSearchIntroductions = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
 
-  const [searchedIntroductions, setSearchedIntroductions] = useState<RecommendedIntroductionType[]>();
+  const [searchedIntroductions, setSearchedIntroductions] = useState<RecommendedIntroductionType[]>([]);
 
   const canShowMoreRecommendedSelfIntroductions =
     recommendedSelfIntroductionAmount + SELF_INTRODUCTION_AMOUNT_UNIT <=
-    (isSearched ? searchedIntroductions!.length : recommendedIntroductions?.length || 0);
+    (isSearched ? searchedIntroductions?.length : recommendedIntroductions?.length || 0);
 
   useEffect(() => {
     if (specification === "- / - / - / - / - / - / -") return;
