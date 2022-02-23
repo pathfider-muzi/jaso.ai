@@ -5,8 +5,8 @@ const ROUTE = {
   SIGN_UP: "/signup",
   MY_SELFINTRODUCTIONS: "/mySelfIntroductions",
   MY_RESUMES: "/myResumes",
-  INTRODUCTION_RECOMMENDATION: "/recommendedIntroductions",
-  SERVICE_NOTICE: "/serviceNotice"
+  ANYONE_RESUME: "/myResumes/anyone",
+  INTRODUCTION_RECOMMENDATION: "/recommendedIntroductions"
 } as const;
 
 export default ROUTE;

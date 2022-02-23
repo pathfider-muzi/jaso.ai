@@ -1,24 +1,21 @@
 import LoginModal from "@/components/Auth/LoginModal";
-import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import ROUTE from "@/constants/routes";
 import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
-import { removeLocalStorage } from "@/utils/localStorage";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import * as S from "./styles";
 
 const MainIntroduction = ({ ...props }) => {
   const { isModalOpen, openModal, closeModal } = useModal({});
-  const { user } = useUser({});
+  const { user } = useUser({ enabled: false });
   const router = useRouter();
 
   const onClickGetStartButton = () => {
     if (user) {
-      router.push(ROUTE.MY_SELFINTRODUCTIONS);
+      router.push(ROUTE.MY_RESUMES);
     } else {
-      removeLocalStorage(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
-      openModal();
+      router.push(ROUTE.ANYONE_RESUME);
     }
   };
 

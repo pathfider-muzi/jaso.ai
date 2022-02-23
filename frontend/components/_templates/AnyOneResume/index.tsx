@@ -1,72 +1,30 @@
+import LoginModal from "@/components/Auth/LoginModal";
 import MotivationForm from "@/components/Resume/MotivationForm";
 import ProjectInfoForm from "@/components/Resume/ProjectInfoForm";
 import BRAND_NAME from "@/constants/brandName";
 import useDebounce from "@/hooks/useDebounce";
 import useInput from "@/hooks/useInput";
-import useProject from "@/hooks/useProject";
+import useModal from "@/hooks/useModal";
 import useResumePdfPreview from "@/hooks/useResumePdfPreview";
 import useResumePdfPreviewModal from "@/hooks/useResumePdfPreviewModal";
-import useResumes from "@/hooks/useResumes";
-import { Project as ProjectType } from "@/types/Project";
-import { Resume } from "@/types/Resume";
-import { useEffect } from "react";
+import { Project, Project as ProjectType } from "@/types/Project";
+import { useEffect, useState } from "react";
+import useDummyProject from "./hooks/useDummyProject";
 import * as S from "./styles";
 
-interface Props {
-  resume: Resume;
-}
+interface Props {}
 
-const MyResume = ({ resume }: Props) => {
+const AnyOneResume = ({ ...props }: Props) => {
   const { isResumePdfPreviewOpen, toggleResumePdfPreview } = useResumePdfPreviewModal();
 
-  const { input: resumeTitleInput, onChangeInput: onChangeResumeTitleInput } = useInput(resume.title);
+  const { input: resumeTitleInput, onChangeInput: onChangeResumeTitleInput } =
+    useInput("AI를 통해 지원동기를 생성해보세요!");
 
-  const { updateResume } = useResumes({ enabled: false });
-
-  const {
-    projects,
-    mutation: { createResumeProject, updateResumeProject, deleteResumeProject },
-    ...projectInput
-  } = useProject({
-    resumeId: resume.id
-  });
-
-  const { resumePdf, generatePdfFromResume, resumePreviewOffsetY } = useResumePdfPreview({
-    resumeTitle: resumeTitleInput,
-    projects
-  });
-
-  const onClickResumeSaveButton = () => {
-    updateResume(
-      {
-        ...resume,
-        title: resumeTitleInput
-      },
-      {
-        onSettled: () => {
-          Promise.allSettled(
-            projects.map(({ id }) => {
-              return updateResumeProject({
-                id,
-                resumeId: resume.id,
-                projectName: projectInput.projectNames[id],
-                projectRole: projectInput.projectRoles[id],
-                projectDetail: projectInput.projectDetails[id],
-                projectFeeling: projectInput.projectFeelings[id],
-                projectResult: projectInput.projectResults[id],
-                projectTerm: projectInput.projectTerms[id]
-              });
-            })
-          ).then(() => {
-            alert("저장이 완료되었습니다.");
-          });
-        }
-      }
-    );
-  };
-
-  const onClickProjectAddButton = () => {
-    const emptyProject = {
+  const [dummyProjects, setDummyProjects] = useState<Project[]>(() => {
+    const emptyProject: Project = {
+      id: 1,
+      createdDate: "",
+      updatedDate: "",
       projectName: "",
       projectDetail: "",
       projectFeeling: [""],
@@ -75,18 +33,53 @@ const MyResume = ({ resume }: Props) => {
       projectTerm: `${new Date().getFullYear()}.${new Date().getMonth()}-${new Date().getFullYear()}.${new Date().getMonth()}`
     };
 
-    createResumeProject({
-      resumeId: resume.id,
-      project: emptyProject
+    return [emptyProject];
+  });
+
+  const { projects, ...projectInput } = useDummyProject({
+    projects: dummyProjects
+  });
+
+  const { resumePdf, generatePdfFromResume, resumePreviewOffsetY } = useResumePdfPreview({
+    resumeTitle: resumeTitleInput,
+    projects
+  });
+
+  const {
+    isModalOpen: isLoginModalOpen,
+    closeModal: closeLoginModal,
+    openModal: openLoginModal
+  } = useModal({
+    defaultValue: false
+  });
+
+  const onClickResumeSaveButton = () => {
+    openLoginModal();
+  };
+
+  const onClickProjectAddButton = () => {
+    const emptyProject: Project = {
+      id: dummyProjects.length + 1,
+      createdDate: "",
+      updatedDate: "",
+      projectName: "",
+      projectDetail: "",
+      projectFeeling: [""],
+      projectResult: [""],
+      projectRole: [""],
+      projectTerm: `${new Date().getFullYear()}.${new Date().getMonth()}-${new Date().getFullYear()}.${new Date().getMonth()}`
+    };
+
+    setDummyProjects(state => {
+      return [...state, emptyProject];
     });
   };
 
   const onClickResumeProjectDeleteButton = (projectId: ProjectType["id"]) => {
     if (!confirm("정말 제거하시겠습니까?")) return;
 
-    deleteResumeProject({
-      resumeId: resume.id,
-      projectId
+    setDummyProjects(state => {
+      return state.filter(project => project.id !== projectId);
     });
   };
 
@@ -105,7 +98,7 @@ const MyResume = ({ resume }: Props) => {
 
   return (
     <S.Screen title="내 이력서" description={`내가 작성한 이력서, ${BRAND_NAME}`}>
-      <S.Frame onKeyUp={onKeyUpResume}>
+      <S.Frame onKeyUp={onKeyUpResume} {...props}>
         <S.Header>
           <S.TitleInput
             type="text"
@@ -170,8 +163,10 @@ const MyResume = ({ resume }: Props) => {
           <S.ResumePdfPreview src={resumePdf} style={{ top: resumePreviewOffsetY }} />
         </S.ResumePdfPreviewWrapper>
       )}
+
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </S.Screen>
   );
 };
 
-export default MyResume;
+export default AnyOneResume;

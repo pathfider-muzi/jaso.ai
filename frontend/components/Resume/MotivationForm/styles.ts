@@ -55,8 +55,8 @@ export const LoadingImageWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 2.5rem;
-  margin-right: 2rem;
-  margin-bottom: 1rem;
+  margin: 1rem 2rem;
+  margin-left: 0;
 
   & > span {
     margin-left: 1rem;

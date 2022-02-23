@@ -16,7 +16,7 @@ const LoginModal = ({ isOpen, onClose }: Props) => {
   };
 
   return (
-    <S.Frame isOpen={isOpen} onClose={onClose} title="로그인">
+    <S.Frame isOpen={isOpen} onClose={onClose} title="로그인이 필요합니다.">
       <S.ButtonsWrapper>
         <KakaoLoginButton />
       </S.ButtonsWrapper>

@@ -1,7 +1,10 @@
+import LoginModal from "@/components/Auth/LoginModal";
 import Field from "@/components/Resume/Field";
-import useProject from "@/components/_templates/MyResume/hooks/useProject";
 import { TERM_INPUT_VALIDATION } from "@/constants/validation";
 import useGenerateIntroductionFromProject from "@/hooks/useGenerateIntroductionFromProject";
+import useModal from "@/hooks/useModal";
+import useProject from "@/hooks/useProject";
+import useUser from "@/hooks/useUser";
 import { Project } from "@/types/Project";
 import Image from "next/image";
 import * as S from "./styles";
@@ -32,6 +35,8 @@ const ProjectInfoForm = ({
   onChangeProjectTermEndMonths,
   projectTerms
 }: Props) => {
+  const { user } = useUser({ enabled: false });
+
   const {
     introduction,
     error,
@@ -51,6 +56,22 @@ const ProjectInfoForm = ({
     },
     enabled: false
   });
+
+  const {
+    isModalOpen: isLoginModalOpen,
+    closeModal: closeLoginModal,
+    openModal: openLoginModal
+  } = useModal({
+    defaultValue: false
+  });
+
+  const onClickGenerateButton = () => {
+    if (user) {
+      refetchGenerateIntroduction();
+    } else {
+      openLoginModal();
+    }
+  };
 
   const isEveryInputFieldFilled = [
     projectNames[id],
@@ -164,12 +185,12 @@ const ProjectInfoForm = ({
       <Field
         label="AI 자기소개서"
         toolTipContent={
-          "위 프로젝트 경험을 바탕으로 자기소개서 내용을 생성할 수 있습니다.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다. 만약 잘 되지 않으면 잠시 후에 다시 시도해 주세요.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원"
+          "위 프로젝트 경험을 바탕으로 자기소개서 내용을 생성할 수 있습니다.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다. 만약 잘 되지 않으면 잠시 후에 다시 시도해 주세요.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다."
         }
       >
         <S.IntroductionContentWrapper>
           <S.IntroductionGenerateButton
-            onClick={() => refetchGenerateIntroduction()}
+            onClick={onClickGenerateButton}
             disabled={isFetching || !isEveryInputFieldFilled}
           >
             {isFetched ? "재시도" : "생성"}
@@ -182,7 +203,7 @@ const ProjectInfoForm = ({
               <Image src="/loading.svg" alt="loading image" width="30" height="30" />
               <S.TextContent>
                 {
-                  "자기소개문구를 생성중입니다. 잠시만 기다려주세요.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다. 만약 잘 되지 않으면 잠시 후에 다시 시도해 주세요.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원"
+                  "자기소개문구를 생성중입니다. 잠시만 기다려주세요.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다. 만약 잘 되지 않으면 잠시 후에 다시 시도해 주세요.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다."
                 }
               </S.TextContent>
             </S.LoadingImageWrapper>
@@ -191,6 +212,7 @@ const ProjectInfoForm = ({
           )}
         </S.IntroductionContentWrapper>
       </Field>
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </>
   );
 };

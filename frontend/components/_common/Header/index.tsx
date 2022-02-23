@@ -66,15 +66,6 @@ const Header = ({ ...props }: Props) => {
           <Link href={"https://predev.dev"} passHref>
             <S.NavLink target="_blank">면접준비</S.NavLink>
           </Link>
-
-          <S.NavButton
-            type="button"
-            onClick={() => {
-              tryOpenCustomAlert(ROUTE.SERVICE_NOTICE);
-            }}
-          >
-            공지사항
-          </S.NavButton>
         </S.Nav>
 
         <S.AuthInfoWrapper>
