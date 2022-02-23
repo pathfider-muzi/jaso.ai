@@ -50,6 +50,15 @@ export const SaveButton = styled(ButtonComponent)`
   font-weight: 900;
 `;
 
+export const SignUpButton = styled(ButtonComponent)`
+  background-color: ${PALETTE.ORANGE};
+  color: ${PALETTE.WHITE};
+  border: none;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  padding: 7px 12px;
+`;
+
 export const ResumePdfPreviewToggleButton = styled(ButtonComponent)`
   background-color: ${PALETTE.WHITE};
   color: ${PALETTE.BLACK_700};
@@ -88,6 +97,8 @@ export const FieldGuide = styled.p`
   letter-spacing: normal;
   color: ${PALETTE.BLACK_700};
   margin: 0.8rem 0;
+  display: flex;
+  align-items: center;
 `;
 
 export const ProjectFormWrapper = styled.div`
@@ -102,10 +113,4 @@ export const ProjectFormWrapper = styled.div`
 export const LoadingImageWrapper = styled.div`
   height: 2.5rem;
   margin-right: 2rem;
-`;
-
-export const SignUpButton = styled.button`
-  margin-left: 0.5rem;
-  font-size: inherit;
-  line-height: inherit;
 `;

@@ -92,12 +92,8 @@ const AnyOneResume = ({ ...props }: Props) => {
                   openLoginModal();
                 }}
               >
-                [회원가입]
+                회원가입
               </S.SignUpButton>
-              <br />
-              {"• 본인이 경험한 프로젝트들을 입력해주세요."}
-              <br />
-              {"• 자기소개서 생성 정보는 이력서 저장에 포함되지 않습니다."}
             </S.FieldGuide>
 
             {projects.map(({ id }) => {
