@@ -1,8 +1,9 @@
 import { Motivation } from "@/types/Motivation";
 import request from "@/utils/request";
 
-const generateMotivation = async (motivationInfo: Motivation) => {
-  const response = await request.post(`/generation/motivation`, {
+const generateMotivation = async (motivationInfo: Motivation, isLogined: boolean) => {
+  const query = isLogined ? `/generation/motivation` : `/generation/motivation/guest`;
+  const response = await request.post(query, {
     ...motivationInfo
   });
 
