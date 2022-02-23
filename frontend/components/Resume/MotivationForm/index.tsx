@@ -28,8 +28,6 @@ const MotivationForm = () => {
     }
   });
 
-  const isEveryInputFieldFilled = [orgName, orgRole, orgDetail, motivationEmphasis].every(inputValue => inputValue);
-
   return (
     <S.Frame>
       <Field label="회사명">
@@ -62,10 +60,7 @@ const MotivationForm = () => {
         }
       >
         <S.IntroductionContentWrapper>
-          <S.IntroductionGenerateButton
-            onClick={() => refetchGenerateIntroduction()}
-            disabled={isFetching || !isEveryInputFieldFilled}
-          >
+          <S.IntroductionGenerateButton onClick={() => refetchGenerateIntroduction()} disabled={isFetching}>
             {isFetched ? "재시도" : "생성"}
           </S.IntroductionGenerateButton>
 

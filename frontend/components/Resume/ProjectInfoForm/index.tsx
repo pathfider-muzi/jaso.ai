@@ -73,15 +73,6 @@ const ProjectInfoForm = ({
     }
   };
 
-  const isEveryInputFieldFilled = [
-    projectNames[id],
-    projectTerms[id],
-    projectDetails[id],
-    projectRoles[id]?.join(","),
-    projectResults[id]?.join(","),
-    projectFeelings[id]?.join(",")
-  ].every(inputValue => inputValue);
-
   return (
     <>
       <Field label="프로젝트명">
@@ -189,10 +180,7 @@ const ProjectInfoForm = ({
         }
       >
         <S.IntroductionContentWrapper>
-          <S.IntroductionGenerateButton
-            onClick={onClickGenerateButton}
-            disabled={isFetching || !isEveryInputFieldFilled}
-          >
+          <S.IntroductionGenerateButton onClick={onClickGenerateButton} disabled={isFetching}>
             {isFetched ? "재시도" : "생성"}
           </S.IntroductionGenerateButton>
 

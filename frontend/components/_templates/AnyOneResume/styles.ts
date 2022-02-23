@@ -1,7 +1,6 @@
 import ButtonComponent from "@/components/_common/Button";
 import ScreenComponent from "@/components/_layouts/Screen";
 import PALETTE from "@/constants/styles/palette";
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Screen = styled(ScreenComponent)`
@@ -91,15 +90,6 @@ export const FieldGuide = styled.p`
   margin: 0.8rem 0;
 `;
 
-export const ProjectAddButton = styled.button`
-  padding: 1.8rem 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border: none;
-  text-align: left;
-  color: ${PALETTE.BLUE};
-`;
-
 export const ProjectFormWrapper = styled.div`
   position: relative;
   padding: 1rem 0;
@@ -109,38 +99,13 @@ export const ProjectFormWrapper = styled.div`
   }
 `;
 
-export const DeleteButton = styled.button`
-  position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1.7rem;
-  top: 2px;
-  right: 6px;
-  color: ${PALETTE.RED};
-`;
-
-export const ResumePdfPreviewWrapper = styled.div`
-  margin-left: 1rem;
-  width: 100%;
-  max-height: 150vh;
-`;
-
-export const ResumePdfPreview = styled.iframe<{
-  style: {
-    top: number;
-  };
-}>`
-  transition: all 0.5s linear;
-  width: 100%;
-  height: 100%;
-
-  ${({ style: { top } }) =>
-    css`
-      top: ${top}px;
-    `};
-`;
-
 export const LoadingImageWrapper = styled.div`
   height: 2.5rem;
   margin-right: 2rem;
+`;
+
+export const SignUpButton = styled.button`
+  margin-left: 0.5rem;
+  font-size: inherit;
+  line-height: inherit;
 `;
