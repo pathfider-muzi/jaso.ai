@@ -7,6 +7,7 @@ export const Frame = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: 100%;
 
   & > *:not(:last-child) {
     margin-bottom: 1rem;
@@ -42,8 +43,9 @@ export const ChangeSpecButton = styled.button`
 
 export const ReloadAnswersButton = styled.button`
   border: 1px solid ${PALETTE.GRAY_200};
-  width: 200px;
-  height: 20px;
+  width: 250px;
+  height: 40px;
+  font-size: 18px;
   align-self: center;
 `;
 

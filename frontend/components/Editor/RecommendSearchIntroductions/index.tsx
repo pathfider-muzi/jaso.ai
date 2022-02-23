@@ -9,10 +9,11 @@ import { useQuery } from "react-query";
 import getIsFilledAdditionalInfo from "@/api/getIsFilledAddtionalInfo";
 import { useRouter } from "next/router";
 import ROUTE from "@/constants/routes";
-import useSearchIntroductions from "@/hooks/Editor/useSearchIntroductoins";
 import SearchMetaInfo from "@/types/searchIntroductions";
 import searchIntroductions from "@/api/searchIntroduction";
 import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
+import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
+import useModal from "@/hooks/useModal";
 
 const SELF_INTRODUCTION_AMOUNT_UNIT = 6;
 const INTRODICTON_MAX_LENGTH = 50;
@@ -106,11 +107,19 @@ const RecommendSearchIntroductions = () => {
     setSearchedIntroductions([...searchedRecommendedIntroductions]);
   };
 
+  const { isModalOpen, closeModal, openModal } = useModal({
+    defaultValue: false
+  });
+
+  const [introductionContent, setIntroductionContent] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+
   return (
     <S.Screen title="자기소개서 추천 " description={`자기소개서 추천, ${BRAND_NAME}`}>
       <S.Frame>
         <S.TopForm>
           <S.Title>여러분의 스펙에 맞는 합격 자기소개서 들 중에 원하는 자기소개서를 검색하실 수 있습니다.</S.Title>
+          <S.DetailExplanation>* 여러분의 스펙과 관련도가 높은 순으로 자기소개서가 추천됩니다.</S.DetailExplanation>
           <S.SearchBarFrame>
             <S.SearchInput placeholder="기업명" ref={orgNameRef} />
             <S.SearchInput placeholder="직무명" ref={jobRef} />
@@ -137,7 +146,14 @@ const RecommendSearchIntroductions = () => {
                 const job = spiltedArray[1] ? spiltedArray[1].replaceAll(" ", "") : "회사 비공개";
 
                 return (
-                  <S.ResultContentFrame key={searchedIntroduction.title + index}>
+                  <S.ResultContentFrame
+                    key={searchedIntroduction.title + index}
+                    onClick={() => {
+                      setIntroductionContent(searchedIntroduction.body);
+                      setTags(searchedIntroduction.tags);
+                      openModal();
+                    }}
+                  >
                     <S.CompanyNameMeta>{companyName}</S.CompanyNameMeta>
                     <S.JobMeta>{job}</S.JobMeta>
                     <S.SpecAndIntroductionMeta>
@@ -157,7 +173,14 @@ const RecommendSearchIntroductions = () => {
                 const job = spiltedArray[1] ? spiltedArray[1].replaceAll(" ", "") : "회사 비공개";
 
                 return (
-                  <S.ResultContentFrame key={recommendedIntroduction.title + index}>
+                  <S.ResultContentFrame
+                    key={recommendedIntroduction.title + index}
+                    onClick={() => {
+                      setIntroductionContent(recommendedIntroduction.body);
+                      setTags(recommendedIntroduction.tags);
+                      openModal();
+                    }}
+                  >
                     <S.CompanyNameMeta>{companyName}</S.CompanyNameMeta>
                     <S.JobMeta>{job}</S.JobMeta>
                     <S.SpecAndIntroductionMeta>
@@ -179,6 +202,12 @@ const RecommendSearchIntroductions = () => {
           </S.ShowMoreButton>
         )}
       </S.Frame>
+      <IntroductionDetailModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        introductionContent={introductionContent}
+        tags={tags}
+      ></IntroductionDetailModal>
     </S.Screen>
   );
 };

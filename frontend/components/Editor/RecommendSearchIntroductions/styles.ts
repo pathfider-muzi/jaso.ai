@@ -32,6 +32,13 @@ export const Title = styled.div`
   font-weight: bold;
 `;
 
+export const DetailExplanation = styled.div`
+  margin-top: 10px;
+  color: white;
+  font-size: 18px;
+  margin-left: 10px;
+`;
+
 export const SearchBarFrame = styled.div`
   margin-top: 30px;
   margin-left: 5px;
@@ -75,6 +82,7 @@ export const SearchResultsFrame = styled.div`
   flex-direction: vertical;
   width: 100%;
 `;
+
 export const MetaInfoForResult = styled.div`
   border-top: 1px solid black;
   align-self: center;
@@ -113,6 +121,7 @@ export const SpecAndIntroductionMeta = styled.div`
 `;
 
 export const ResultContentFrame = styled.div`
+  cursor: pointer;
   border-top: 1px solid ${PALETTE.GRAY_150};
   border-bottom: 1px solid ${PALETTE.GRAY_200};
   align-self: center;

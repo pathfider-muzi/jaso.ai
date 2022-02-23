@@ -16,7 +16,13 @@ export const Frame = styled.section`
   border-radius: 10px;
   overflow-y: scroll;
   margin-right: 1rem;
+
+  & > *:not(:last-child) {
+    border-bottom: 1px solid ${PALETTE.GRAY_150};
+    margin-bottom: 0.5rem;
+  }
 `;
+
 export const Header = styled.div`
   width: 100%;
   ${verticalStyle};
@@ -62,6 +68,7 @@ export const Tag = styled.div`
 
 export const Answer = styled.div`
   white-space: break-spaces;
+  text-align: left;
 `;
 
 export const CopyPaste = styled.div`
@@ -71,4 +78,15 @@ export const CopyPaste = styled.div`
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
+`;
+
+export const ReportButton = styled.div`
+  cursor: pointer;
+  margin-left: 50px;
+  justify-content: flex-end;
+  width: 150px;
+  height: 20px;
+  border-radius: 8px;
+  background-color: yellow;
+  color: brown;
 `;
