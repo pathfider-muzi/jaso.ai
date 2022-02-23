@@ -14,6 +14,9 @@ interface Props {
   setEmphasizedQuestion: (isEmphasized: boolean) => void;
 }
 
+const SELF_ANSWER_AMOUNT_UNIT = 3;
+const LIMIT_ANSWER_NUM = 100;
+
 const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle }: Props) => {
   const {
     university,
@@ -46,13 +49,8 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
     (state: RootState) => state.recommendedAnswerOfQuestionReducer.currentQuestionTitle
   );
 
-  const SELF_ANSWER_AMOUNT_UNIT = 3;
-  const LIMIT_ANSWER_NUM = 100;
-
-  console.log(currentQuestionTitle);
-
   const { data: recommendedAnswers, refetch } = useRecommendAnswers({
-    enabled: true,
+    enabled: false,
     metaInfo: {
       listNum: LIMIT_ANSWER_NUM,
       question: currentQuestionTitle,
@@ -81,10 +79,11 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
   };
 
   useEffect(() => {
-    if (specification === "- / - / - / - / - / - / -") return;
-    console.log(specification);
+    if (specification === "- / - / - / - / - / - / -") {
+      return;
+    }
     refetch();
-  }, [specification]);
+  }, [specification, refetch]);
 
   return (
     <S.Frame>

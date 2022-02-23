@@ -235,6 +235,7 @@ const EditorForm = ({
     setIsEditableTextCount(false);
     setQuestion(qnaList[selectedPageNumber - 1].question);
     setAnswer(qnaList[selectedPageNumber - 1].answer);
+    dispatch(changeQuestionTitleState(qnaList[selectedPageNumber - 1].question));
   }, [qnaList, selectedPageNumber]);
 
   useEffect(() => {
@@ -245,7 +246,6 @@ const EditorForm = ({
   }, [textCountRef, isEditableTextCount]);
 
   useEffect(() => {
-    dispatch(changePageState(true));
     dispatch(changePageState(true));
   }, []);
 

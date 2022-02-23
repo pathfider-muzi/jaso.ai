@@ -35,6 +35,7 @@ export const Title = styled.div`
 export const SearchBarFrame = styled.div`
   margin-top: 30px;
   margin-left: 5px;
+  width: 80%;
   display: flex;
   align-self: center;
   flex-direction: row;
@@ -85,7 +86,7 @@ export const MetaInfoForResult = styled.div`
 `;
 
 export const CompanyNameMeta = styled.div`
-  min-width: 130px;
+  min-width: 260px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -141,4 +142,10 @@ export const ShowMoreButton = styled.button`
   &:hover {
     background-color: ${PALETTE.GRAY_150};
   }
+`;
+
+export const NoSearchResult = styled.div`
+  align-self: center;
+  font-weight: border;
+  font-size: 20px;
 `;
