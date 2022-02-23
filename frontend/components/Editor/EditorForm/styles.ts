@@ -6,7 +6,7 @@ import BORDER from "@/constants/styles/border";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
 import verticalStyle from "@/constants/styles/verticalStyle";
-import { css, keyframes } from "@emotion/react";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
@@ -214,4 +214,6 @@ export const OrganizationNameCheckWrapper = styled.div`
 export const PdfExportButtonToolTip = styled(ToolTipComponent)`
   border: none;
   margin-top: 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
 `;

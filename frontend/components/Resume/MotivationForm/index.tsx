@@ -28,6 +28,8 @@ const MotivationForm = () => {
     }
   });
 
+  const isEveryInputFieldFilled = [orgName, orgRole, orgDetail, motivationEmphasis].every(inputValue => inputValue);
+
   return (
     <S.Frame>
       <Field label="회사명">
@@ -56,11 +58,14 @@ const MotivationForm = () => {
       <Field
         label="AI 지원동기"
         toolTipContent={
-          "위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n• 위 기능은 30초 ~ 1분의 시간이 소요되며, 개발자 직군에 최적화되어있습니다.\n• 생성 시 마다 다른 결과값이 나오므로 마음에 드는 지원동기 문구를 찾을 때까지 시도할 수 있습니다."
+          "위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다. 만약 잘 되지 않으면 잠시 후에 다시 시도해 주세요.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원"
         }
       >
         <S.IntroductionContentWrapper>
-          <S.IntroductionGenerateButton onClick={() => refetchGenerateIntroduction()} disabled={isFetching}>
+          <S.IntroductionGenerateButton
+            onClick={() => refetchGenerateIntroduction()}
+            disabled={isFetching || !isEveryInputFieldFilled}
+          >
             {isFetched ? "재시도" : "생성"}
           </S.IntroductionGenerateButton>
 
@@ -71,7 +76,7 @@ const MotivationForm = () => {
               <Image src="/loading.svg" alt="loading image" width="30" height="30" />
               <S.TextContent>
                 {
-                  "지원동기 문구를 생성중입니다. 잠시만 기다려주세요.\n• 위 기능은 30초 ~ 1분의 시간이 소요되며, 개발자 직군에 최적화되어있습니다.\n• 생성 시 마다 다른 결과값이 나오므로 마음에 드는 지원동기 문구를 찾을 때까지 시도할 수 있습니다."
+                  "지원동기 문구를 생성중입니다. 잠시만 기다려주세요.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다. 만약 잘 되지 않으면 잠시 후에 다시 시도해 주세요.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원"
                 }
               </S.TextContent>
             </S.LoadingImageWrapper>

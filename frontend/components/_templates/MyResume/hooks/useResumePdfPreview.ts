@@ -24,7 +24,7 @@ const _generatePdfFromResume = ({ resumeTitle, projects }: GeneratePdfFromResume
     acc += "\n\n";
     acc += `성과: ${curr.projectResult.join(", ")}`;
     acc += "\n\n";
-    acc += `느낀점: ${curr.projectResult.join(", ")}`;
+    acc += `느낀점: ${curr.projectFeeling.join(", ")}`;
     acc += "\n\n\n";
 
     return acc;

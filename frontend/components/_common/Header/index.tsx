@@ -61,7 +61,7 @@ const Header = ({ ...props }: Props) => {
               tryOpenCustomAlert(ROUTE.INTRODUCTION_RECOMMENDATION);
             }}
           >
-            자기소개서 검색
+            자기소개서 추천
           </S.NavButton>
           <Link href={"https://predev.dev"} passHref>
             <S.NavLink target="_blank">면접준비</S.NavLink>
@@ -70,7 +70,7 @@ const Header = ({ ...props }: Props) => {
           <S.NavButton
             type="button"
             onClick={() => {
-              alert("준비중입니다.");
+              tryOpenCustomAlert(ROUTE.SERVICE_NOTICE);
             }}
           >
             공지사항

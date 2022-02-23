@@ -109,7 +109,12 @@ const MyResume = ({ resume }: Props) => {
     <S.Screen title="내 이력서" description={`내가 작성한 이력서, ${BRAND_NAME}`}>
       <S.Frame onKeyUp={onKeyUpResume}>
         <S.Header>
-          <S.TitleInput type="text" value={resumeTitleInput} onChange={onChangeResumeTitleInput} />
+          <S.TitleInput
+            type="text"
+            value={resumeTitleInput}
+            onChange={onChangeResumeTitleInput}
+            placeholder="이력서 제목"
+          />
 
           <S.ButtonsWrapper>
             <S.ResumePdfPreviewToggleButton
