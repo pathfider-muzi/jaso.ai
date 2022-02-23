@@ -5,14 +5,12 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService } from '../user/user.service';
 import { GenerateMotivationRequestDto } from './dto/generateMotivationRequestDto';
 import { GenerateProjectRequestDto } from './dto/generateProjectRequestDto';
-// import { GenerationService } from './generation.service';
 
 @Controller('generation')
 export class GenerationController {
     constructor(
         private httpService: HttpService,
         private userService: UserService,
-        // private generationService: GenerationService
     ) {};
 
     @UseGuards(JwtAuthGuard)
@@ -83,9 +81,30 @@ export class GenerationController {
         };
     }
 
-    // @Get('project/result')
-    // async getProjectGenerationResult(@Request() req, @Query('msg') msg: string) {
-    //     this.generationService.sendMessage(msg);
-    //     return msg;
-    // };
+    @Post('motivation/guest')
+    async generateMotivationWithoutJwt(@Body() generateMotivationRequestDto: GenerateMotivationRequestDto) {
+        const { orgName, orgRole, orgDetail, motivationEmphasis } = generateMotivationRequestDto;
+        console.log(`[API] POST /generation/motivation : ${orgName} ${orgRole} ${orgDetail} ${motivationEmphasis}`);
+
+        const postData = {
+            orgName,
+            orgRole,
+            orgDetail,
+            motivationEmphasis
+        };
+
+        const { data: { motiveIntroduction } } = await lastValueFrom(this.httpService.post("http://34.87.41.125:3000/motive", postData, {
+            timeout: 500000
+        }).pipe(
+            catchError(error => {
+                throw new HttpException(error.response.data, error.response.status);
+            })
+        ));
+
+        return {
+            data: {
+                motiveIntroduction
+            }
+        };
+    }
 }

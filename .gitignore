@@ -432,3 +432,6 @@ settings.json
 
 # docker
 docker-compose_2.yml
+
+# redis
+redis-test/
