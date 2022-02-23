@@ -98,12 +98,7 @@ const AnyOneResume = ({ ...props }: Props) => {
 
             {projects.map(({ id }) => {
               return (
-                <S.ProjectFormWrapper
-                  key={id}
-                  onKeyDown={() => {
-                    openLoginModal();
-                  }}
-                >
+                <S.ProjectFormWrapper key={id} onFocus={openLoginModal}>
                   <ProjectInfoForm id={id} {...projectInput} />
                 </S.ProjectFormWrapper>
               );
