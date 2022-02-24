@@ -1,6 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
+import * as redisStore from 'cache-manager-redis-store';
 import { JwtStrategy } from '../auth/jwt.strategy';
 import { UserModule } from '../user/user.module';
 import { GenerationController } from './generation.controller';
@@ -11,6 +12,11 @@ import { GenerationController } from './generation.controller';
       timeout: 500000
     }),
     PassportModule,
+    CacheModule.register({
+      store: redisStore,
+      host: 'localhost',
+      port: 6379
+    }),
     UserModule
   ],
   controllers: [GenerationController],
