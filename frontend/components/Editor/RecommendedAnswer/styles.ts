@@ -102,6 +102,7 @@ export const ReportButton = styled.div`
 export const ReportFrame = styled.div`
   display: flex;
   flex-direction: row;
+  margin-left: 80%;
 `;
 
 export const FieldFrame = styled.div`
@@ -113,7 +114,7 @@ export const FieldFrame = styled.div`
 `;
 
 export const ReportLetter = styled.div`
-  margin-left: 15px;
+  margin-left: 5px;
   font-size: 15px;
 `;
 

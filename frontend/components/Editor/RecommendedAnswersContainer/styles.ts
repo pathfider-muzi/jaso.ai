@@ -49,7 +49,7 @@ export const ChangeSpecButton = styled.button`
 
 export const ReloadAnswersButton = styled.button`
   width: 50%;
-  height: 40px;
+  height: fit-content;
   font-size: 18px;
   align-self: center;
   border-radius: 10px;

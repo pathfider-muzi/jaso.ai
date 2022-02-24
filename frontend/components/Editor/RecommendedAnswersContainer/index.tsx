@@ -51,7 +51,7 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
   );
 
   const { data: recommendedAnswers, refetch } = useRecommendAnswers({
-    enabled: true,
+    enabled: false,
     metaInfo: {
       listNum: LIMIT_ANSWER_NUM,
       question: currentQuestionTitle,

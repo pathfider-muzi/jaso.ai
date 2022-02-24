@@ -68,9 +68,9 @@ const RecommendedAnswer = ({ answer, question, tags, id }: Props) => {
         </S.ReportButton>
         <S.Label>
           <S.ToolTip
-            text={"잘못된 문항이 추천되었다면 왼쪽 버튼을 눌러 신고해주세요."}
+            text={"잘못된 문항이 추천되었다면 왼쪽 버튼을 눌러 신고하세요."}
             textBubbleStyle={{
-              left: "0",
+              left: "-24rem",
               bottom: "2rem"
             }}
           ></S.ToolTip>

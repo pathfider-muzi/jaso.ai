@@ -28,12 +28,15 @@ const Header = ({ ...props }: Props) => {
   return (
     <>
       <S.Frame {...props}>
-        <Link href={ROUTE.HOME} passHref={true}>
-          <S.BrandInfoWrapper>
-            <Logo size="md" />
-            <S.BrandName>{BRAND_NAME}</S.BrandName>
-          </S.BrandInfoWrapper>
-        </Link>
+        <S.BrandInfoWrapper
+          onClick={() => {
+            tryOpenCustomAlert(ROUTE.HOME);
+          }}
+        >
+          <Logo size="md" />
+          <S.BrandName>{BRAND_NAME}</S.BrandName>
+        </S.BrandInfoWrapper>
+
         <S.Nav>
           <S.NavButton
             type="button"

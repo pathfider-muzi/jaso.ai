@@ -61,7 +61,9 @@ export const CopyPaste = styled.div`
 export const ReportFrame = styled.div`
   display: flex;
   flex-direction: row;
+  margin-left: 410px;
 `;
+
 export const ReportButton = styled.div`
   cursor: pointer;
   margin-top: 8px;
@@ -97,7 +99,7 @@ export const Label = styled.span`
 `;
 
 export const ReportLetter = styled.div`
-  margin-left: 12px;
+  margin-left: 4px;
 `;
 
 export const ToolTip = styled(ToolTipComponent)`
