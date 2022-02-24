@@ -27,6 +27,7 @@ export const SpeechBubble = styled.div<{
     bottom?: string;
   };
 }>`
+  z-index: 1;
   ${({ textBubbleStyle }) => textBubbleStyle};
   color: ${PALETTE.BLACK_900};
   position: absolute;

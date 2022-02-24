@@ -285,7 +285,7 @@ const EditorForm = ({
             onChangeQuestion(event);
             dispatch(changeQuestionTitleState(event.target.value));
           }}
-          placeholder="질문 입력"
+          placeholder="질문 입력 ex) 회사에 지원하게된 동기"
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -404,13 +404,9 @@ const EditorForm = ({
       </S.Footer>
 
       <UnSaveAlert saveIntroduction={onClickSaveButton}></UnSaveAlert>
-      <_CustomAlert
-        title={`현재글자수 ${answer.length} 보다 높게 설정해야합니다.`}
-        isOpened={letterRangeAlert}
-        contentNode={<></>}
-      />
-      <_CustomAlert title={`최대 글자수가 변경되었습니다.`} isOpened={maxRangeSucceed} contentNode={<></>} />
-      <_CustomAlert title="자소서 저장에 성공하셨습니다" isOpened={isSaveSuecceedAlertOpeneed} contentNode={<></>} />
+      <_CustomAlert title={`현재글자수 ${answer.length} 보다 높게 설정해야합니다.`} isOpened={letterRangeAlert} />
+      <_CustomAlert title={`최대 글자수가 변경되었습니다.`} isOpened={maxRangeSucceed} />
+      <_CustomAlert title="자기소개서 저장에 성공하셨습니다" isOpened={isSaveSuecceedAlertOpeneed} />
 
       <S.PageMarksWrapper>
         {qnaList.map((qna, index) => {

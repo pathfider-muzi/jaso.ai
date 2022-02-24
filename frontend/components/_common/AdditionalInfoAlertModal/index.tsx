@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import * as S from "./styles";
 
-const OPEN_TIME_SEC = 5;
+const OPEN_TIME_SEC = 10;
 
 interface Props {
   isOpen: boolean;

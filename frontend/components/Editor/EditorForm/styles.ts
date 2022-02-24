@@ -44,22 +44,28 @@ export const QuestionWrapper = styled.div`
 `;
 
 export const Question = styled.textarea<{ isEmphasized: boolean }>`
-  ${({ isEmphasized: isEmpahsized }) => {
-    if (isEmpahsized) {
-      return css`
-        display: inline-block;
-        background-color: ${PALETTE.GREEN};
-      `;
-    }
-    return;
-  }}
-
+  transition: all 0.3s linear;
   border: none;
+  border-radius: 10px;
   width: 100%;
-  outline: 0;
+  outline: none;
   resize: none;
   font-size: 1rem;
   height: 3.5rem;
+  color: ${PALETTE.BLACK_900};
+
+  ${({ isEmphasized }) => {
+    if (isEmphasized) {
+      return css`
+        color: ${PALETTE.HOT_PINK};
+        font-weight: 900;
+
+        &::placeholder {
+          color: ${PALETTE.HOT_PINK};
+        }
+      `;
+    }
+  }}
 `;
 
 export const InnerQuestion = styled.div``;

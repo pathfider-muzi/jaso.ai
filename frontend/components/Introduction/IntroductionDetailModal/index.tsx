@@ -1,8 +1,8 @@
-import * as S from "./styles";
+import reportLosuyIntroduction from "@/api/reportIntroduction";
+import _CustomAlert from "@/components/_common/CustomAlert";
 import Image from "next/image";
 import { useState } from "react";
-import _CustomAlert from "@/components/_common/CustomAlert";
-import reportLosuyIntroduction from "@/api/reportIntroduction";
+import * as S from "./styles";
 
 interface Props {
   isOpen: boolean;
@@ -41,11 +41,7 @@ const IntroductionDetailModal = ({ isOpen, onClose, introductionContent, tags, i
         </S.CopyPaste>
       </S.IntroductionContent>
 
-      <_CustomAlert
-        isOpened={isCopyPasteAlertOpened}
-        title={"선택한 자기소개서 문항이 복사되었습니다."}
-        contentNode={<></>}
-      />
+      <_CustomAlert isOpened={isCopyPasteAlertOpened} title={"선택한 자기소개서 문항이 복사되었습니다."} />
       <S.Footer>
         {tags.map(tag => {
           return <S.Tag key={tag}>{tag}</S.Tag>;
@@ -61,26 +57,20 @@ const IntroductionDetailModal = ({ isOpen, onClose, introductionContent, tags, i
             await reportLosuyIntroduction(id);
           }}
         >
-          <S.FieldFrame>
-            <S.ReportLetter>신고하기</S.ReportLetter>
-          </S.FieldFrame>
+          신고하기
         </S.ReportButton>
         <S.Label>
           <S.ToolTip
             text={"잘못된 자기소개서가 추천되었으면 왼쪽 버튼을 눌러 신고해주세요."}
             textBubbleStyle={{
-              left: "-31rem",
+              right: "0",
               bottom: "2rem"
             }}
           ></S.ToolTip>
         </S.Label>
       </S.ReportFrame>
 
-      <_CustomAlert
-        title="해당 답변의 신고 처리가 정상적으로 접수되었습니다."
-        isOpened={isReportAlertOpened}
-        contentNode={<></>}
-      />
+      <_CustomAlert title="해당 답변의 신고 처리가 정상적으로 접수되었습니다." isOpened={isReportAlertOpened} />
     </S.Frame>
   );
 };

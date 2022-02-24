@@ -38,19 +38,17 @@ const UnSaveAlert = ({ saveIntroduction }: Props) => {
     });
   };
 
-  const saveOrNotUI = (
-    <S.ButtonsFrame>
-      <S.Button onClick={saveAndClose}>예</S.Button>
-      <S.Button onClick={closeAndGoToNextPage}>아니오</S.Button>
-    </S.ButtonsFrame>
-  );
-
   return (
-    <_CustomAlert
-      title={"자소서 저장이 안되있습니다. 저장하고 이동하시겠습니까?"}
-      contentNode={saveOrNotUI}
-      isOpened={isAlertOpened}
-    />
+    <_CustomAlert title={"자소서 저장이 안되있습니다. 저장하고 이동하시겠습니까?"} isOpened={isAlertOpened}>
+      <S.ButtonsFrame>
+        <S.Button type="button" onClick={saveAndClose}>
+          예
+        </S.Button>
+        <S.Button type="button" onClick={closeAndGoToNextPage}>
+          아니오
+        </S.Button>
+      </S.ButtonsFrame>
+    </_CustomAlert>
   );
 };
 

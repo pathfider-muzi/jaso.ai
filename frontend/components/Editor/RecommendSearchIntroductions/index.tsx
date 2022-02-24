@@ -1,18 +1,17 @@
+import getRecommendIntroductions from "@/api/getRecommendIntroductions";
+import searchIntroductions from "@/api/searchIntroduction";
+import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
 import AdditionalInfoAlertModal from "@/components/_common/AdditionalInfoAlertModal";
 import BRAND_NAME from "@/constants/brandName";
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
+import useModal from "@/hooks/useModal";
 import usePleaseFillAdditionalModal from "@/hooks/usePleaseFillAdditionalInfoModal";
-import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
-import useUser, { getUserInfoString } from "@/hooks/useUser";
+import { getUserInfoString } from "@/hooks/useUser";
+import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
+import SearchMetaInfo from "@/types/searchIntroductions";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as S from "./styles";
-import SearchMetaInfo from "@/types/searchIntroductions";
-import searchIntroductions from "@/api/searchIntroduction";
-import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
-import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
-import useModal from "@/hooks/useModal";
-import getRecommendIntroductions from "@/api/getRecommendIntroductions";
 
 const SELF_INTRODUCTION_AMOUNT_UNIT = 6;
 const INTRODICTON_MAX_LENGTH = 50;
@@ -105,11 +104,11 @@ const RecommendSearchIntroductions = () => {
   }, [specification, getRecommendedIntroductions]);
 
   return (
-    <S.Screen title="자기소개서 추천 " description={`자기소개서 추천, ${BRAND_NAME}`}>
+    <S.Screen title="자기소개서 검색" description={`자기소개서 검색, ${BRAND_NAME}`}>
       <S.Frame>
         <S.TopForm>
-          <S.Title>여러분의 스펙에 맞는 합격 자기소개서들 중에 원하는 자기소개서를 검색하실 수 있습니다.</S.Title>
-          <S.DetailExplanation>* 여러분의 스펙과 관련도가 높은 순으로 자기소개서가 추천됩니다.</S.DetailExplanation>
+          <S.Title>{"스펙에 맞는 합격 자기소개서들 중\n원하는 자기소개서를 검색하실 수 있습니다."}</S.Title>
+          <S.DetailExplanation>{"* 스펙과 관련도가 높은 순으로 자기소개서가 추천됩니다."}</S.DetailExplanation>
           <S.SearchBarFrame>
             <S.SearchInput placeholder="기업명" ref={orgNameRef} />
             <S.SearchInput placeholder="직무명" ref={jobRef} />

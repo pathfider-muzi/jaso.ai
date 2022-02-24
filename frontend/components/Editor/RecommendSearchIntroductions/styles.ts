@@ -1,7 +1,8 @@
-import PALETTE from "@/constants/styles/palette";
-import styled from "@emotion/styled";
+import ButtonComponent from "@/components/_common/Button";
 import ScreenComponent from "@/components/_layouts/Screen";
 import BORDER from "@/constants/styles/border";
+import PALETTE from "@/constants/styles/palette";
+import styled from "@emotion/styled";
 
 export const Screen = styled(ScreenComponent)`
   width: 100%;
@@ -18,63 +19,54 @@ export const Frame = styled.div`
 
 export const TopForm = styled.form`
   width: 100%;
-  height: 200px;
-  background-color: purple;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
 `;
 
-export const Title = styled.div`
-  margin-top: 10px;
-  color: white;
-  font-size: 24px;
+export const Title = styled.h2`
+  margin: 1rem 0;
+  font-size: 3rem;
   margin-left: 10px;
   font-weight: bold;
+  white-space: pre;
+  background-image: linear-gradient(90deg, ${PALETTE.VIOLET}, ${PALETTE.HOT_PINK});
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 export const DetailExplanation = styled.div`
   margin-top: 10px;
-  color: white;
+  color: ${PALETTE.BLACK_900};
   font-size: 18px;
   margin-left: 10px;
+  font-weight: 900;
 `;
 
 export const SearchBarFrame = styled.div`
-  margin-top: 30px;
-  margin-left: 5px;
-  width: 80%;
+  width: 100%;
+  gap: 1rem;
   display: flex;
-  align-self: center;
-  flex-direction: row;
   justify-items: center;
   align-items: center;
 
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
-
-  margin-bottom: 40px;
+  margin: 1rem 0;
 `;
 
 export const SearchInput = styled.input`
-  background-color: white;
-  border-radius: 2%;
+  ${BORDER.GRAY_300}
+  padding: 1rem;
+  border-radius: 10px;
   width: 300px;
   height: 50px;
-  border: none;
 `;
 
-export const SearchButton = styled.button`
+export const SearchButton = styled(ButtonComponent)`
   background-color: ${PALETTE.VIOLET};
-  margin-left: 20px;
-  width: 100px;
-  height: 30px;
-  border-radius: 5px;
-  color: white;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: ${PALETTE.WHITE};
+  font-weight: 900;
+
+  font-size: 1rem;
 `;
 
 export const SearchResultsFrame = styled.div`
@@ -130,6 +122,11 @@ export const ResultContentFrame = styled.div`
   flex-direction: row;
   width: 100%;
   height: 150px;
+
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: ${PALETTE.GRAY_150};
+  }
 `;
 
 export const LoadingImageWrapper = styled.div`

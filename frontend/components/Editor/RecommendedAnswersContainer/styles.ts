@@ -1,3 +1,4 @@
+import ButtonComponent from "@/components/_common/Button";
 import ToolTipComponent from "@/components/_common/ToolTip";
 import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
@@ -19,7 +20,6 @@ export const MetaInfo = styled.div`
   width: 450px;
   height: 20px;
   border-radius: 10px;
-  ${BORDER.GRAY_150};
 `;
 
 export const AdditionalInfoWrapper = styled.div`
@@ -28,9 +28,9 @@ export const AdditionalInfoWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  ${BORDER.GRAY_150};
+  ${BORDER.GRAY_300};
   border-radius: 10px;
-  padding: 1rem;
+  padding: 0.5rem;
 `;
 
 export const AdditionalInfo = styled.span`
@@ -43,16 +43,21 @@ export const ToolTip = styled(ToolTipComponent)`
   border: none;
 `;
 
-export const ChangeSpecButton = styled.button`
+export const ChangeSpecButton = styled(ButtonComponent)`
+  background-color: ${PALETTE.BLUE};
   font-weight: 900;
+  color: ${PALETTE.WHITE};
+  font-size: 1rem;
 `;
 
-export const ReloadAnswersButton = styled.button`
-  width: 50%;
+export const ReloadAnswersButton = styled(ButtonComponent)`
+  width: 100%;
   height: fit-content;
-  font-size: 18px;
-  align-self: center;
+  font-size: 1rem;
+  font-weight: 900;
   border-radius: 10px;
+  background-color: ${PALETTE.HOT_PINK};
+  color: ${PALETTE.WHITE};
   ${BORDER.GRAY_150};
 `;
 

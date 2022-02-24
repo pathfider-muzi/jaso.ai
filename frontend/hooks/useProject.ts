@@ -89,7 +89,7 @@ const useProject = ({ resumeId }: Props) => {
 
   const onChangeProjectRoles: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectRoles(state => {
-      return { ...state, [`${event.target.dataset.projectid}`]: event.target.value.split(", ") };
+      return { ...state, [`${event.target.dataset.projectid}`]: event.target.value.split(",") };
     });
   };
 
@@ -113,7 +113,7 @@ const useProject = ({ resumeId }: Props) => {
 
   const onChangeProjectResults: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectResults(state => {
-      return { ...state, [`${event.target.dataset.projectid}`]: event.target.value.split(", ") };
+      return { ...state, [`${event.target.dataset.projectid}`]: event.target.value.split(",") };
     });
   };
 
@@ -137,7 +137,7 @@ const useProject = ({ resumeId }: Props) => {
 
   const onChangeProjectFeelings: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setProjectFeelings(state => {
-      return { ...state, [`${event.target.dataset.projectid}`]: event.target.value.split(", ") };
+      return { ...state, [`${event.target.dataset.projectid}`]: event.target.value.split(",") };
     });
   };
 

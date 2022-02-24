@@ -133,7 +133,7 @@ export const IntroductionGenerateButton = styled(ButtonComponent)<{
     width: max-content;
     border-radius: 10px;
     position: absolute;
-    content: "<< 지원동기가 마음에 들지 않으신가요? 다시 생성해보세요!";
+    content: "<< 생성된 프로젝트 경험이 마음에 들지 않으신가요? 다시 생성해보세요!";
     animation: move 3s linear infinite;
 
     @keyframes move {

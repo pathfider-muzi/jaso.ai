@@ -1,8 +1,9 @@
+import ButtonComponent from "@/components/_common/Button";
 import Modal from "@/components/_common/Modal";
+import ToolTipComponent from "@/components/_common/ToolTip";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
 import styled from "@emotion/styled";
-import ToolTipComponent from "@/components/_common/ToolTip";
 
 export const Frame = styled(Modal)`
   overflow-y: scroll;
@@ -59,26 +60,19 @@ export const CopyPaste = styled.div`
 `;
 
 export const ReportFrame = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 410px;
-`;
-
-export const ReportButton = styled.div`
-  cursor: pointer;
-  margin-top: 8px;
-  width: 80px;
-  height: 30px;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 5px;
-  border-radius: 8px;
-  background-color: brown;
-  font-size: 15px;
-  color: white;
-  border: 1px solid ${PALETTE.GRAY_200};
-  box-shadow: ${BOX_SHADOW.DEFAULT};
+  justify-content: flex-end;
+`;
+
+export const ReportButton = styled(ButtonComponent)`
+  margin-top: 8px;
+  text-align: center;
+  background-color: ${PALETTE.RED};
+  color: ${PALETTE.WHITE};
+  font-weight: 900;
+  font-size: 1rem;
 `;
 
 export const FieldFrame = styled.div`
@@ -94,8 +88,6 @@ export const Label = styled.span`
   justify-content: space-between;
   font-size: 1rem;
   font-weight: 600;
-  margin-right: 2rem;
-  min-width: 10.6rem;
 `;
 
 export const ReportLetter = styled.div`
@@ -103,10 +95,10 @@ export const ReportLetter = styled.div`
 `;
 
 export const ToolTip = styled(ToolTipComponent)`
-  top: 9px;
   font-size: 1rem;
   font-weight: 400;
   margin-left: 0.3rem;
+  margin-top: 0.2rem;
   text-align: center;
   vertical-align: middle;
   width: 1.5rem;

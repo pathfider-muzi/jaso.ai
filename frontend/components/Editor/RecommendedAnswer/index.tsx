@@ -36,16 +36,8 @@ const RecommendedAnswer = ({ answer, question, tags, id }: Props) => {
       <S.CopyPaste>
         <Image src="/copy_paste_icon.png" alt="복붙" width="35" height="35" onClick={() => copyPaste(answer)} />
       </S.CopyPaste>
-      <_CustomAlert
-        isOpened={isCopyPasteAlertOpened}
-        title={"선택한 자기소개서 문항이 복사되었습니다."}
-        contentNode={<></>}
-      />
-      <_CustomAlert
-        isOpened={isReportAlertOpened}
-        title={"해당 문항의 신고 처리가 정상적으로 접수되었습니다."}
-        contentNode={<></>}
-      />
+      <_CustomAlert isOpened={isCopyPasteAlertOpened} title={"선택한 자기소개서 문항이 복사되었습니다."} />
+      <_CustomAlert isOpened={isReportAlertOpened} title={"해당 문항의 신고 처리가 정상적으로 접수되었습니다."} />
 
       <S.Footer>
         {tags.map(tag => {
@@ -70,10 +62,10 @@ const RecommendedAnswer = ({ answer, question, tags, id }: Props) => {
           <S.ToolTip
             text={"잘못된 문항이 추천되었다면 왼쪽 버튼을 눌러 신고하세요."}
             textBubbleStyle={{
-              left: "-29rem",
+              right: "0",
               bottom: "2rem"
             }}
-          ></S.ToolTip>
+          />
         </S.Label>
       </S.ReportFrame>
     </S.Frame>

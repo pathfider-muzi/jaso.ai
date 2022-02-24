@@ -1,6 +1,5 @@
 import getRecommendAnswers from "@/api/recommendAnswers";
 import AdditionalInformationModal from "@/components/User/AdditionalInformationModal";
-import useRecommendAnswers from "@/hooks/Editor/useRecommendAnswer";
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
 import useModal from "@/hooks/useModal";
 import { getUserInfoString } from "@/hooks/useUser";
@@ -18,6 +17,7 @@ interface Props {
 
 const SELF_ANSWER_AMOUNT_UNIT = 3;
 const LIMIT_ANSWER_NUM = 100;
+const EMPTY_SPEC = "- / - / - / - / - / - / -";
 
 const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle, additionalInfoInput }: Props) => {
   const {
@@ -98,9 +98,9 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
 
   return (
     <S.Frame>
-      <S.MetaInfo>질문 내용과 스펙을 바탕으로 자기소개서 문단을 추천해줍니다.</S.MetaInfo>
+      <S.MetaInfo> {"※ 질문 내용과 스펙을 바탕으로 자기소개서 문단을 추천해줍니다."}</S.MetaInfo>
       <S.AdditionalInfoWrapper>
-        <S.AdditionalInfo>사용자의 스펙: {specification}</S.AdditionalInfo>
+        <S.AdditionalInfo>사용자의 스펙: {specification === EMPTY_SPEC ? "없음" : specification}</S.AdditionalInfo>
         <S.ChangeSpecButton type="button" onClick={openModal}>
           변경
         </S.ChangeSpecButton>

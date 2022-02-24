@@ -1,8 +1,9 @@
+import ButtonComponent from "@/components/_common/Button";
+import ToolTipComponent from "@/components/_common/ToolTip";
 import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
 import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
-import ToolTipComponent from "@/components/_common/ToolTip";
 
 export const Frame = styled.section`
   display: flex;
@@ -17,11 +18,6 @@ export const Frame = styled.section`
   border-radius: 10px;
   overflow-y: scroll;
   margin-right: 1rem;
-
-  /* & > *:not(:first-child) {
-  
-    margin-bottom: 0.5rem;
-  } */
 `;
 
 export const Header = styled.div`
@@ -84,25 +80,19 @@ export const CopyPaste = styled.div`
   border-bottom: 1px solid ${PALETTE.GRAY_150};
 `;
 
-export const ReportButton = styled.div`
-  cursor: pointer;
-  margin-left: 0px;
-  width: 80px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  border: 1px solid ${PALETTE.GRAY_200};
-  box-shadow: ${BOX_SHADOW.DEFAULT};
-  background-color: brown;
-  color: white;
+export const ReportButton = styled(ButtonComponent)`
+  margin-top: 8px;
+  text-align: center;
+  background-color: ${PALETTE.RED};
+  color: ${PALETTE.WHITE};
+  font-weight: 900;
 `;
 
 export const ReportFrame = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  margin-left: 80%;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 export const FieldFrame = styled.div`
@@ -123,14 +113,13 @@ export const Label = styled.span`
   justify-content: space-between;
   font-size: 1rem;
   font-weight: 600;
-  margin-right: 2rem;
-  min-width: 10rem;
 `;
 
 export const ToolTip = styled(ToolTipComponent)`
   font-size: 1rem;
   font-weight: 400;
   margin-left: 0.3rem;
+  margin-top: 0.2rem;
   text-align: center;
   vertical-align: middle;
   width: 1.5rem;
