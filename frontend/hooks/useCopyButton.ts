@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 export const useCopyButton = () => {
-  const [isCopyButtonClicked, setCopyButtonState] = useState(false);
+  const [isCopyButtonClicked, setIsCopyButtonClicked] = useState(false);
 
   const onCopy = (script: string) => {
     navigator.clipboard.writeText(script);
-    setCopyButtonState(true);
+    setIsCopyButtonClicked(true);
   };
 
-  return { isCopyButtonClicked, setCopyButtonState, onCopy };
+  return { isCopyButtonClicked, setIsCopyButtonClicked, onCopy };
 };

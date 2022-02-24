@@ -47,6 +47,33 @@ export const TextArea = styled.textarea`
   resize: none;
 `;
 
+export const ResultWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+export const ResultButtonWrapper = styled.div`
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  display: flex;
+  gap: 0.5rem;
+`;
+
+export const CopyButton = styled(ButtonComponent)`
+  color: ${PALETTE.WHITE};
+  font-weight: 900;
+  font-size: 1rem;
+  background-color: ${PALETTE.GREEN};
+`;
+
+export const GoToEditorButton = styled(ButtonComponent)`
+  color: ${PALETTE.WHITE};
+  font-weight: 900;
+  font-size: 1rem;
+  background-color: ${PALETTE.ORANGE};
+`;
+
 export const IntroductionContentWrapper = styled.div`
   width: 100%;
   display: flex;

@@ -1,12 +1,15 @@
 import LoginModal from "@/components/Auth/LoginModal";
 import Field from "@/components/Resume/Field";
+import ROUTE from "@/constants/routes";
 import { TERM_INPUT_VALIDATION } from "@/constants/validation";
+import { useCopyButton } from "@/hooks/useCopyButton";
 import useGenerateIntroductionFromProject from "@/hooks/useGenerateIntroductionFromProject";
 import useModal from "@/hooks/useModal";
 import useProject from "@/hooks/useProject";
 import useUser from "@/hooks/useUser";
 import { Project } from "@/types/Project";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import * as S from "./styles";
@@ -39,6 +42,7 @@ const ProjectInfoForm = ({
   onChangeProjectTermEndMonths,
   projectTerms
 }: Props) => {
+  const router = useRouter();
   const { user } = useUser({ enabled: false });
 
   const [resumeProjectId, setResumeProjectId] = useState(uuidv4());
@@ -76,6 +80,8 @@ const ProjectInfoForm = ({
       openLoginModal();
     }
   };
+
+  const { isCopyButtonClicked, onCopy } = useCopyButton();
 
   const hasProjectIntroduction = !!(projectIntroduction && projectIntroduction.trim().length > 0);
 
@@ -204,7 +210,7 @@ const ProjectInfoForm = ({
               <S.TextContentWrapper>
                 <S.TextContent>
                   {
-                    "위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n구체적으로 입력하시면 더 좋은 생성 결과가 나옵니다.\n"
+                    "• 위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n• 구체적으로 입력하시면 더 좋은 생성 결과가 나옵니다.\n"
                   }
                 </S.TextContent>
                 <S.TextContent>
@@ -226,7 +232,33 @@ const ProjectInfoForm = ({
               </S.TextContentWrapper>
             </S.LoadingImageWrapper>
           ) : (
-            <S.TextContent>{projectIntroduction}</S.TextContent>
+            <S.ResultWrapper>
+              <S.TextContent>{projectIntroduction}</S.TextContent>
+              {hasProjectIntroduction && (
+                <S.ResultButtonWrapper>
+                  <S.CopyButton
+                    onClick={() => {
+                      if (projectIntroduction) {
+                        onCopy(projectIntroduction);
+                      }
+                    }}
+                  >
+                    {isCopyButtonClicked ? "Copied" : "Copy"}
+                  </S.CopyButton>
+                  <S.GoToEditorButton
+                    onClick={() => {
+                      if (projectIntroduction) {
+                        onCopy(projectIntroduction);
+                      }
+
+                      router.push(ROUTE.MY_SELFINTRODUCTIONS);
+                    }}
+                  >
+                    자기소개서 작성하러 가기
+                  </S.GoToEditorButton>
+                </S.ResultButtonWrapper>
+              )}
+            </S.ResultWrapper>
           )}
         </S.IntroductionContentWrapper>
       </Field>
