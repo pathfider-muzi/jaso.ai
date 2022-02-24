@@ -92,7 +92,7 @@ export const FieldGuide = styled.p`
   white-space: pre-wrap;
   padding: 0.8rem;
   background-color: ${PALETTE.GRAY_120};
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   line-height: 1.42;
   letter-spacing: normal;
   color: ${PALETTE.BLACK_700};

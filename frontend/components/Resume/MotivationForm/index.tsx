@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 import Field from "../Field";
 import * as S from "./styles";
 
+const MIN_GENERATION_QUEUE_USER = 5;
+
 interface Props {}
 
 const MotivationForm = ({ ...props }: Props) => {
@@ -65,7 +67,7 @@ const MotivationForm = ({ ...props }: Props) => {
         <S.TextInput
           value={motivationEmphasis}
           onChange={onChangeMotivationEmphasis}
-          placeholder="ex) AI 개발 능력, 고객중심사고"
+          placeholder="구체적으로 입력하시면 더 좋은 생성 결과가 나옵니다 ex) AI 개발 능력, 고객 중심 사고, 개발자로서 성장, 회사의 성장 가능성"
         />
       </Field>
 
@@ -92,12 +94,29 @@ const MotivationForm = ({ ...props }: Props) => {
           {generateButtonClicked ? (
             <S.LoadingImageWrapper>
               <Image src="/loading.svg" alt="loading image" width="30" height="30" />
-              <S.TextContent>
-                {"위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n👉  다시 시도하면 새로운 결과를 반환합니다. 결과가 마음에 들지 않는다면 재시도해주세요.\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n" +
-                  (delayCount
-                    ? `${delayCount}명의 사용자가 이용중입니다. 약 ${delayCount * 53}초의 시간이 소요됩니다.`
-                    : "")}
-              </S.TextContent>
+              <S.TextContentWrapper>
+                <S.TextContent>
+                  {
+                    "위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n👉  다시 시도하면 새로운 결과를 반환합니다. 결과가 마음에 들지 않는다면 재시도해주세요.\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n구체적으로 입력하시면 더 좋은 생성 결과가 나옵니다.\n"
+                  }
+                </S.TextContent>
+                <S.TextContent>
+                  {delayCount ? (
+                    <>
+                      <span>{delayCount === MIN_GENERATION_QUEUE_USER ? "최대 " : ""}</span>
+                      <S.HighLightText>{delayCount}</S.HighLightText>
+
+                      <span>명의 사용자가 이용중입니다.</span>
+
+                      <span>{delayCount === MIN_GENERATION_QUEUE_USER ? " 최대 " : " 약 "}</span>
+                      <S.HighLightText>{Math.ceil((delayCount * 53) / 60)}</S.HighLightText>
+                      <span>분의 시간이 소요됩니다.</span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </S.TextContent>
+              </S.TextContentWrapper>
             </S.LoadingImageWrapper>
           ) : (
             <S.TextContent>{motivationIntroduction}</S.TextContent>

@@ -19,10 +19,23 @@ export const TextInput = styled.input`
   width: 100%;
 `;
 
+export const TextContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+`;
+
 export const TextContent = styled(TextInput)`
   word-break: break-all;
   white-space: break-spaces;
 `.withComponent("span");
+
+export const HighLightText = styled.span`
+  font-weight: 900;
+  color: ${PALETTE.BLUE};
+`;
 
 export const TextArea = styled.textarea`
   line-height: 1.3rem;
@@ -61,7 +74,7 @@ export const IntroductionGenerateButton = styled(ButtonComponent)<{
         display: none;
       `}
     top: 0;
-    left: 7rem;
+    left: 100%;
     color: ${PALETTE.BLACK_900};
     padding: 0.4rem 0.6rem;
     width: max-content;
