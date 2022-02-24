@@ -48,15 +48,10 @@ const GuestResume = ({ ...props }: Props) => {
   };
 
   return (
-    <S.Screen title="내 이력서" description={`내가 작성한 이력서, ${BRAND_NAME}`}>
+    <S.Screen title="자기소개서 생성" description={`자기소개서를 생성해보세요., ${BRAND_NAME}`}>
       <S.Frame {...props}>
         <S.Header>
-          <S.TitleInput
-            type="text"
-            value={resumeTitleInput}
-            onChange={onChangeResumeTitleInput}
-            placeholder="이력서 제목을 입력해주세요."
-          />
+          <S.TitleInput type="text" defaultValue={"AI가 자기소개서를 생성해드립니다."} readOnly />
 
           <S.ButtonsWrapper>
             <S.ResumePdfPreviewToggleButton
@@ -71,11 +66,20 @@ const GuestResume = ({ ...props }: Props) => {
           </S.ButtonsWrapper>
         </S.Header>
         <S.ResumeForm>
-          <S.FieldName>지원동기</S.FieldName>
+          <S.FieldName>{"지원동기"}</S.FieldName>
           <S.FieldGuide>
             {"• 지원하고자 하는 회사정보를 입력하고 지원동기를 생성해보세요."}
             <br />
             {"• 이 정보는 이력서 저장에 포함되지 않습니다."}
+            <br />
+            {
+              "• 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR->삼성리서치, 금감원->금융감독원, kakaobrain->카카오브레인"
+            }
+            <br />
+
+            {"• 회사 소개는 본인이 직접작성하는 것보다 회사 홈페이지의 공식 소개를 가져와주세요."}
+            <br />
+            {"• 결과가 마음에 들지 않는 경우 다시시도하여 새로운 결과를 받을 수 있습니다."}
           </S.FieldGuide>
 
           <S.ResumeInfo>
@@ -83,7 +87,7 @@ const GuestResume = ({ ...props }: Props) => {
           </S.ResumeInfo>
 
           <S.ResumeInfo>
-            <S.FieldName>프로젝트</S.FieldName>
+            <S.FieldName>{"프로젝트 경험"}</S.FieldName>
             <S.FieldGuide>
               {"• 프로젝트 생성을 위해서는 회원가입이 필요합니다."}
               <S.SignUpButton

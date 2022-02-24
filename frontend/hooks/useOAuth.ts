@@ -56,7 +56,12 @@ const useOAuth = ({ code }: Props) => {
       if (!isSuccess) return;
 
       removeLocalStorage(LOCAL_STORAGE_KEY.TOS_AGREE);
-      router.replace(ROUTE.MY_SELFINTRODUCTIONS);
+
+      if (user) {
+        router.replace(ROUTE.RESUME);
+      } else {
+        router.replace(ROUTE.GUEST_RESUME);
+      }
     }
   });
 

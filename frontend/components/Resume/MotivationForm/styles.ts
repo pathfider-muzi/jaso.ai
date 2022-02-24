@@ -1,6 +1,7 @@
 import ButtonComponent from "@/components/_common/Button";
 import BORDER from "@/constants/styles/border";
 import PALETTE from "@/constants/styles/palette";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const Frame = styled.div`
@@ -40,7 +41,9 @@ export const IntroductionContentWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const IntroductionGenerateButton = styled(ButtonComponent)`
+export const IntroductionGenerateButton = styled(ButtonComponent)<{
+  isFetched: boolean;
+}>`
   margin-bottom: 1rem;
   max-width: fit-content;
   background-color: ${PALETTE.BLUE};
@@ -49,6 +52,42 @@ export const IntroductionGenerateButton = styled(ButtonComponent)`
   padding: 0.4rem 0.6rem;
   border: none;
   font-weight: 900;
+  position: relative;
+
+  &::after {
+    ${({ isFetched }) =>
+      !isFetched &&
+      css`
+        display: none;
+      `}
+    top: 0;
+    left: 7rem;
+    color: ${PALETTE.BLACK_900};
+    padding: 0.4rem 0.6rem;
+    width: max-content;
+    border-radius: 10px;
+    position: absolute;
+    content: "<< 지원동기가 마음에 들지 않으신가요? 다시 생성해보세요!";
+    animation: move 3s linear infinite;
+
+    @keyframes move {
+      0% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(10px);
+      }
+      50% {
+        transform: translateX(15px);
+      }
+      75% {
+        transform: translateX(10px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+  }
 `;
 
 export const LoadingImageWrapper = styled.div`

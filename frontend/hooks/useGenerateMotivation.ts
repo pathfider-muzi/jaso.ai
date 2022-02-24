@@ -1,32 +1,40 @@
 import generateMotivation from "@/api/generateMotivation";
+import getMotivationGeneratedResult from "@/api/getMotivationGenerateResult";
 import { Motivation } from "@/types/Motivation";
+import { Resume } from "@/types/Resume";
 import { useQuery } from "react-query";
-import useUser from "./useUser";
 
 interface Props {
   motivationInfo: Motivation;
+  resumeMotivationId: Resume["id"] | string;
   enabled?: boolean;
+  doRefetch: boolean;
 }
 
-const useGenerateMotivation = ({ motivationInfo, enabled = false }: Props) => {
-  const { user } = useUser({ enabled: false });
+const useGenerateMotivation = ({ motivationInfo, resumeMotivationId, enabled = false, doRefetch }: Props) => {
+  const { data: generationResponseData, refetch: refetchGenerateIntroduction } = useQuery<{
+    resumeMotivationId: string;
+    queueNum: number;
+  }>(motivationInfo.orgName, () => generateMotivation(motivationInfo, resumeMotivationId), {
+    enabled,
+    retry: 0
+  });
 
-  const { data, isLoading, isFetching, error, isRefetchError, refetch, isFetched } = useQuery<string>(
-    [motivationInfo.orgName],
-    () => generateMotivation(motivationInfo, !!user),
-    {
-      enabled,
-      retry: 0
-    }
-  );
+  const { data: resultData, refetch: refetchGetMotivationGeneratedResult } = useQuery<
+    { motiveIntroduction: string; requested: boolean; generated: boolean },
+    { error: string }
+  >(["getMotivationGeneratedResult", resumeMotivationId], () => getMotivationGeneratedResult(resumeMotivationId), {
+    enabled: doRefetch,
+    refetchInterval: 10 * 1000,
+    refetchIntervalInBackground: true
+  });
 
   return {
-    error,
-    isFetching,
-    isFetched,
-    isRefetchError,
-    motivation: data,
-    refetch
+    delayCount: generationResponseData?.queueNum,
+    motivationIntroduction: resultData?.motiveIntroduction,
+    generationResponseData,
+    refetchGenerateIntroduction,
+    refetchGetMotivationGeneratedResult
   };
 };
 

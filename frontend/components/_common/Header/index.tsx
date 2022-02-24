@@ -38,20 +38,20 @@ const Header = ({ ...props }: Props) => {
           <S.NavButton
             type="button"
             onClick={() => {
+              tryOpenCustomAlert(!!user ? ROUTE.RESUME : ROUTE.GUEST_RESUME);
+            }}
+          >
+            자기소개서 생성
+          </S.NavButton>
+          <S.NavButton
+            type="button"
+            onClick={() => {
               tryOpenCustomAlert(ROUTE.MY_SELFINTRODUCTIONS);
             }}
           >
             자기소개서 에디터
           </S.NavButton>
 
-          <S.NavButton
-            type="button"
-            onClick={() => {
-              tryOpenCustomAlert(!!user ? ROUTE.RESUME : ROUTE.GUEST_RESUME);
-            }}
-          >
-            자기소개서 생성
-          </S.NavButton>
           <S.NavButton
             type="button"
             onClick={() => {

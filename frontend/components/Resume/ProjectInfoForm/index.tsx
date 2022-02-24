@@ -7,6 +7,8 @@ import useProject from "@/hooks/useProject";
 import useUser from "@/hooks/useUser";
 import { Project } from "@/types/Project";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import * as S from "./styles";
 
 interface Props extends Omit<ReturnType<typeof useProject>, "projects" | "mutation"> {
@@ -37,14 +39,11 @@ const ProjectInfoForm = ({
 }: Props) => {
   const { user } = useUser({ enabled: false });
 
-  const {
-    introduction,
-    error,
-    isFetching,
-    isFetched,
-    isRefetchError,
-    refetch: refetchGenerateIntroduction
-  } = useGenerateIntroductionFromProject({
+  const [resumeProjectId, setResumeProjectId] = useState(uuidv4());
+
+  const [generateButtonClicked, setGenerateButtonClicked] = useState(false);
+
+  const { refetchGenerateIntroduction, delayCount, projectIntroduction } = useGenerateIntroductionFromProject({
     project: {
       id,
       projectName: projectNames[id],
@@ -54,7 +53,9 @@ const ProjectInfoForm = ({
       projectResult: projectResults[id],
       projectFeeling: projectFeelings[id]
     },
-    enabled: false
+    enabled: false,
+    doRefetch: generateButtonClicked,
+    resumeProjectId
   });
 
   const {
@@ -68,10 +69,17 @@ const ProjectInfoForm = ({
   const onClickGenerateButton = () => {
     if (user) {
       refetchGenerateIntroduction();
+      setGenerateButtonClicked(true);
     } else {
       openLoginModal();
     }
   };
+
+  const hasProjectIntroduction = !!(projectIntroduction && projectIntroduction.trim().length > 0);
+
+  useEffect(() => {
+    if (hasProjectIntroduction) setGenerateButtonClicked(false);
+  }, [projectIntroduction]);
 
   return (
     <>
@@ -174,29 +182,32 @@ const ProjectInfoForm = ({
       <S.Line />
 
       <Field
-        label="AI 자기소개서"
+        label="AI 프로젝트 경험 생성결과"
         toolTipContent={
-          "위 프로젝트 경험을 바탕으로 자기소개서 내용을 생성할 수 있습니다.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n👉  다시 시도하면 새로운 결과를 반환합니다. 결과가 마음에 들지 않는다면 재시도해주세요."
+          "위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n👉  다시 시도하면 새로운 결과를 반환합니다. 결과가 마음에 들지 않는다면 재시도해주세요."
         }
       >
         <S.IntroductionContentWrapper>
-          <S.IntroductionGenerateButton onClick={onClickGenerateButton} disabled={isFetching}>
-            {isFetched ? "재시도" : "생성"}
+          <S.IntroductionGenerateButton
+            onClick={onClickGenerateButton}
+            disabled={generateButtonClicked}
+            isFetched={hasProjectIntroduction}
+          >
+            {"프로젝트 경험 생성"}
           </S.IntroductionGenerateButton>
 
-          {error || isRefetchError ? (
-            <S.TextContent>{"서버가 불안정합니다. 잠시후에 다시 시도해주세요"}</S.TextContent>
-          ) : isFetching ? (
+          {generateButtonClicked ? (
             <S.LoadingImageWrapper>
               <Image src="/loading.svg" alt="loading image" width="30" height="30" />
               <S.TextContent>
-                {
-                  "자기소개문구를 생성중입니다. 잠시만 기다려주세요.\n• 자기소개서가 생성되는데 시간이 조금 걸릴 수 있습니다.\n• 정보는 영어보다는 한국어로, 약자보다는 전문으로 입력해주세요. ex) SR -> 삼성리서치, 금감원 -> 금융감독원\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n👉  다시 시도하면 새로운 결과를 반환합니다. 결과가 마음에 들지 않는다면 재시도해주세요."
-                }
+                {"위 정보를 바탕으로 지원동기 내용을 생성할 수 있습니다.\n👉  다시 시도하면 새로운 결과를 반환합니다. 결과가 마음에 들지 않는다면 재시도해주세요.\n• 현재 AI 자기소개서 생성 서버가 불안정하여 서비스 사용에 제한이 생길 수 있습니다.\n" +
+                  (delayCount
+                    ? `${delayCount}명의 사용자가 이용중입니다. 약 ${delayCount * 53}초의 시간이 소요됩니다.`
+                    : "")}
               </S.TextContent>
             </S.LoadingImageWrapper>
           ) : (
-            <S.TextContent>{introduction}</S.TextContent>
+            <S.TextContent>{projectIntroduction}</S.TextContent>
           )}
         </S.IntroductionContentWrapper>
       </Field>

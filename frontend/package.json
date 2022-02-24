@@ -36,7 +36,8 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-select": "^5.2.2",
-    "redux": "^4.1.2"
+    "redux": "^4.1.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
@@ -54,6 +55,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-redux": "^7.1.22",
     "@types/redux": "^3.6.0",
+    "@types/uuid": "^8.3.4",
     "babel-loader": "^8.2.3",
     "babel-plugin-emotion": "^11.0.0",
     "eslint": "8.6.0",

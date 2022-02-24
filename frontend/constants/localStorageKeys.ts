@@ -1,7 +1,8 @@
 const LOCAL_STORAGE_KEY = {
   ACCESS_TOKEN: "accessToken",
   TOS_AGREE: "tos_agree",
-  SPELLING_WORD_SET: "spelling_word_set"
+  SPELLING_WORD_SET: "spelling_word_set",
+  GUEST_RESUME_MOTIVATION_GENERATION_ID: "GUEST_RESUME_MOTIVATION_GENERATION_ID"
 } as const;
 
 export default LOCAL_STORAGE_KEY;
