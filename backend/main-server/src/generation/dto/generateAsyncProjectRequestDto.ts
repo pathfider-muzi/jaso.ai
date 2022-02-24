@@ -1,7 +1,9 @@
 export class GenerateAsyncProjectRequestDto {
     resumeProjectId: number;
-    orgName: string;
-    orgRole: string;
-    orgDetail: string;
-    motivationEmphasis: string;
+    projectName: string;
+    projectDetail: string;
+    projectTerm: string;
+    projectRole: string[];
+    projectResult: string[];
+    projectFeeling: string[];
 };

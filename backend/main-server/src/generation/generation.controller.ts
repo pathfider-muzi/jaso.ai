@@ -210,8 +210,8 @@ export class GenerationController {
     @Post('project/async')
     async generateAsyncProject(@Body() generateAsyncProjectRequestDto: GenerateAsyncProjectRequestDto, @Request() req) {
         const kakaoId = req.user.kakaoId;
-        const { resumeProjectId, orgName, orgRole, orgDetail, motivationEmphasis } = generateAsyncProjectRequestDto;
-        console.log(`[API] POST /generation/project/async : ${kakaoId} ${resumeProjectId} ${orgName} ${orgRole} ${orgDetail} ${motivationEmphasis}`);
+        const { resumeProjectId, projectName, projectDetail, projectTerm, projectRole, projectResult, projectFeeling } = generateAsyncProjectRequestDto;
+        console.log(`[API] POST /generation/project/async : ${kakaoId} ${resumeProjectId} ${projectName} ${projectDetail} ${projectTerm} ${projectRole} ${projectResult} ${projectFeeling}`);
         const user = await this.userService.getUser(kakaoId);
         if (!user) {
             throw new NotFoundException();
@@ -219,10 +219,12 @@ export class GenerationController {
 
         const postData = {
             resumeProjectId,
-            orgName,
-            orgRole,
-            orgDetail,
-            motivationEmphasis
+            projectName, 
+            projectDetail, 
+            projectTerm, 
+            projectRole, 
+            projectResult, 
+            projectFeeling
         };
 
         const { status, data: { queueNum } } = await lastValueFrom(this.httpService.post("http://34.87.41.125:3000/project", postData, {
@@ -235,7 +237,6 @@ export class GenerationController {
         if (status !== 200) {
             throw new NotFoundException();
         }
-
         const projectCacheId = "resumeProjectId"+resumeProjectId.toString();
         const cachedResumeProject = await this.cacheManager.get(projectCacheId);
         if (cachedResumeProject) {
