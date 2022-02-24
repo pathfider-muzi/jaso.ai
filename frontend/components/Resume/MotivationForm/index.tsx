@@ -110,7 +110,10 @@ const MotivationForm = ({ ...props }: Props) => {
 
                       <span>{delayCount === MIN_GENERATION_QUEUE_USER ? " 최대 " : " 약 "}</span>
                       <S.HighLightText>{Math.ceil((delayCount * 53) / 60)}</S.HighLightText>
-                      <span>분의 시간이 소요됩니다.</span>
+                      <span>분</span>
+                      <S.HighLightText>{Math.ceil((delayCount * 53) % 60)}</S.HighLightText>
+                      <span>초</span>
+                      <span>의 시간이 소요됩니다.</span>
                     </>
                   ) : (
                     <></>

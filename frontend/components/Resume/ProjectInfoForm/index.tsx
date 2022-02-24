@@ -214,7 +214,10 @@ const ProjectInfoForm = ({
                       <span>명의 사용자가 이용중입니다.</span>
                       <span> 약 </span>
                       <S.HighLightText>{Math.ceil((delayCount * 53) / 60)}</S.HighLightText>
-                      <span>분의 시간이 소요됩니다.</span>
+                      <span>분</span>
+                      <S.HighLightText>{Math.ceil((delayCount * 53) % 60)}</S.HighLightText>
+                      <span>초</span>
+                      <span>의 시간이 소요됩니다.</span>
                     </>
                   ) : (
                     <></>
