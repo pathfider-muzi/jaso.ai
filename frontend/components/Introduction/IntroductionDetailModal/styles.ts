@@ -9,7 +9,20 @@ export const Frame = styled(Modal)`
 `;
 
 export const IntroductionContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  box-shadow: ${BOX_SHADOW.BOLD};
+  border: 1px solid ${PALETTE.GRAY_200};
+  padding: 1rem;
+  min-height: 250px;
+  max-height: 500px;
+  border-radius: 10px;
+  overflow-y: scroll;
+  margin-right: 1rem;
   white-space: break-spaces;
+  text-align: left;
 `;
 export const ContentWrapper = styled.div`
   overflow-y: scroll;

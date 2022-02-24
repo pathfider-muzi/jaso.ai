@@ -212,7 +212,6 @@ const RecommendSearchIntroductions = () => {
           </S.ShowMoreButton>
         )}
       </S.Frame>
-
       <IntroductionDetailModal
         isOpen={isModalOpen}
         onClose={closeModal}

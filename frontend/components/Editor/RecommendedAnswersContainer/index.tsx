@@ -84,7 +84,7 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
     <S.Frame>
       <S.MetaInfo>질문 내용과 스펙을 바탕으로 자기소개서 문단을 추천해줍니다.</S.MetaInfo>
       <S.AdditionalInfoWrapper>
-        <S.AdditionalInfo>{specification}</S.AdditionalInfo>
+        <S.AdditionalInfo>사용자의 스펙: {specification}</S.AdditionalInfo>
 
         <S.ChangeSpecButton type="button" onClick={openModal}>
           변경
@@ -125,21 +125,20 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
         <></>
       )}
       {recommendedAnswers ? (
-        recommendedAnswers
-          .slice(0, recommendedAnswersAmount)
-          .map(({ body: recommendedAnswer, spec, id }, index: number) => {
-            const specArray = spec.split("/");
-            const question = specArray[0];
-            return (
-              <RecommendedAnswer
-                key={id}
-                answer={recommendedAnswer}
-                question={question}
-                tags={specArray.slice(1)}
-                id={id}
-              />
-            );
-          })
+        recommendedAnswers.slice(0, recommendedAnswersAmount).map(({ body: recommendedAnswer, spec, id }) => {
+          const specArray = spec.split("/");
+          const question = specArray[0];
+
+          return (
+            <RecommendedAnswer
+              key={id}
+              answer={recommendedAnswer}
+              question={question}
+              tags={specArray.slice(1)}
+              id={id}
+            />
+          );
+        })
       ) : (
         <S.LoadingImageWrapper>
           <Image src="/loading.svg" alt="loading image" width="100" height="100" />

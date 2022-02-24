@@ -89,6 +89,7 @@ export const MetaInfoForResult = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  font-size: 14px;
   margin-top: 10px;
   height: 60px;
 `;
