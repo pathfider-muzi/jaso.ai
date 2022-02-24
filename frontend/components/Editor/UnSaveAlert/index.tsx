@@ -11,7 +11,6 @@ interface Props {
 }
 
 const UnSaveAlert = ({ saveIntroduction }: Props) => {
-  // const [isOpenedValue, setOpenedValue] = useState(isOpened);
   const isAlertOpened = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isAlertOpened);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -32,8 +31,6 @@ const UnSaveAlert = ({ saveIntroduction }: Props) => {
         resolve();
       });
 
-    // setTimeOUt 을 쓰지 않고 react query 실행 될때까지 기다리는 방법 못찾음
-    // promise 써도 안됨..
     wrappedPromise(dispatch).then(() => {
       setTimeout(() => {
         router.push(nextLink);
@@ -50,7 +47,7 @@ const UnSaveAlert = ({ saveIntroduction }: Props) => {
 
   return (
     <_CustomAlert
-      title="자소서 저장이 안되있습니다. 저장하고 이동하시겠습니까? 아니면 저장안하고 이동하시겠습니까?"
+      title={"자소서 저장이 안되있습니다. 저장하고 이동하시겠습니까?"}
       contentNode={saveOrNotUI}
       isOpened={isAlertOpened}
     />

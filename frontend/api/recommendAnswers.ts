@@ -12,6 +12,7 @@ const getRecommendAnswers = async ({ listNum, question, specification }: InfoFor
     body: string;
     rank: number;
     spec: string;
+    id: number;
   }[];
 
   return data;

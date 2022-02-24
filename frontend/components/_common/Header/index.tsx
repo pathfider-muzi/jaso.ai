@@ -7,7 +7,6 @@ import useModal from "@/hooks/useModal";
 import useUser from "@/hooks/useUser";
 import { getLocalStorage } from "@/utils/localStorage";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Button from "../Button";
 import Logo from "../Logo";
 import * as S from "./styles";
@@ -19,8 +18,6 @@ const Header = ({ ...props }: Props) => {
 
   const { isModalOpen: isLoginModalOpen, openModal: openLoginModal, closeModal: closeLoginModal } = useModal({});
   const { isModalOpen: isAvatarDropDownOpen, toggleModal: toggleAvatarDropdown } = useModal({});
-
-  const router = useRouter();
 
   const onClickLoginButton = () => {
     openLoginModal();

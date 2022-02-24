@@ -1,17 +1,17 @@
-import searchIntroductions from "@/api/searchIntroduction";
-import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
 import AdditionalInfoAlertModal from "@/components/_common/AdditionalInfoAlertModal";
 import BRAND_NAME from "@/constants/brandName";
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
-import useModal from "@/hooks/useModal";
 import usePleaseFillAdditionalModal from "@/hooks/usePleaseFillAdditionalInfoModal";
 import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
 import useUser, { getUserInfoString } from "@/hooks/useUser";
-import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
-import SearchMetaInfo from "@/types/searchIntroductions";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import * as S from "./styles";
+import SearchMetaInfo from "@/types/searchIntroductions";
+import searchIntroductions from "@/api/searchIntroduction";
+import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
+import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
+import useModal from "@/hooks/useModal";
 
 const SELF_INTRODUCTION_AMOUNT_UNIT = 6;
 const INTRODICTON_MAX_LENGTH = 50;
@@ -96,6 +96,7 @@ const RecommendSearchIntroductions = () => {
 
   const [introductionContent, setIntroductionContent] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     if (!!user && specification === "- / - / - / - / - / - / -") return;
@@ -123,7 +124,6 @@ const RecommendSearchIntroductions = () => {
             <S.SpecAndIntroductionMeta>합격스펙/내용</S.SpecAndIntroductionMeta>
           </S.MetaInfoForResult>
         </S.SearchResultsFrame>
-
         {!isLoading && recommendedIntroductions ? (
           isSearched ? (
             searchedIntroductions === undefined || searchedIntroductions.length === 0 ? (
@@ -131,8 +131,18 @@ const RecommendSearchIntroductions = () => {
             ) : (
               searchedIntroductions!.slice(0, recommendedSelfIntroductionAmount).map((searchedIntroduction, index) => {
                 const spiltedArray = searchedIntroduction.title.split("/");
-                const companyName = spiltedArray[0] ? spiltedArray[0].replaceAll(" ", "") : "회사 비공개";
-                const job = spiltedArray[1] ? spiltedArray[1].replaceAll(" ", "") : "회사 비공개";
+
+                const companyName = spiltedArray[0]
+                  ? spiltedArray[0].replaceAll(" ", "").length === 0
+                    ? "회사 비공개"
+                    : spiltedArray[0].replaceAll(" ", "")
+                  : "회사 비공개";
+
+                const job = spiltedArray[1]
+                  ? spiltedArray[1].replaceAll(" ", "").length === 0
+                    ? "직무 비공개"
+                    : spiltedArray[1].replaceAll(" ", "")
+                  : "직무 비공개";
 
                 return (
                   <S.ResultContentFrame
@@ -158,8 +168,18 @@ const RecommendSearchIntroductions = () => {
               .slice(0, recommendedSelfIntroductionAmount)
               .map((recommendedIntroduction, index) => {
                 const spiltedArray = recommendedIntroduction.title.split("/");
-                const companyName = spiltedArray[0] ? spiltedArray[0].replaceAll(" ", "") : "회사 비공개";
-                const job = spiltedArray[1] ? spiltedArray[1].replaceAll(" ", "") : "회사 비공개";
+
+                const companyName = spiltedArray[0]
+                  ? spiltedArray[0].replaceAll(" ", "").length === 0
+                    ? "회사 비공개"
+                    : spiltedArray[0].replaceAll(" ", "")
+                  : "회사 비공개";
+
+                const job = spiltedArray[1]
+                  ? spiltedArray[1].replaceAll(" ", "").length === 0
+                    ? "직무 비공개"
+                    : spiltedArray[1].replaceAll(" ", "")
+                  : "직무 비공개";
 
                 return (
                   <S.ResultContentFrame
@@ -167,6 +187,7 @@ const RecommendSearchIntroductions = () => {
                     onClick={() => {
                       setIntroductionContent(recommendedIntroduction.body);
                       setTags(recommendedIntroduction.tags);
+                      setId(recommendedIntroduction.id);
                       openModal();
                     }}
                   >
@@ -197,8 +218,8 @@ const RecommendSearchIntroductions = () => {
         onClose={closeModal}
         introductionContent={introductionContent}
         tags={tags}
-      />
-
+        id={id}
+      ></IntroductionDetailModal>
       <AdditionalInfoAlertModal isOpen={isPleaseFillAdditionalModalOpen} onClose={closePleaseFillAdditionalModal} />
     </S.Screen>
   );

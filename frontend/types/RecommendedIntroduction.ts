@@ -3,4 +3,5 @@ export interface RecommendedIntroductionType {
   tags: string[];
   title: string;
   spec: string;
+  id: number;
 }

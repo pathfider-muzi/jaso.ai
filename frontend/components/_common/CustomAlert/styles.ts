@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 
+export const TitleFrame = styled.div`
+  padding-top: 15px;
+`;
 export const CloseIcon = styled.div`
-  position: relative;
-  top: -125px;
-  right: 8px;
-
+  position: absolute;
+  left: 93%;
+  top: 2%;
   &:hover {
     cursor: pointer;
   }

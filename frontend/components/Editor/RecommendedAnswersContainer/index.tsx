@@ -127,11 +127,17 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
       {recommendedAnswers ? (
         recommendedAnswers
           .slice(0, recommendedAnswersAmount)
-          .map(({ body: recommendedAnswer, spec }, index: number) => {
+          .map(({ body: recommendedAnswer, spec, id }, index: number) => {
             const specArray = spec.split("/");
             const question = specArray[0];
             return (
-              <RecommendedAnswer key={index} answer={recommendedAnswer} question={question} tags={specArray.slice(1)} />
+              <RecommendedAnswer
+                key={id}
+                answer={recommendedAnswer}
+                question={question}
+                tags={specArray.slice(1)}
+                id={id}
+              />
             );
           })
       ) : (

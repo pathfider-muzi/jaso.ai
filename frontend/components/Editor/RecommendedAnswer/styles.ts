@@ -2,6 +2,7 @@ import { BOX_SHADOW } from "@/constants/styles/boxShadow";
 import PALETTE from "@/constants/styles/palette";
 import verticalStyle from "@/constants/styles/verticalStyle";
 import styled from "@emotion/styled";
+import ToolTipComponent from "@/components/_common/ToolTip";
 
 export const Frame = styled.section`
   display: flex;
@@ -82,11 +83,43 @@ export const CopyPaste = styled.div`
 
 export const ReportButton = styled.div`
   cursor: pointer;
-  margin-left: 50px;
+  margin-left: 5px;
   justify-content: flex-end;
-  width: 150px;
-  height: 20px;
+  width: 100px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 8px;
-  background-color: yellow;
+  border: 1px solid ${PALETTE.GRAY_200};
+  box-shadow: ${BOX_SHADOW.DEFAULT};
   color: brown;
+`;
+
+export const FieldFrame = styled.div`
+  width: 100%;
+  display: flex;
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+`;
+
+export const Label = styled.span`
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 2rem;
+  min-width: 10.6rem;
+`;
+
+export const ToolTip = styled(ToolTipComponent)`
+  font-size: 1rem;
+  font-weight: 400;
+  margin-left: 0.3rem;
+  text-align: center;
+  vertical-align: middle;
+  width: 1.5rem;
+  height: 1.5rem;
 `;

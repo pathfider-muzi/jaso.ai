@@ -83,6 +83,7 @@ const EditorForm = ({
   const [selectedPageNumber, setSelectedPageNumber] = useState(INITIAL_PAGE_NUMBER);
 
   const isIntroductionSaved = useSelector((state: RootState) => state.confirmSavingIntroductionReducer.isSaved);
+
   const dispatch = useDispatch();
 
   const [isEditableTextCount, setIsEditableTextCount] = useState(false);
@@ -248,21 +249,6 @@ const EditorForm = ({
   useEffect(() => {
     dispatch(changePageState(true));
   }, []);
-
-  useEffect(() => {
-    router.beforePopState(({ as: nextLink }) => {
-      if (nextLink !== router.asPath && isIntroductionSaved === false) {
-        dispatch(setNextLink(nextLink));
-        dispatch(changeAlertState(true));
-        return false;
-      }
-      return true;
-    });
-
-    return () => {
-      router.beforePopState(() => true);
-    };
-  }, [router, isIntroductionSaved, dispatch]);
 
   useEffect(() => {
     router.beforePopState(({ as: nextLink }) => {

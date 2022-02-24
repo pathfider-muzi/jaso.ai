@@ -1,6 +1,8 @@
+import LOCAL_STORAGE_KEY from "@/constants/localStorageKeys";
 import globalStyles from "@/constants/styles/globalStyle";
 import wrapper from "@/modules/store";
 import * as gtag from "@/utils/gtag";
+import { getLocalStorage } from "@/utils/localStorage";
 import { Global } from "@emotion/react";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";

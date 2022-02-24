@@ -14,6 +14,7 @@ const useCustomAlert = () => {
 
   const tryOpenCustomAlert = (nextLink: string) => {
     dispatch(setNextLink(nextLink));
+
     if (isCustomAlertShouldOpen()) {
       dispatch(changeAlertState(true));
       return;
