@@ -5,7 +5,7 @@ import usePleaseFillAdditionalModal from "@/hooks/usePleaseFillAdditionalInfoMod
 import useSelfIntroductionRecommend from "@/hooks/useSelfIntroductionRecommend";
 import useUser, { getUserInfoString } from "@/hooks/useUser";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as S from "./styles";
 import SearchMetaInfo from "@/types/searchIntroductions";
 import searchIntroductions from "@/api/searchIntroduction";
@@ -35,17 +35,7 @@ const RecommendSearchIntroductions = () => {
     license: licenses.join(" / ")
   });
 
-  // let { getRecommendIntroductions, recommendedIntroductions } = useSelfIntroductionRecommend({
-  //   enabled: false,
-  //   specification
-  // });
-
   const [recommendedIntroductions, setRecommendedIntroductions] = useState<RecommendedIntroductionType[]>([]);
-
-  const getRecommendedIntroductions = async () => {
-    const newRecommendedIntroductions = await getRecommendIntroductions({ amount: 100, specification: specification });
-    setRecommendedIntroductions(newRecommendedIntroductions);
-  };
 
   const onClickShowMoreRecommendedSelfIntroductionButton = () => {
     if (!canShowMoreRecommendedSelfIntroductions) return;
@@ -105,9 +95,14 @@ const RecommendSearchIntroductions = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [id, setId] = useState(0);
 
+  const getRecommendedIntroductions = useCallback(async () => {
+    const newRecommendedIntroductions = await getRecommendIntroductions({ amount: 100, specification: specification });
+    setRecommendedIntroductions(newRecommendedIntroductions);
+  }, [specification]);
+
   useEffect(() => {
     getRecommendedIntroductions();
-  }, [specification, getRecommendIntroductions]);
+  }, [specification, getRecommendedIntroductions]);
 
   return (
     <S.Screen title="자기소개서 추천 " description={`자기소개서 추천, ${BRAND_NAME}`}>

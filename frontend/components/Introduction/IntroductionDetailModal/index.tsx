@@ -69,7 +69,7 @@ const IntroductionDetailModal = ({ isOpen, onClose, introductionContent, tags, i
           <S.ToolTip
             text={"잘못된 자기소개서가 추천되었으면 왼쪽 버튼을 눌러 신고해주세요."}
             textBubbleStyle={{
-              left: "-28rem",
+              left: "-31rem",
               bottom: "2rem"
             }}
           ></S.ToolTip>
