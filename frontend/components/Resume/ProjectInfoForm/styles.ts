@@ -19,7 +19,6 @@ export const TextContentWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin-left: 1rem;
-  margin-top: 1.5rem;
 `;
 
 export const TextContent = styled(TextInput)`
