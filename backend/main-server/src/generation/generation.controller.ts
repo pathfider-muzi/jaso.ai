@@ -141,9 +141,7 @@ export class GenerationController {
         const motivationCacheId = "resumeMotivationId"+resumeMotivationId.toString();
         const cachedResumeMotivation = await this.cacheManager.get(motivationCacheId);
         if (cachedResumeMotivation) {
-            return {
-                error: `Motivation generation for ${resumeMotivationId} is already in progress`
-            };
+            throw new NotFoundException(`Motivation generation for ${resumeMotivationId} is already in progress`);
         }
         await this.cacheManager.set(motivationCacheId, " ", { ttl: 0 });
 
@@ -241,9 +239,7 @@ export class GenerationController {
         const projectCacheId = "resumeProjectId"+resumeProjectId.toString();
         const cachedResumeProject = await this.cacheManager.get(projectCacheId);
         if (cachedResumeProject) {
-            return {
-                error: `Project generation for ${resumeProjectId} is already in progress`
-            };
+            throw new NotFoundException(`Project generation for ${resumeProjectId} is already in progress`);
         }
         await this.cacheManager.set(projectCacheId, " ", { ttl: 0 });
 
