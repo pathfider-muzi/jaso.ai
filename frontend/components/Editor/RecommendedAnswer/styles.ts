@@ -18,10 +18,10 @@ export const Frame = styled.section`
   overflow-y: scroll;
   margin-right: 1rem;
 
-  & > *:not(:last-child) {
-    border-bottom: 1px solid ${PALETTE.GRAY_150};
+  /* & > *:not(:first-child) {
+  
     margin-bottom: 0.5rem;
-  }
+  } */
 `;
 
 export const Header = styled.div`
@@ -52,6 +52,8 @@ export const Footer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   gap: 0.5rem;
 `;
 
@@ -79,22 +81,27 @@ export const CopyPaste = styled.div`
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
+  border-bottom: 1px solid ${PALETTE.GRAY_150};
 `;
 
 export const ReportButton = styled.div`
   cursor: pointer;
-  margin-left: 5px;
-  justify-content: flex-end;
-  width: 100px;
+  margin-left: 0px;
+  width: 80px;
   height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 8px;
   border: 1px solid ${PALETTE.GRAY_200};
   box-shadow: ${BOX_SHADOW.DEFAULT};
-  color: brown;
+  background-color: brown;
+  color: white;
+`;
+
+export const ReportFrame = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const FieldFrame = styled.div`
@@ -105,13 +112,18 @@ export const FieldFrame = styled.div`
   }
 `;
 
+export const ReportLetter = styled.div`
+  margin-left: 15px;
+  font-size: 15px;
+`;
+
 export const Label = styled.span`
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
   font-weight: 600;
   margin-right: 2rem;
-  min-width: 10.6rem;
+  min-width: 10rem;
 `;
 
 export const ToolTip = styled(ToolTipComponent)`

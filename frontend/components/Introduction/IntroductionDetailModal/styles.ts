@@ -31,6 +31,7 @@ export const ContentWrapper = styled.div`
 
 export const Footer = styled.div`
   width: 100%;
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -57,24 +58,25 @@ export const CopyPaste = styled.div`
   cursor: pointer;
 `;
 
+export const ReportFrame = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 export const ReportButton = styled.div`
   cursor: pointer;
-  margin-top: -15px;
-  margin-left: 5px;
-  width: 100px;
-  height: 26px;
+  margin-top: 8px;
+  width: 80px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
   border-radius: 8px;
+  background-color: brown;
+  font-size: 15px;
+  color: white;
   border: 1px solid ${PALETTE.GRAY_200};
   box-shadow: ${BOX_SHADOW.DEFAULT};
-  color: brown;
-
-  &:hover {
-    background-color: yellow;
-  }
 `;
 
 export const FieldFrame = styled.div`
@@ -94,7 +96,12 @@ export const Label = styled.span`
   min-width: 10.6rem;
 `;
 
+export const ReportLetter = styled.div`
+  margin-left: 12px;
+`;
+
 export const ToolTip = styled(ToolTipComponent)`
+  top: 9px;
   font-size: 1rem;
   font-weight: 400;
   margin-left: 0.3rem;

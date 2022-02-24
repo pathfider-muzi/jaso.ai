@@ -5,7 +5,7 @@ import useModal from "@/hooks/useModal";
 import { getUserInfoString } from "@/hooks/useUser";
 import { RootState } from "@/modules";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import RecommendedAnswer from "../RecommendedAnswer";
 import * as S from "./styles";
@@ -85,7 +85,6 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
       <S.MetaInfo>질문 내용과 스펙을 바탕으로 자기소개서 문단을 추천해줍니다.</S.MetaInfo>
       <S.AdditionalInfoWrapper>
         <S.AdditionalInfo>사용자의 스펙: {specification}</S.AdditionalInfo>
-
         <S.ChangeSpecButton type="button" onClick={openModal}>
           변경
         </S.ChangeSpecButton>

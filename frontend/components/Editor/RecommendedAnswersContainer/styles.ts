@@ -18,8 +18,8 @@ export const MetaInfo = styled.div`
   align-self: center;
   width: 450px;
   height: 20px;
-  border-radius: 20px;
-  border: 1px solid ${PALETTE.GRAY_300};
+  border-radius: 10px;
+  ${BORDER.GRAY_150};
 `;
 
 export const AdditionalInfoWrapper = styled.div`
@@ -48,11 +48,17 @@ export const ChangeSpecButton = styled.button`
 `;
 
 export const ReloadAnswersButton = styled.button`
-  border: 1px solid ${PALETTE.GRAY_200};
-  width: fit-content;
+  width: 50%;
   height: 40px;
   font-size: 18px;
   align-self: center;
+  border-radius: 10px;
+  ${BORDER.GRAY_150};
+`;
+
+export const NoResultFrame = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ShowMoreButton = styled.button`
@@ -74,4 +80,11 @@ export const LoadingImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const AnswerNotice = styled.div`
+  width: fit-content;
+  height: fit-content;
+  min-height: 20px;
+  border: 1px solid ${PALETTE.GRAY_200};
 `;

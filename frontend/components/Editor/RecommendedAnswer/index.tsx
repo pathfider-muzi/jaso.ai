@@ -52,28 +52,30 @@ const RecommendedAnswer = ({ answer, question, tags, id }: Props) => {
           return <S.Tag key={tag}>{tag}</S.Tag>;
         })}
       </S.Footer>
-      <S.ReportButton
-        onClick={async () => {
-          setReportAlertOpened(true);
-          setTimeout(() => {
-            setReportAlertOpened(false);
-          }, 1000);
-          await reportLosuyAnswer(id);
-        }}
-      >
-        <S.FieldFrame>
-          {"신고하기"}
-          <S.Label>
-            <S.ToolTip
-              text={"잘못된 문항이 추천되었다고 생각되시면 이 버튼을 눌러주세요."}
-              textBubbleStyle={{
-                left: "0",
-                bottom: "2rem"
-              }}
-            ></S.ToolTip>
-          </S.Label>
-        </S.FieldFrame>
-      </S.ReportButton>
+      <S.ReportFrame>
+        <S.ReportButton
+          onClick={async () => {
+            setReportAlertOpened(true);
+            setTimeout(() => {
+              setReportAlertOpened(false);
+            }, 1000);
+            await reportLosuyAnswer(id);
+          }}
+        >
+          <S.FieldFrame>
+            <S.ReportLetter>{"신고하기"}</S.ReportLetter>
+          </S.FieldFrame>
+        </S.ReportButton>
+        <S.Label>
+          <S.ToolTip
+            text={"잘못된 문항이 추천되었다면 왼쪽 버튼을 눌러 신고해주세요."}
+            textBubbleStyle={{
+              left: "0",
+              bottom: "2rem"
+            }}
+          ></S.ToolTip>
+        </S.Label>
+      </S.ReportFrame>
     </S.Frame>
   );
 };
