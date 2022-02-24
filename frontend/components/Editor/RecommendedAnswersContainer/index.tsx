@@ -1,3 +1,4 @@
+import getRecommendAnswers from "@/api/recommendAnswers";
 import AdditionalInformationModal from "@/components/User/AdditionalInformationModal";
 import useRecommendAnswers from "@/hooks/Editor/useRecommendAnswer";
 import useAdditionalInfoInput from "@/hooks/useAdditionalInfoInput";
@@ -50,17 +51,32 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
     (state: RootState) => state.recommendedAnswerOfQuestionReducer.currentQuestionTitle
   );
 
-  const { data: recommendedAnswers, refetch } = useRecommendAnswers({
-    enabled: false,
-    metaInfo: {
-      listNum: LIMIT_ANSWER_NUM,
-      question: currentQuestionTitle,
-      specification: specification
-    }
-  });
+  const [recommendedAnswers, setRecommendedAnswers] = useState<
+    {
+      body: string;
+      rank: number;
+      spec: string;
+      id: number;
+    }[]
+  >([]);
+
   const { isModalOpen, closeModal, openModal } = useModal({
     defaultValue: false
   });
+
+  const refetch = async () => {
+    const newRecommendedAnswers = await getRecommendAnswers({
+      listNum: LIMIT_ANSWER_NUM,
+      question: currentQuestionTitle,
+      specification: specification
+    });
+    setRecommendedAnswers(newRecommendedAnswers);
+  };
+
+  useEffect(() => {
+    refetch();
+    setRecommendedAnswersAmount(SELF_ANSWER_AMOUNT_UNIT);
+  }, [specification]);
 
   const [recommendedAnswersAmount, setRecommendedAnswersAmount] = useState(SELF_ANSWER_AMOUNT_UNIT);
 
@@ -75,9 +91,9 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
     });
   };
 
-  const onClickSaveButton = () => {
+  const onClickSaveButton = async () => {
     closeModal();
-    refetch();
+    await refetch();
   };
 
   return (
@@ -110,12 +126,12 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
           onChangeLicenses
         }}
       />
-      {recommendedAnswers ? (
+      {recommendedAnswers.length !== 0 ? (
         <S.ReloadAnswersButton
           onMouseLeave={() => setEmphasizedTitle(false)}
           onMouseOver={() => setEmphasizedTitle(true)}
-          onClick={() => {
-            refetch();
+          onClick={async () => {
+            await refetch();
           }}
         >
           추천된 자기소개서 답변 불러오기
@@ -123,7 +139,7 @@ const RecommendedAnswersContainer = ({ setEmphasizedQuestion: setEmphasizedTitle
       ) : (
         <></>
       )}
-      {recommendedAnswers ? (
+      {recommendedAnswers.length !== 0 ? (
         recommendedAnswers.slice(0, recommendedAnswersAmount).map(({ body: recommendedAnswer, spec, id }) => {
           const specArray = spec.split("/");
           const question = specArray[0];

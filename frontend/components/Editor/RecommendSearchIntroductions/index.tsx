@@ -12,12 +12,12 @@ import searchIntroductions from "@/api/searchIntroduction";
 import { RecommendedIntroductionType } from "@/types/RecommendedIntroduction";
 import IntroductionDetailModal from "@/components/Introduction/IntroductionDetailModal";
 import useModal from "@/hooks/useModal";
+import getRecommendIntroductions from "@/api/getRecommendIntroductions";
 
 const SELF_INTRODUCTION_AMOUNT_UNIT = 6;
 const INTRODICTON_MAX_LENGTH = 50;
 
 const RecommendSearchIntroductions = () => {
-  const { user } = useUser({ enabled: false });
   const [recommendedSelfIntroductionAmount, setRecommendedSelfIntroductionAmount] =
     useState(SELF_INTRODUCTION_AMOUNT_UNIT);
 
@@ -35,10 +35,17 @@ const RecommendSearchIntroductions = () => {
     license: licenses.join(" / ")
   });
 
-  let { getRecommendIntroductions, recommendedIntroductions } = useSelfIntroductionRecommend({
-    enabled: false,
-    specification
-  });
+  // let { getRecommendIntroductions, recommendedIntroductions } = useSelfIntroductionRecommend({
+  //   enabled: false,
+  //   specification
+  // });
+
+  const [recommendedIntroductions, setRecommendedIntroductions] = useState<RecommendedIntroductionType[]>([]);
+
+  const getRecommendedIntroductions = async () => {
+    const newRecommendedIntroductions = await getRecommendIntroductions({ amount: 100, specification: specification });
+    setRecommendedIntroductions(newRecommendedIntroductions);
+  };
 
   const onClickShowMoreRecommendedSelfIntroductionButton = () => {
     if (!canShowMoreRecommendedSelfIntroductions) return;
@@ -99,10 +106,8 @@ const RecommendSearchIntroductions = () => {
   const [id, setId] = useState(0);
 
   useEffect(() => {
-    if (!!user && specification === "- / - / - / - / - / - / -") return;
-
-    getRecommendIntroductions();
-  }, [specification]);
+    getRecommendedIntroductions();
+  }, [specification, getRecommendIntroductions]);
 
   return (
     <S.Screen title="자기소개서 추천 " description={`자기소개서 추천, ${BRAND_NAME}`}>
