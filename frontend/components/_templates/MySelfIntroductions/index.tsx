@@ -54,7 +54,7 @@ const MySelfIntroductions = ({ ...props }) => {
           addButtonToolTipInfo={{
             text: "자기소개서를 추가하세요",
             textBubbleStyle: {
-              right: "0.5rem",
+              right: "4%",
               bottom: "-4rem"
             }
           }}

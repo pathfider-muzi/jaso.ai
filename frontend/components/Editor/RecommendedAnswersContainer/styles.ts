@@ -17,9 +17,6 @@ export const Frame = styled.div`
 
 export const MetaInfo = styled.div`
   align-self: center;
-  width: 450px;
-  height: 20px;
-  border-radius: 10px;
 `;
 
 export const AdditionalInfoWrapper = styled.div`

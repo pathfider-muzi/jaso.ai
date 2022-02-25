@@ -104,8 +104,7 @@ export const FieldFrame = styled.div`
 `;
 
 export const ReportLetter = styled.div`
-  margin-left: 5px;
-  font-size: 15px;
+  font-size: 1rem;
 `;
 
 export const Label = styled.span`
